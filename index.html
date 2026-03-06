@@ -3,271 +3,464 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rutgers Notes — hellaanxiouss</title>
+    <title>hellaanxiouss — Rutgers Notes</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400;500&display=swap"
       rel="stylesheet"
     />
     <style>
       :root {
-        --bg: #0a0a0f;
-        --surface: #111118;
-        --border: #1e1e2e;
+        --bg: #080b10;
+        --surface: #0d1117;
+        --border: #161c27;
+        --border2: #1e2738;
         --accent: #cc0033;
-        --accent2: #ff6b6b;
-        --text: #e8e8f0;
-        --muted: #6b6b8a;
-        --card: #13131c;
+        --accent2: #ff4466;
+        --scarlet: #cc0033;
+        --text: #dde4f0;
+        --muted: #5a6a82;
+        --card: #0d1117;
+        --green: #22c55e;
+        --yellow: #f59e0b;
+        --blue: #3b82f6;
       }
+
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
       }
+
       body {
         background: var(--bg);
         color: var(--text);
-        font-family: "DM Mono", monospace;
+        font-family: "DM Sans", sans-serif;
         min-height: 100vh;
         overflow-x: hidden;
       }
 
-      /* Animated grid background */
+      /* Grid bg */
       body::before {
         content: "";
         position: fixed;
         inset: 0;
         background-image:
-          linear-gradient(var(--border) 1px, transparent 1px),
-          linear-gradient(90deg, var(--border) 1px, transparent 1px);
-        background-size: 40px 40px;
-        opacity: 0.4;
+          linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        background-size: 48px 48px;
         z-index: 0;
         pointer-events: none;
       }
 
-      .noise {
+      /* Scarlet glow top left */
+      body::after {
+        content: "";
         position: fixed;
-        inset: 0;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-        opacity: 0.15;
+        top: -200px;
+        left: -200px;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(
+          circle,
+          rgba(204, 0, 51, 0.07) 0%,
+          transparent 65%
+        );
         z-index: 0;
         pointer-events: none;
       }
 
-      .container {
-        max-width: 1100px;
+      .wrap {
+        max-width: 1200px;
         margin: 0 auto;
         padding: 0 2rem;
         position: relative;
         z-index: 1;
       }
 
-      /* Header */
-      header {
-        padding: 3rem 0 2rem;
-        border-bottom: 1px solid var(--border);
-        margin-bottom: 3rem;
-        animation: fadeDown 0.6s ease both;
-      }
-      .header-inner {
+      /* ── TOP BAR ── */
+      .topbar {
         display: flex;
+        align-items: center;
         justify-content: space-between;
-        align-items: flex-end;
-        flex-wrap: wrap;
+        padding: 1.5rem 0;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 0;
+        animation: fadeDown 0.5s ease both;
+      }
+      .topbar-left {
+        display: flex;
+        align-items: center;
         gap: 1rem;
       }
-      .logo-block {
+      .rutgers-logo {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.1rem;
+        letter-spacing: 0.12em;
+        color: var(--accent2);
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
       }
-      .rutgers-badge {
-        font-family: "Syne", sans-serif;
+      .rutgers-logo::before {
+        content: "R";
+        width: 28px;
+        height: 28px;
+        background: var(--accent);
+        color: white;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+      }
+      .topbar-handle {
+        font-family: "DM Mono", monospace;
         font-size: 0.7rem;
-        font-weight: 600;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: var(--accent);
-        margin-bottom: 0.4rem;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+      }
+      .topbar-right {
+        font-family: "DM Mono", monospace;
+        font-size: 0.7rem;
+        color: var(--muted);
         display: flex;
         align-items: center;
         gap: 0.5rem;
       }
-      .rutgers-badge::before {
-        content: "";
-        display: inline-block;
-        width: 18px;
-        height: 2px;
-        background: var(--accent);
-      }
-      h1 {
-        font-family: "Syne", sans-serif;
-        font-size: clamp(2.2rem, 5vw, 3.5rem);
-        font-weight: 800;
-        line-height: 1;
-        letter-spacing: -0.02em;
-        color: var(--text);
-      }
-      h1 span {
-        color: var(--accent);
-      }
-      .header-meta {
-        text-align: right;
-        font-size: 0.75rem;
-        color: var(--muted);
-        line-height: 1.8;
-      }
-      .status-dot {
-        display: inline-block;
+      .live-dot {
         width: 6px;
         height: 6px;
-        background: #22c55e;
         border-radius: 50%;
-        margin-right: 6px;
+        background: var(--green);
         animation: pulse 2s infinite;
       }
 
-      /* Semester label */
-      .semester-label {
-        font-family: "Syne", sans-serif;
+      /* ── HERO ── */
+      .hero {
+        padding: 5rem 0 4rem;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 4rem;
+        position: relative;
+        animation: fadeUp 0.6s 0.1s ease both;
+      }
+
+      .hero-eyebrow {
+        font-family: "DM Mono", monospace;
         font-size: 0.65rem;
-        font-weight: 700;
         letter-spacing: 0.25em;
         text-transform: uppercase;
         color: var(--muted);
-        margin-bottom: 1.2rem;
-        animation: fadeUp 0.6s 0.2s ease both;
+        margin-bottom: 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
       }
-      .semester-label span {
-        color: var(--accent2);
+      .hero-eyebrow::before {
+        content: "";
+        width: 24px;
+        height: 1px;
+        background: var(--accent);
       }
 
-      /* Subject grid */
-      .subjects-grid {
+      .hero-name {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(4rem, 10vw, 8rem);
+        line-height: 0.9;
+        letter-spacing: 0.02em;
+        margin-bottom: 1.5rem;
+      }
+      .hero-name .line1 {
+        color: var(--text);
+        display: block;
+      }
+      .hero-name .line2 {
+        color: var(--accent);
+        display: block;
+      }
+
+      .hero-sub {
+        font-size: 0.95rem;
+        color: var(--muted);
+        max-width: 400px;
+        line-height: 1.7;
+      }
+
+      /* GPA widget — floats right on hero */
+      .gpa-widget {
+        position: absolute;
+        right: 0;
+        top: 5rem;
+        background: var(--surface);
+        border: 1px solid var(--border2);
+        padding: 1.5rem 2rem;
+        min-width: 220px;
+        animation: fadeUp 0.6s 0.3s ease both;
+      }
+      @media (max-width: 768px) {
+        .gpa-widget {
+          position: static;
+          margin-top: 2rem;
+        }
+      }
+
+      .gpa-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 0.75rem;
+      }
+      .gpa-display {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 4rem;
+        line-height: 1;
+        color: var(--green);
+        margin-bottom: 0.25rem;
+        cursor: pointer;
+        transition: opacity 0.2s;
+      }
+      .gpa-display:hover {
+        opacity: 0.7;
+      }
+      .gpa-display[contenteditable="true"] {
+        outline: none;
+        border-bottom: 2px solid var(--accent);
+      }
+      .gpa-sub {
+        font-size: 0.7rem;
+        color: var(--muted);
+        margin-bottom: 1.25rem;
+      }
+      .gpa-bar-wrap {
+        background: var(--border2);
+        height: 3px;
+        border-radius: 100px;
+        overflow: hidden;
+        margin-bottom: 0.4rem;
+      }
+      .gpa-bar {
+        height: 3px;
+        border-radius: 100px;
+        background: var(--green);
+        transition: width 0.8s ease;
+      }
+      .gpa-scale {
+        display: flex;
+        justify-content: space-between;
+        font-family: "DM Mono", monospace;
+        font-size: 0.55rem;
+        color: var(--muted);
+      }
+      .gpa-edit-hint {
+        font-size: 0.6rem;
+        color: var(--muted);
+        margin-top: 0.75rem;
+        opacity: 0.6;
+      }
+
+      /* ── SECTION LABEL ── */
+      .section-header {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+      .section-title {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+      .section-title span {
+        color: var(--accent2);
+      }
+      .section-line {
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+
+      /* ── SEMESTER CARDS ── */
+      .semesters {
+        margin-bottom: 4rem;
+      }
+
+      .semester-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
         gap: 1px;
         background: var(--border);
         border: 1px solid var(--border);
-        margin-bottom: 3rem;
       }
 
-      .subject-card {
+      .semester-card {
         background: var(--card);
         padding: 2rem;
         text-decoration: none;
         color: inherit;
         display: flex;
         flex-direction: column;
-        gap: 1rem;
+        gap: 1.25rem;
         position: relative;
         overflow: hidden;
         transition: background 0.2s;
-        animation: fadeUp 0.5s ease both;
       }
-      .subject-card:nth-child(1) {
-        animation-delay: 0.1s;
+      .semester-card:hover {
+        background: #111827;
       }
-      .subject-card:nth-child(2) {
-        animation-delay: 0.15s;
-      }
-      .subject-card:nth-child(3) {
-        animation-delay: 0.2s;
-      }
-      .subject-card:nth-child(4) {
-        animation-delay: 0.25s;
-      }
-      .subject-card:nth-child(5) {
-        animation-delay: 0.3s;
-      }
-
-      .subject-card::before {
+      .semester-card::after {
         content: "";
         position: absolute;
-        top: 0;
+        bottom: 0;
         left: 0;
-        width: 3px;
-        height: 0;
-        background: var(--card-accent, var(--accent));
-        transition: height 0.3s ease;
+        right: 0;
+        height: 2px;
+        background: var(--sem-color, var(--accent));
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s ease;
       }
-      .subject-card:hover {
-        background: #16161f;
-      }
-      .subject-card:hover::before {
-        height: 100%;
+      .semester-card:hover::after {
+        transform: scaleX(1);
       }
 
-      .card-tag {
+      .semester-card.active {
+        background: linear-gradient(135deg, #0d1117, #120a10);
+      }
+      .semester-card.locked {
+        opacity: 0.45;
+        cursor: default;
+        pointer-events: none;
+      }
+
+      .sem-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+      .sem-season {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 2.2rem;
+        line-height: 0.95;
+        letter-spacing: 0.04em;
+      }
+      .sem-year {
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+      }
+
+      .sem-status {
         font-size: 0.6rem;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: var(--card-accent, var(--accent));
-        font-weight: 500;
+        padding: 0.25rem 0.65rem;
+        border-radius: 100px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        font-family: "DM Mono", monospace;
       }
-      .card-title {
-        font-family: "Syne", sans-serif;
-        font-size: 1.3rem;
-        font-weight: 700;
-        line-height: 1.2;
+      .status-current {
+        background: rgba(204, 0, 51, 0.12);
+        border: 1px solid rgba(204, 0, 51, 0.3);
+        color: var(--accent2);
       }
-      .card-desc {
+      .status-done {
+        background: rgba(34, 197, 94, 0.08);
+        border: 1px solid rgba(34, 197, 94, 0.2);
+        color: #4ade80;
+      }
+      .status-future {
+        background: rgba(90, 106, 130, 0.08);
+        border: 1px solid rgba(90, 106, 130, 0.2);
+        color: var(--muted);
+      }
+
+      .sem-subjects {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+      .sem-subject {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
         font-size: 0.75rem;
         color: var(--muted);
-        line-height: 1.6;
-        flex: 1;
       }
-      .card-footer {
+      .sem-subject-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--sem-color, var(--accent));
+        flex-shrink: 0;
+      }
+
+      .sem-footer {
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding-top: 1rem;
         border-top: 1px solid var(--border);
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
+        color: var(--muted);
+      }
+      .sem-arrow {
+        color: var(--sem-color, var(--accent));
+        font-size: 1rem;
+        transition: transform 0.2s;
+      }
+      .semester-card:hover .sem-arrow {
+        transform: translate(4px, -4px);
+      }
+
+      /* ── STATS ROW ── */
+      .stats-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        margin-bottom: 4rem;
+        animation: fadeUp 0.6s 0.4s ease both;
+      }
+      .stat-card {
+        background: var(--card);
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+      .stat-label {
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .stat-value {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 2.2rem;
+        line-height: 1;
+      }
+      .stat-sub {
         font-size: 0.7rem;
         color: var(--muted);
       }
-      .card-arrow {
-        font-size: 1rem;
-        color: var(--card-accent, var(--accent));
-        transition: transform 0.2s;
-      }
-      .subject-card:hover .card-arrow {
-        transform: translate(3px, -3px);
-      }
 
-      /* Exam alert */
-      .exam-alert {
-        background: linear-gradient(
-          135deg,
-          rgba(204, 0, 51, 0.08),
-          rgba(204, 0, 51, 0.03)
-        );
-        border: 1px solid rgba(204, 0, 51, 0.3);
-        border-left: 3px solid var(--accent);
-        padding: 1.2rem 1.5rem;
-        margin-bottom: 3rem;
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        animation: fadeUp 0.6s 0.4s ease both;
-        font-size: 0.8rem;
-      }
-      .exam-alert-icon {
-        font-size: 1.2rem;
-      }
-      .exam-alert strong {
-        font-family: "Syne", sans-serif;
-        color: var(--accent2);
-      }
-
-      /* Footer */
+      /* ── FOOTER ── */
       footer {
         border-top: 1px solid var(--border);
         padding: 2rem 0;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-size: 0.7rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.65rem;
         color: var(--muted);
-        animation: fadeUp 0.6s 0.5s ease both;
         flex-wrap: wrap;
         gap: 1rem;
       }
@@ -275,7 +468,7 @@
       @keyframes fadeDown {
         from {
           opacity: 0;
-          transform: translateY(-20px);
+          transform: translateY(-16px);
         }
         to {
           opacity: 1;
@@ -298,135 +491,255 @@
           opacity: 1;
         }
         50% {
-          opacity: 0.4;
+          opacity: 0.3;
         }
       }
     </style>
   </head>
   <body>
-    <div class="noise"></div>
-    <div class="container">
-      <header>
-        <div class="header-inner">
-          <div class="logo-block">
-            <div class="rutgers-badge">Rutgers University</div>
-            <h1>My<span>Notes</span></h1>
-          </div>
-          <div class="header-meta">
-            <div><span class="status-dot"></span>GitHub Pages — Live</div>
-            <div>hellaanxiouss</div>
-            <div>Last updated: <span id="lastUpdated">—</span></div>
-          </div>
+    <div class="wrap">
+      <!-- TOP BAR -->
+      <div class="topbar">
+        <div class="topbar-left">
+          <div class="rutgers-logo">RUTGERS UNIVERSITY</div>
+          <div class="topbar-handle">/ hellaanxiouss</div>
         </div>
-      </header>
-
-      <div class="exam-alert">
-        <div class="exam-alert-icon">⚡</div>
-        <div>
-          <strong>Exam incoming —</strong> Physics 2 exam next week. Head to the
-          Physics 2 hub to review concepts, formulas & simulations.
+        <div class="topbar-right">
+          <span class="live-dot"></span>
+          GitHub Pages · Live
         </div>
       </div>
 
-      <div class="semester-label">
-        Current Semester — <span>Spring 2026</span>
+      <!-- HERO -->
+      <div class="hero">
+        <div class="hero-eyebrow">Academic Notes Dashboard</div>
+        <div class="hero-name">
+          <span class="line1">MY</span>
+          <span class="line2">RUTGERS</span>
+        </div>
+        <p class="hero-sub">
+          All notes, study guides, past exams & interactive resources —
+          organized by semester.
+        </p>
+
+        <!-- GPA Widget -->
+        <div class="gpa-widget">
+          <div class="gpa-label">Cumulative GPA</div>
+          <div
+            class="gpa-display"
+            id="gpaDisplay"
+            onclick="editGPA()"
+            title="Click to edit"
+          >
+            3.80
+          </div>
+          <div class="gpa-sub">/ 4.00 scale</div>
+          <div class="gpa-bar-wrap">
+            <div class="gpa-bar" id="gpaBar" style="width: 95%"></div>
+          </div>
+          <div class="gpa-scale">
+            <span>0.0</span><span>2.0</span><span>3.0</span><span>4.0</span>
+          </div>
+          <div class="gpa-edit-hint">click GPA to edit</div>
+        </div>
       </div>
 
-      <div class="subjects-grid">
-        <a
-          href="spring-2026/physics-2/index.html"
-          class="subject-card"
-          style="--card-accent: #cc0033"
-        >
-          <div class="card-tag">PHY 204</div>
-          <div class="card-title">Physics 2</div>
-          <div class="card-desc">
-            Electrostatics, circuits, magnetism, waves, optics & modern physics.
+      <!-- STATS -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-label">Current Semester</div>
+          <div class="stat-value" style="color: var(--accent)">SP26</div>
+          <div class="stat-sub">Spring 2026</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Semesters Tracked</div>
+          <div class="stat-value" style="color: var(--blue)" id="semCount">
+            1
           </div>
-          <div class="card-footer">
-            <span>Notes · Formulas · Simulations</span>
-            <span class="card-arrow">↗</span>
+          <div class="stat-sub">on this site</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Subjects This Sem</div>
+          <div class="stat-value" style="color: var(--yellow)">5</div>
+          <div class="stat-sub">Physics 2, DS, OS, ML, Lab</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Next Exam</div>
+          <div
+            class="stat-value"
+            style="color: var(--accent2); font-size: 1.6rem"
+            id="daysLeft"
+          >
+            —
           </div>
-        </a>
+          <div class="stat-sub">Physics 2 · Mar 12</div>
+        </div>
+      </div>
 
-        <a
-          href="spring-2026/physics-2-lab/index.html"
-          class="subject-card"
-          style="--card-accent: #f97316"
+      <!-- SEMESTERS -->
+      <div class="semesters">
+        <div
+          class="section-header"
+          style="animation: fadeUp 0.6s 0.2s ease both"
         >
-          <div class="card-tag">PHY 204L</div>
-          <div class="card-title">Physics 2 Lab</div>
-          <div class="card-desc">
-            Lab notebooks, data analysis, experiment write-ups & reports.
+          <div class="section-title">
+            Semesters <span>/ click to open</span>
           </div>
-          <div class="card-footer">
-            <span>Notebooks · Data · Reports</span>
-            <span class="card-arrow">↗</span>
-          </div>
-        </a>
+          <div class="section-line"></div>
+        </div>
 
-        <a
-          href="spring-2026/data-structures/index.html"
-          class="subject-card"
-          style="--card-accent: #3b82f6"
-        >
-          <div class="card-tag">CS 112</div>
-          <div class="card-title">Data Structures</div>
-          <div class="card-desc">
-            Arrays, linked lists, trees, graphs, sorting algorithms &
-            complexity.
-          </div>
-          <div class="card-footer">
-            <span>Notes · Implementations · Visualizers</span>
-            <span class="card-arrow">↗</span>
-          </div>
-        </a>
+        <div class="semester-grid">
+          <!-- Spring 2026 — CURRENT -->
+          <a
+            href="spring-2026/index.html"
+            class="semester-card active"
+            style="--sem-color: #cc0033"
+          >
+            <div class="sem-top">
+              <div>
+                <div class="sem-season" style="color: var(--accent)">
+                  Spring
+                </div>
+                <div class="sem-year">2026 · Semester 6</div>
+              </div>
+              <span class="sem-status status-current">● Current</span>
+            </div>
+            <div class="sem-subjects">
+              <div class="sem-subject">
+                <span class="sem-subject-dot"></span>Physics 2
+              </div>
+              <div class="sem-subject">
+                <span class="sem-subject-dot"></span>Physics 2 Lab
+              </div>
+              <div class="sem-subject">
+                <span class="sem-subject-dot"></span>Data Structures
+              </div>
+              <div class="sem-subject">
+                <span class="sem-subject-dot"></span>Operating Systems
+              </div>
+              <div class="sem-subject">
+                <span class="sem-subject-dot"></span>Machine Learning
+              </div>
+            </div>
+            <div class="sem-footer">
+              <span>5 subjects · Exam 2 → Mar 12</span>
+              <span class="sem-arrow">↗</span>
+            </div>
+          </a>
 
-        <a
-          href="spring-2026/operating-systems/index.html"
-          class="subject-card"
-          style="--card-accent: #22c55e"
-        >
-          <div class="card-tag">CS 416</div>
-          <div class="card-title">Operating Systems</div>
-          <div class="card-desc">
-            Processes, threads, memory management, scheduling & file systems.
+          <!-- Fall 2025 — placeholder -->
+          <div class="semester-card locked" style="--sem-color: #3b82f6">
+            <div class="sem-top">
+              <div>
+                <div class="sem-season" style="color: #3b82f6">Fall</div>
+                <div class="sem-year">2025 · Semester 5</div>
+              </div>
+              <span class="sem-status status-done">✓ Done</span>
+            </div>
+            <div class="sem-subjects">
+              <div class="sem-subject">
+                <span class="sem-subject-dot" style="background: #3b82f6"></span
+                >Add your subjects here
+              </div>
+            </div>
+            <div class="sem-footer">
+              <span>Notes not uploaded yet</span>
+              <span class="sem-arrow" style="color: #3b82f6">↗</span>
+            </div>
           </div>
-          <div class="card-footer">
-            <span>Notes · Past Exams</span>
-            <span class="card-arrow">↗</span>
-          </div>
-        </a>
 
-        <a
-          href="spring-2026/machine-learning/index.html"
-          class="subject-card"
-          style="--card-accent: #a855f7"
-        >
-          <div class="card-tag">CS 461</div>
-          <div class="card-title">Machine Learning</div>
-          <div class="card-desc">
-            Supervised & unsupervised learning, neural nets, model evaluation.
+          <!-- Spring 2027 — future -->
+          <div class="semester-card locked" style="--sem-color: #5a6a82">
+            <div class="sem-top">
+              <div>
+                <div class="sem-season" style="color: var(--muted)">Spring</div>
+                <div class="sem-year">2027 · Semester 7</div>
+              </div>
+              <span class="sem-status status-future">Coming Soon</span>
+            </div>
+            <div class="sem-subjects">
+              <div class="sem-subject">
+                <span
+                  class="sem-subject-dot"
+                  style="background: var(--muted)"
+                ></span
+                >Future semester
+              </div>
+            </div>
+            <div class="sem-footer">
+              <span>Not started</span>
+              <span class="sem-arrow" style="color: var(--muted)">↗</span>
+            </div>
           </div>
-          <div class="card-footer">
-            <span>Notes · Notebooks · Datasets</span>
-            <span class="card-arrow">↗</span>
-          </div>
-        </a>
+        </div>
       </div>
 
       <footer>
-        <span>rutgers-notes / spring-2026</span>
         <span>hellaanxiouss.github.io/rutgers-notes</span>
+        <span id="footerDate">—</span>
       </footer>
     </div>
+
     <script>
-      document.getElementById("lastUpdated").textContent =
+      // Footer date
+      document.getElementById("footerDate").textContent =
         new Date().toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
+          month: "long",
           year: "numeric",
         });
+
+      // Days until exam
+      const exam = new Date("2026-03-12T00:00:00");
+      const now = new Date();
+      const days = Math.max(0, Math.ceil((exam - now) / 86400000));
+      document.getElementById("daysLeft").textContent =
+        days > 0 ? days + "d" : "Today!";
+
+      // GPA editor
+      function editGPA() {
+        const el = document.getElementById("gpaDisplay");
+        el.contentEditable = "true";
+        el.focus();
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        el.addEventListener("blur", saveGPA, { once: true });
+        el.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            el.blur();
+          }
+        });
+      }
+
+      function saveGPA() {
+        const el = document.getElementById("gpaDisplay");
+        el.contentEditable = "false";
+        const val = parseFloat(el.textContent);
+        if (isNaN(val) || val < 0 || val > 4) {
+          el.textContent = localStorage.getItem("gpa") || "3.80";
+        } else {
+          const gpa = Math.min(4, Math.max(0, val)).toFixed(2);
+          el.textContent = gpa;
+          localStorage.setItem("gpa", gpa);
+          // Update bar and color
+          const pct = (parseFloat(gpa) / 4) * 100;
+          document.getElementById("gpaBar").style.width = pct + "%";
+          const bar = document.getElementById("gpaBar");
+          if (parseFloat(gpa) >= 3.5) bar.style.background = "#22c55e";
+          else if (parseFloat(gpa) >= 3.0) bar.style.background = "#f59e0b";
+          else bar.style.background = "#f43f5e";
+        }
+      }
+
+      // Load saved GPA
+      const saved = localStorage.getItem("gpa");
+      if (saved) {
+        document.getElementById("gpaDisplay").textContent = saved;
+        const pct = (parseFloat(saved) / 4) * 100;
+        document.getElementById("gpaBar").style.width = pct + "%";
+      }
     </script>
   </body>
 </html>

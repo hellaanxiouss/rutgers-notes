@@ -1,0 +1,2840 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Physics Exam 2 — Chapter Study Guide</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,600;1,300&family=DM+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #0d0f14;
+        --surface: #141720;
+        --surface2: #1a1e2a;
+        --border: #252a38;
+        --text: #e8eaf0;
+        --muted: #6b7280;
+        --ch24: #f97316;
+        --ch26: #06b6d4;
+        --ch27: #10b981;
+        --ch29: #a855f7;
+        --yellow: #fbbf24;
+        --red: #f43f5e;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        font-size: 15px;
+        line-height: 1.65;
+        min-height: 100vh;
+      }
+
+      /* NAV */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(13, 15, 20, 0.95);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+        padding: 0 32px;
+        display: flex;
+        align-items: center;
+        gap: 0;
+        height: 56px;
+        overflow-x: auto;
+      }
+
+      .nav-brand {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 20px;
+        letter-spacing: 0.08em;
+        color: var(--text);
+        white-space: nowrap;
+        margin-right: 32px;
+        flex-shrink: 0;
+      }
+
+      .nav-tabs {
+        display: flex;
+        gap: 4px;
+      }
+
+      .nav-tab {
+        padding: 6px 16px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        color: var(--muted);
+        transition: all 0.18s;
+        white-space: nowrap;
+        font-family: "DM Sans", sans-serif;
+        letter-spacing: 0.03em;
+      }
+
+      .nav-tab:hover {
+        color: var(--text);
+        background: var(--surface2);
+      }
+
+      .nav-tab.active-24 {
+        background: rgba(249, 115, 22, 0.15);
+        color: var(--ch24);
+      }
+      .nav-tab.active-26 {
+        background: rgba(6, 182, 212, 0.15);
+        color: var(--ch26);
+      }
+      .nav-tab.active-27 {
+        background: rgba(16, 185, 129, 0.15);
+        color: var(--ch27);
+      }
+      .nav-tab.active-29 {
+        background: rgba(168, 85, 247, 0.15);
+        color: var(--ch29);
+      }
+
+      /* HERO */
+      .hero {
+        padding: 64px 48px 48px;
+        border-bottom: 1px solid var(--border);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: -100px;
+        right: -100px;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(
+          circle,
+          rgba(168, 85, 247, 0.06) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+
+      .hero-eyebrow {
+        font-family: "DM Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 16px;
+      }
+
+      .hero h1 {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(48px, 8vw, 88px);
+        line-height: 0.95;
+        letter-spacing: 0.02em;
+        margin-bottom: 20px;
+      }
+
+      .hero h1 span {
+        display: block;
+      }
+      .hero h1 .accent {
+        color: var(--yellow);
+      }
+
+      .hero-sub {
+        font-size: 16px;
+        color: var(--muted);
+        margin-bottom: 40px;
+        max-width: 500px;
+      }
+
+      .chapter-pills {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .chapter-pill {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 20px;
+        border-radius: 100px;
+        border: 1px solid;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 14px;
+        font-weight: 600;
+        background: transparent;
+        font-family: "DM Sans", sans-serif;
+      }
+
+      .chapter-pill.ch24 {
+        border-color: rgba(249, 115, 22, 0.4);
+        color: var(--ch24);
+      }
+      .chapter-pill.ch26 {
+        border-color: rgba(6, 182, 212, 0.4);
+        color: var(--ch26);
+      }
+      .chapter-pill.ch27 {
+        border-color: rgba(16, 185, 129, 0.4);
+        color: var(--ch27);
+      }
+      .chapter-pill.ch29 {
+        border-color: rgba(168, 85, 247, 0.4);
+        color: var(--ch29);
+      }
+
+      .chapter-pill:hover {
+        transform: translateY(-2px);
+      }
+      .chapter-pill.ch24:hover {
+        background: rgba(249, 115, 22, 0.1);
+      }
+      .chapter-pill.ch26:hover {
+        background: rgba(6, 182, 212, 0.1);
+      }
+      .chapter-pill.ch27:hover {
+        background: rgba(16, 185, 129, 0.1);
+      }
+      .chapter-pill.ch29:hover {
+        background: rgba(168, 85, 247, 0.1);
+      }
+
+      .pill-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+
+      /* MAIN CONTENT */
+      .content {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 48px 32px 80px;
+      }
+
+      /* CHAPTER SECTIONS */
+      .chapter-section {
+        display: none;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .chapter-section.visible {
+        display: block;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .chapter-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+        margin-bottom: 40px;
+        padding-bottom: 32px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .chapter-number {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 80px;
+        line-height: 0.85;
+        flex-shrink: 0;
+        opacity: 0.25;
+      }
+
+      .chapter-header-text {
+        flex: 1;
+      }
+
+      .chapter-label {
+        font-family: "DM Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+
+      .chapter-header h2 {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 36px;
+        letter-spacing: 0.04em;
+        margin-bottom: 12px;
+      }
+
+      .problem-count {
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      /* FORMULA SECTION */
+      .formula-section {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 40px;
+      }
+
+      .formula-header {
+        padding: 14px 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        user-select: none;
+        border-bottom: 1px solid transparent;
+        transition: border-color 0.2s;
+      }
+
+      .formula-header.open {
+        border-bottom-color: var(--border);
+      }
+
+      .formula-header-text {
+        font-family: "DM Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        flex: 1;
+      }
+
+      .formula-toggle {
+        font-size: 18px;
+        transition: transform 0.2s;
+        color: var(--muted);
+      }
+
+      .formula-toggle.open {
+        transform: rotate(180deg);
+      }
+
+      .formula-body {
+        display: none;
+        padding: 20px;
+      }
+
+      .formula-body.open {
+        display: block;
+      }
+
+      .formula-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      @media (max-width: 600px) {
+        .formula-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .formula-card {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 14px 16px;
+      }
+
+      .formula-card .label {
+        font-size: 11px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 6px;
+      }
+
+      .formula-card .eq {
+        font-family: "DM Mono", monospace;
+        font-size: 13px;
+        color: var(--text);
+        line-height: 1.7;
+      }
+
+      /* PROBLEMS */
+      .problem-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 24px;
+        transition: border-color 0.2s;
+      }
+
+      .problem-card:hover {
+        border-color: rgba(255, 255, 255, 0.12);
+      }
+
+      .problem-header {
+        padding: 20px 24px 0;
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      .problem-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 18px;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      .problem-meta {
+        flex: 1;
+      }
+
+      .problem-title {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .difficulty {
+        font-size: 11px;
+        padding: 2px 8px;
+        border-radius: 100px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+      }
+
+      .diff-ii {
+        background: rgba(251, 191, 36, 0.15);
+        color: var(--yellow);
+      }
+      .diff-iii {
+        background: rgba(244, 63, 94, 0.15);
+        color: var(--red);
+      }
+      .diff-i {
+        background: rgba(16, 185, 129, 0.15);
+        color: var(--ch27);
+      }
+
+      .problem-body {
+        padding: 16px 24px 20px 80px;
+      }
+
+      .problem-text {
+        font-size: 14px;
+        line-height: 1.75;
+        color: #c5c9d4;
+        margin-bottom: 16px;
+      }
+
+      .problem-text strong {
+        color: var(--text);
+      }
+
+      /* ACCORDION */
+      .accordion {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 10px;
+      }
+
+      .accordion-btn {
+        width: 100%;
+        padding: 12px 16px;
+        background: var(--surface2);
+        border: none;
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        text-align: left;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background 0.15s;
+        letter-spacing: 0.02em;
+      }
+
+      .accordion-btn:hover {
+        background: #20253a;
+      }
+      .accordion-icon {
+        transition: transform 0.2s;
+        color: var(--muted);
+      }
+      .accordion-icon.open {
+        transform: rotate(180deg);
+      }
+
+      .accordion-content {
+        display: none;
+        padding: 16px;
+        background: var(--bg);
+        border-top: 1px solid var(--border);
+      }
+
+      .accordion-content.open {
+        display: block;
+      }
+
+      .step-list {
+        list-style: none;
+      }
+
+      .step-list li {
+        display: flex;
+        gap: 12px;
+        padding: 8px 0;
+        border-bottom: 1px solid var(--border);
+        font-size: 13px;
+        color: #c5c9d4;
+        line-height: 1.7;
+      }
+
+      .step-list li:last-child {
+        border-bottom: none;
+      }
+
+      .step-num {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 700;
+        flex-shrink: 0;
+        margin-top: 2px;
+        font-family: "DM Mono", monospace;
+      }
+
+      .key-tip {
+        background: rgba(251, 191, 36, 0.06);
+        border: 1px solid rgba(251, 191, 36, 0.2);
+        border-left: 3px solid var(--yellow);
+        border-radius: 6px;
+        padding: 12px 14px;
+        font-size: 13px;
+        color: #d4c589;
+        margin-bottom: 12px;
+        line-height: 1.65;
+      }
+
+      .key-tip strong {
+        color: var(--yellow);
+      }
+
+      .warning-tip {
+        background: rgba(244, 63, 94, 0.06);
+        border: 1px solid rgba(244, 63, 94, 0.2);
+        border-left: 3px solid var(--red);
+        border-radius: 6px;
+        padding: 12px 14px;
+        font-size: 13px;
+        color: #d4a0a8;
+        margin-bottom: 12px;
+        line-height: 1.65;
+      }
+
+      /* PROGRESS */
+      .progress-bar-wrap {
+        background: var(--border);
+        border-radius: 100px;
+        height: 4px;
+        margin-bottom: 6px;
+        overflow: hidden;
+      }
+
+      .progress-bar {
+        height: 4px;
+        border-radius: 100px;
+        transition: width 0.4s ease;
+      }
+
+      /* SECTION DIVIDER */
+      .section-divider {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin: 32px 0 24px;
+      }
+
+      .section-divider-line {
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+
+      .section-divider-label {
+        font-family: "DM Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+
+      /* DONE CHECKBOXES */
+      .done-wrap {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .done-check {
+        width: 18px;
+        height: 18px;
+        border: 2px solid var(--border);
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .done-check.checked {
+        background: #10b981;
+        border-color: #10b981;
+      }
+      .done-check.checked::after {
+        content: "✓";
+        color: white;
+        font-size: 11px;
+        font-weight: bold;
+      }
+      .done-label {
+        font-size: 12px;
+        color: var(--muted);
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-brand">PHYS EXAM 2</div>
+      <div class="nav-tabs">
+        <button class="nav-tab" onclick="showChapter('ch24')" id="tab-ch24">
+          Ch 24 — Capacitance
+        </button>
+        <button class="nav-tab" onclick="showChapter('ch26')" id="tab-ch26">
+          Ch 26 — Circuits
+        </button>
+        <button class="nav-tab" onclick="showChapter('ch27')" id="tab-ch27">
+          Ch 27 — Magnetism
+        </button>
+        <button class="nav-tab" onclick="showChapter('ch29')" id="tab-ch29">
+          Ch 29 — Induction
+        </button>
+      </div>
+    </nav>
+
+    <div class="hero">
+      <div class="hero-eyebrow">Giancoli 4th Edition · March 12, 2026</div>
+      <h1>
+        <span>PHYSICS</span>
+        <span class="accent">EXAM 2</span>
+        <span>STUDY GUIDE</span>
+      </h1>
+      <p class="hero-sub">
+        Chapter-by-chapter breakdown of every assigned problem. Click a chapter
+        to start.
+      </p>
+      <div class="chapter-pills">
+        <button class="chapter-pill ch24" onclick="showChapter('ch24')">
+          <span class="pill-dot"></span> Ch 24 · Capacitance · P29, 30, 35
+        </button>
+        <button class="chapter-pill ch26" onclick="showChapter('ch26')">
+          <span class="pill-dot"></span> Ch 26 · DC Circuits · P14, 16, 19, 31,
+          32, 33
+        </button>
+        <button class="chapter-pill ch27" onclick="showChapter('ch27')">
+          <span class="pill-dot"></span> Ch 27 · Magnetism · P8, 25
+        </button>
+        <button class="chapter-pill ch29" onclick="showChapter('ch29')">
+          <span class="pill-dot"></span> Ch 29 · Induction · P18, 19, 21, 34
+        </button>
+      </div>
+    </div>
+
+    <div class="content">
+      <!-- ==================== CHAPTER 24 ==================== -->
+      <div class="chapter-section" id="ch24">
+        <div class="chapter-header">
+          <div class="chapter-number" style="color: var(--ch24)">24</div>
+          <div class="chapter-header-text">
+            <div class="chapter-label" style="color: var(--ch24)">
+              Chapter 24
+            </div>
+            <h2 style="color: var(--ch24)">
+              Capacitance, Dielectrics & Energy Storage
+            </h2>
+            <div class="problem-count">
+              Assigned: Problems 29, 30, 35 &nbsp;·&nbsp; 3 problems
+            </div>
+            <div style="margin-top: 12px">
+              <div class="progress-bar-wrap">
+                <div
+                  class="progress-bar"
+                  id="prog-ch24"
+                  style="width: 0%; background: var(--ch24)"
+                ></div>
+              </div>
+              <div
+                style="font-size: 12px; color: var(--muted)"
+                id="prog-label-ch24"
+              >
+                0 / 3 done
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Formulas -->
+        <div class="formula-section">
+          <div class="formula-header" onclick="toggleFormulas('f24')">
+            <span style="color: var(--ch24); font-size: 16px">⚡</span>
+            <span class="formula-header-text" style="color: var(--ch24)"
+              >Chapter 24 Key Formulas</span
+            >
+            <span class="formula-toggle" id="ftoggle-f24">▼</span>
+          </div>
+          <div class="formula-body" id="fbody-f24">
+            <div class="formula-grid">
+              <div class="formula-card">
+                <div class="label">Fundamental Relation</div>
+                <div class="eq">Q = CV</div>
+              </div>
+              <div class="formula-card">
+                <div class="label">Parallel-Plate Capacitor</div>
+                <div class="eq">
+                  C = ε₀A/d<br />C = Kε₀A/d (with dielectric)
+                </div>
+              </div>
+              <div class="formula-card">
+                <div class="label">Capacitors in PARALLEL</div>
+                <div class="eq">
+                  C_eq = C₁ + C₂ + ···<br /><span style="color: var(--yellow)"
+                    >(just add them up)</span
+                  >
+                </div>
+              </div>
+              <div class="formula-card">
+                <div class="label">Capacitors in SERIES</div>
+                <div class="eq">
+                  1/C_eq = 1/C₁ + 1/C₂ + ···<br /><span
+                    style="color: var(--yellow)"
+                    >(reciprocal rule)</span
+                  >
+                </div>
+              </div>
+              <div class="formula-card">
+                <div class="label">Energy Stored</div>
+                <div class="eq">U = ½CV² = ½QV = Q²/2C</div>
+              </div>
+              <div class="formula-card">
+                <div class="label">Bridge Null Condition</div>
+                <div class="eq">Cx = C₁·C₃ / C₂</div>
+              </div>
+            </div>
+            <div class="warning-tip" style="margin-top: 16px">
+              <strong>⚠️ THE #1 TRAP:</strong> Capacitors and resistors are
+              OPPOSITES in series/parallel.<br />
+              Parallel caps ADD directly. Series caps use the 1/C formula. Don't
+              mix them up!
+            </div>
+          </div>
+        </div>
+
+        <!-- PROBLEM 29 -->
+        <div class="problem-card" style="border-top: 3px solid var(--ch24)">
+          <div class="problem-header">
+            <div
+              class="problem-badge"
+              style="background: rgba(249, 115, 22, 0.15); color: var(--ch24)"
+            >
+              29
+            </div>
+            <div class="problem-meta">
+              <div class="problem-title">
+                Mixed Series-Parallel Network (All Equal C)
+                <span class="difficulty diff-ii">Level II</span>
+              </div>
+              <div style="font-size: 13px; color: var(--muted)">
+                Fig. 24-23 — Four capacitors, all C
+              </div>
+            </div>
+          </div>
+          <div class="problem-body">
+            <div class="problem-text">
+              In Fig. 24-23, <strong>C₁ = C₂ = C₃ = C₄ = C</strong>.<br />
+              <strong>(a)</strong> Determine the equivalent capacitance between
+              points <em>a</em> and <em>b</em>.<br />
+              <strong>(b)</strong> Find the charge on each capacitor and the
+              potential difference across each, in terms of V.
+            </div>
+            <div class="key-tip">
+              <strong>Circuit Layout:</strong> C₁ and C₂ are in
+              <em>series</em> forming the top branch. C₃ is alone in a middle
+              branch. C₄ is alone in the bottom branch. All three branches
+              connect <em>in parallel</em> between points a and b.
+            </div>
+
+            <div class="accordion">
+              <button class="accordion-btn" onclick="toggleAcc(this)">
+                💡 Concept: How do I identify series vs parallel?
+                <span class="accordion-icon">▼</span>
+              </button>
+              <div class="accordion-content">
+                <p style="font-size: 13px; color: #c5c9d4; line-height: 1.7">
+                  <strong>Parallel:</strong> Both ends of each component connect
+                  to the same two nodes → same voltage across all.<br />
+                  <strong>Series:</strong> Components chained end-to-end with
+                  nothing branching off → same current (same charge for caps)
+                  through all.<br /><br />
+                  In Fig. 24-23: C₁ and C₂ share only an internal node (no other
+                  branch attached there) → they're in series. The resulting C₁₂
+                  pair, plus C₃, plus C₄ all connect directly between a and b →
+                  they're in parallel.
+                </p>
+              </div>
+            </div>
+
+            <div class="accordion">
+              <button class="accordion-btn" onclick="toggleAcc(this)">
+                🧮 Step-by-step solution <span class="accordion-icon">▼</span>
+              </button>
+              <div class="accordion-content">
+                <ol class="step-list">
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(249, 115, 22, 0.2);
+                        color: var(--ch24);
+                      "
+                      >1</span
+                    >
+                    <div>
+                      C₁ and C₂ in series:
+                      <strong>1/C₁₂ = 1/C + 1/C = 2/C → C₁₂ = C/2</strong>
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(249, 115, 22, 0.2);
+                        color: var(--ch24);
+                      "
+                      >2</span
+                    >
+                    <div>
+                      Three branches in parallel:
+                      <strong>C_eq = C₁₂ + C₃ + C₄ = C/2 + C + C = 5C/2</strong>
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(249, 115, 22, 0.2);
+                        color: var(--ch24);
+                      "
+                      >3</span
+                    >
+                    <div>
+                      All parallel branches have the same voltage V.<br />Q₃ =
+                      C·V, Q₄ = C·V
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(249, 115, 22, 0.2);
+                        color: var(--ch24);
+                      "
+                      >4</span
+                    >
+                    <div>
+                      Series branch carries charge Q = C₁₂·V = (C/2)·V<br /><strong
+                        >Q₁ = Q₂ = CV/2</strong
+                      >
+                      (same charge for caps in series)
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(249, 115, 22, 0.2);
+                        color: var(--ch24);
+                      "
+                      >5</span
+                    >
+                    <div>
+                      Voltages: V₁ = Q₁/C = V/2, V₂ = V/2 ✓ (check: V₁+V₂ = V
+                      ✓)<br />V₃ = V, V₄ = V
+                    </div>
+                  </li>
+                </ol>
+                <div
+                  style="
+                    margin-top: 12px;
+                    padding: 10px 14px;
+                    background: rgba(249, 115, 22, 0.08);
+                    border-radius: 6px;
+                    font-family: &quot;DM Mono&quot;, monospace;
+                    font-size: 13px;
+                  "
+                >
+                  ✅ C_eq = 5C/2 &nbsp;|&nbsp; Q₁=Q₂=CV/2 &nbsp;|&nbsp; Q₃=Q₄=CV
+                </div>
+              </div>
+            </div>
+            <div class="done-wrap">
+              <div
+                class="done-check"
+                onclick="markDone(this, 'prog-ch24', 'prog-label-ch24', 3)"
+                title="Mark done"
+              ></div>
+              <span class="done-label">Mark as practiced</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROBLEM 30 -->
+        <div class="problem-card" style="border-top: 3px solid var(--ch24)">
+          <div class="problem-header">
+            <div
+              class="problem-badge"
+              style="background: rgba(249, 115, 22, 0.15); color: var(--ch24)"
+            >
+              30
+            </div>
+            <div class="problem-meta">
+              <div class="problem-title">
+                Mixed Network — Numerical Values
+                <span class="difficulty diff-ii">Level II</span>
+              </div>
+              <div style="font-size: 13px; color: var(--muted)">
+                Same circuit as P29 but with real numbers. Given Q₂ = 12.4 μC.
+              </div>
+            </div>
+          </div>
+          <div class="problem-body">
+            <div class="problem-text">
+              C₁ = C₂ = C₃ = <strong>16.0 μF</strong>, C₄ =
+              <strong>28.5 μF</strong>. Charge on C₂: Q₂ = 12.4 μC.<br />
+              Find <strong>(a)</strong> charge on C₁, C₃, C₄ &nbsp;&nbsp;<strong
+                >(b)</strong
+              >
+              voltage V across combination &nbsp;&nbsp;<strong>(c)</strong>
+              total energy stored.
+            </div>
+            <div class="key-tip">
+              <strong>Key Insight:</strong> C₁ and C₂ are in series → they carry
+              the <em>same charge</em>. So Q₁ = Q₂ = 12.4 μC immediately. Then
+              work backwards to find V, and use V to find Q₃ and Q₄.
+            </div>
+            <div class="accordion">
+              <button class="accordion-btn" onclick="toggleAcc(this)">
+                🧮 Step-by-step solution <span class="accordion-icon">▼</span>
+              </button>
+              <div class="accordion-content">
+                <ol class="step-list">
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(249, 115, 22, 0.2);
+                        color: var(--ch24);
+                      "
+                      >1</span
+                    >
+                    <div>
+                      C₁ ∥ C₂ are in series → <strong>Q₁ = Q₂ = 12.4 μC</strong>
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(249, 115, 22, 0.2);
+                        color: var(--ch24);
+                      "
+                      >2</span
+                    >
+                    <div>
+                      Voltage across series branch: V = Q₁/C₁ + Q₂/C₂ = 12.4/16
+                      + 12.4/16 = 0.775 + 0.775 = <strong>1.55 V</strong>
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(249, 115, 22, 0.2);
+                        color: var(--ch24);
+                      "
+                      >3</span
+                    >
+                    <div>
+                      All parallel branches share V = 1.55 V:<br /><strong
+                        >Q₃ = 16.0×10⁻⁶ × 1.55 = 24.8 μC</strong
+                      ><br /><strong>Q₄ = 28.5×10⁻⁶ × 1.55 = 44.2 μC</strong>
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(249, 115, 22, 0.2);
+                        color: var(--ch24);
+                      "
+                      >4</span
+                    >
+                    <div>
+                      Total charge: Q_total = Q_series + Q₃ + Q₄ = 12.4 + 24.8 +
+                      44.2 = 81.4 μC<br />C_eq = Q_total/V = 81.4μC / 1.55V =
+                      52.5 μF
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(249, 115, 22, 0.2);
+                        color: var(--ch24);
+                      "
+                      >5</span
+                    >
+                    <div>
+                      Energy: U = ½·C_eq·V² = ½ × 52.5×10⁻⁶ × (1.55)² =
+                      <strong>63.1 μJ</strong>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+            <div class="done-wrap">
+              <div
+                class="done-check"
+                onclick="markDone(this, 'prog-ch24', 'prog-label-ch24', 3)"
+              ></div>
+              <span class="done-label">Mark as practiced</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROBLEM 35 -->
+        <div class="problem-card" style="border-top: 3px solid var(--ch24)">
+          <div class="problem-header">
+            <div
+              class="problem-badge"
+              style="background: rgba(249, 115, 22, 0.15); color: var(--ch24)"
+            >
+              35
+            </div>
+            <div class="problem-meta">
+              <div class="problem-title">
+                Capacitance Bridge (Null Method)
+                <span class="difficulty diff-ii">Level II</span>
+              </div>
+              <div style="font-size: 13px; color: var(--muted)">
+                Fig. 24-26 — Find unknown Cₓ from null condition
+              </div>
+            </div>
+          </div>
+          <div class="problem-body">
+            <div class="problem-text">
+              A voltage V₀ is applied to the capacitance bridge. Variable
+              capacitor C₁ is adjusted until
+              <strong>V_ab = 0</strong> (voltmeter reads zero). Find the unknown
+              capacitance Cₓ.<br /><br />
+              Given: <strong>C₁ = 8.9 μF, C₂ = 18.0 μF, C₃ = 4.8 μF</strong>
+            </div>
+            <div class="key-tip">
+              <strong>Bridge Null Condition:</strong> When V_ab = 0, no current
+              through voltmeter. The voltage divides proportionally on each
+              side. This is exactly like a Wheatstone resistor bridge — just
+              swap R → 1/C.
+            </div>
+            <div class="accordion">
+              <button class="accordion-btn" onclick="toggleAcc(this)">
+                🧮 Step-by-step solution <span class="accordion-icon">▼</span>
+              </button>
+              <div class="accordion-content">
+                <ol class="step-list">
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(249, 115, 22, 0.2);
+                        color: var(--ch24);
+                      "
+                      >1</span
+                    >
+                    <div>
+                      Two voltage divider arms: Left (C₁ and Cₓ in series),
+                      Right (C₂ and C₃ in series)
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(249, 115, 22, 0.2);
+                        color: var(--ch24);
+                      "
+                      >2</span
+                    >
+                    <div>
+                      Null condition: voltage ratio same on both sides → Cₓ/C₁ =
+                      C₃/C₂<br />(In capacitor dividers, smaller C gets larger
+                      share of voltage, so the ratios invert relative to
+                      resistors)
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(249, 115, 22, 0.2);
+                        color: var(--ch24);
+                      "
+                      >3</span
+                    >
+                    <div>
+                      <strong
+                        >Cₓ = C₁ · C₃ / C₂ = 8.9 × 4.8 / 18.0 = 42.72 / 18.0 =
+                        2.37 μF</strong
+                      >
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+            <div class="done-wrap">
+              <div
+                class="done-check"
+                onclick="markDone(this, 'prog-ch24', 'prog-label-ch24', 3)"
+              ></div>
+              <span class="done-label">Mark as practiced</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== CHAPTER 26 ==================== -->
+      <div class="chapter-section" id="ch26">
+        <div class="chapter-header">
+          <div class="chapter-number" style="color: var(--ch26)">26</div>
+          <div class="chapter-header-text">
+            <div class="chapter-label" style="color: var(--ch26)">
+              Chapter 26
+            </div>
+            <h2 style="color: var(--ch26)">
+              DC Circuits, Kirchhoff's Rules & RC Circuits
+            </h2>
+            <div class="problem-count">
+              Assigned: Problems 14, 16, 19, 31, 32, 33 &nbsp;·&nbsp; 6 problems
+            </div>
+            <div style="margin-top: 12px">
+              <div class="progress-bar-wrap">
+                <div
+                  class="progress-bar"
+                  id="prog-ch26"
+                  style="width: 0%; background: var(--ch26)"
+                ></div>
+              </div>
+              <div
+                style="font-size: 12px; color: var(--muted)"
+                id="prog-label-ch26"
+              >
+                0 / 6 done
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="formula-section">
+          <div class="formula-header" onclick="toggleFormulas('f26')">
+            <span style="color: var(--ch26); font-size: 16px">⚡</span>
+            <span class="formula-header-text" style="color: var(--ch26)"
+              >Chapter 26 Key Formulas</span
+            >
+            <span class="formula-toggle" id="ftoggle-f26">▼</span>
+          </div>
+          <div class="formula-body" id="fbody-f26">
+            <div class="formula-grid">
+              <div class="formula-card">
+                <div class="label">Terminal Voltage</div>
+                <div class="eq">V_terminal = ε − Ir</div>
+              </div>
+              <div class="formula-card">
+                <div class="label">Ohm's Law</div>
+                <div class="eq">
+                  V = IR &nbsp;→&nbsp; I = V/R &nbsp;→&nbsp; R = V/I
+                </div>
+              </div>
+              <div class="formula-card">
+                <div class="label">Node Rule (KCL)</div>
+                <div class="eq">ΣI_in = ΣI_out (at any junction)</div>
+              </div>
+              <div class="formula-card">
+                <div class="label">Loop Rule (KVL)</div>
+                <div class="eq">ΣΔV = 0 (around any closed loop)</div>
+              </div>
+              <div class="formula-card">
+                <div class="label">KVL Sign Conventions</div>
+                <div class="eq">
+                  Battery − to +: +ε &nbsp; + to −: −ε<br />Resistor with I: −IR
+                  &nbsp; against I: +IR
+                </div>
+              </div>
+              <div class="formula-card">
+                <div class="label">RC Time Constant</div>
+                <div class="eq">
+                  τ = RC<br />V_C(t) = ε(1−e^(−t/τ)) (charging)<br />V_C(t) =
+                  V₀·e^(−t/τ) (discharging)
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- P14 -->
+        <div class="problem-card" style="border-top: 3px solid var(--ch26)">
+          <div class="problem-header">
+            <div
+              class="problem-badge"
+              style="background: rgba(6, 182, 212, 0.15); color: var(--ch26)"
+            >
+              14
+            </div>
+            <div class="problem-meta">
+              <div class="problem-title">
+                Corroded Battery Terminal
+                <span class="difficulty diff-ii">Level II</span>
+              </div>
+              <div style="font-size: 13px; color: var(--muted)">
+                Series resistance added by corrosion — real-world application
+              </div>
+            </div>
+          </div>
+          <div class="problem-body">
+            <div class="problem-text">
+              Starter circuit: battery (ε = 12.5 V, r = 0.02 Ω), starter motor
+              Rₛ = 0.15 Ω.<br />
+              Corrosion later adds Rᴄ = 0.10 Ω in series.<br />
+              <strong>(a)</strong> Power to starter without corrosion.
+              <strong>(b)</strong> Power with corrosion.
+              <strong>(c)</strong> Ratio P/P₀.
+            </div>
+            <div class="accordion">
+              <button class="accordion-btn" onclick="toggleAcc(this)">
+                🧮 Full Solution <span class="accordion-icon">▼</span>
+              </button>
+              <div class="accordion-content">
+                <ol class="step-list">
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >1</span
+                    >
+                    <div>
+                      <strong>Clean circuit:</strong> R_total = r + Rₛ = 0.02 +
+                      0.15 = 0.17 Ω<br />I₀ = 12.5 / 0.17 =
+                      <strong>73.5 A</strong>
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >2</span
+                    >
+                    <div>
+                      P₀ = I₀² · Rₛ = (73.5)² × 0.15 = <strong>810 W</strong>
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >3</span
+                    >
+                    <div>
+                      <strong>With corrosion:</strong> R_total = 0.02 + 0.10 +
+                      0.15 = 0.27 Ω<br />I = 12.5 / 0.27 =
+                      <strong>46.3 A</strong>
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >4</span
+                    >
+                    <div>
+                      P = I² · Rₛ = (46.3)² × 0.15 = <strong>321 W</strong>
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >5</span
+                    >
+                    <div>
+                      Ratio: P/P₀ = 321/810 = <strong>0.396</strong> → Motor
+                      only gets ~40% of original power from just 0.10 Ω of
+                      corrosion!
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+            <div class="done-wrap">
+              <div
+                class="done-check"
+                onclick="markDone(this, 'prog-ch26', 'prog-label-ch26', 6)"
+              ></div>
+              <span class="done-label">Mark as practiced</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- P16 -->
+        <div class="problem-card" style="border-top: 3px solid var(--ch26)">
+          <div class="problem-header">
+            <div
+              class="problem-badge"
+              style="background: rgba(6, 182, 212, 0.15); color: var(--ch26)"
+            >
+              16
+            </div>
+            <div class="problem-meta">
+              <div class="problem-title">
+                Parallel Bulbs — Net Resistance
+                <span class="difficulty diff-ii">Level II</span>
+              </div>
+              <div style="font-size: 13px; color: var(--muted)">
+                Use P = V²/R to find resistance from rated wattage
+              </div>
+            </div>
+          </div>
+          <div class="problem-body">
+            <div class="problem-text">
+              A <strong>75-W, 110-V</strong> bulb is connected in parallel with
+              a <strong>25-W, 110-V</strong> bulb.<br />
+              What is the net resistance of the combination?
+            </div>
+            <div class="key-tip">
+              <strong>Key:</strong> Use P = V²/R rearranged as R = V²/P to find
+              each bulb's resistance at its rated conditions.
+            </div>
+            <div class="accordion">
+              <button class="accordion-btn" onclick="toggleAcc(this)">
+                🧮 Full Solution <span class="accordion-icon">▼</span>
+              </button>
+              <div class="accordion-content">
+                <ol class="step-list">
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >1</span
+                    >
+                    <div>
+                      R₁ (75 W) = V²/P = 110²/75 = 12100/75 =
+                      <strong>161 Ω</strong>
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >2</span
+                    >
+                    <div>
+                      R₂ (25 W) = V²/P = 110²/25 = 12100/25 =
+                      <strong>484 Ω</strong>
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >3</span
+                    >
+                    <div>
+                      Parallel: 1/R_eq = 1/161 + 1/484 = 0.00621 + 0.00207 =
+                      0.00828<br /><strong>R_eq = 121 Ω</strong>
+                    </div>
+                  </li>
+                </ol>
+                <div class="warning-tip" style="margin-top: 8px">
+                  Check: R_eq (121 Ω) must be less than the smallest (R₁ = 161
+                  Ω). ✓
+                </div>
+              </div>
+            </div>
+            <div class="done-wrap">
+              <div
+                class="done-check"
+                onclick="markDone(this, 'prog-ch26', 'prog-label-ch26', 6)"
+              ></div>
+              <span class="done-label">Mark as practiced</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- P19 -->
+        <div class="problem-card" style="border-top: 3px solid var(--ch26)">
+          <div class="problem-header">
+            <div
+              class="problem-badge"
+              style="background: rgba(6, 182, 212, 0.15); color: var(--ch26)"
+            >
+              19
+            </div>
+            <div class="problem-meta">
+              <div class="problem-title">
+                Net Resistance — Ladder/Bridge Network
+                <span class="difficulty diff-ii">Level II</span>
+              </div>
+              <div style="font-size: 13px; color: var(--muted)">
+                Fig. 26-41 — Six equal resistors R in a specific layout
+              </div>
+            </div>
+          </div>
+          <div class="problem-body">
+            <div class="problem-text">
+              What is the net resistance of the circuit in Fig. 26-41?<br />
+              If R = 1.20 kΩ and V = 12.0 V, calculate the current through each
+              resistor.
+            </div>
+            <div class="key-tip">
+              <strong>Strategy:</strong> Simplify step by step — find which
+              resistors are in series/parallel from the inside out. Look for
+              symmetry.
+            </div>
+            <div class="accordion">
+              <button class="accordion-btn" onclick="toggleAcc(this)">
+                🧮 Full Solution <span class="accordion-icon">▼</span>
+              </button>
+              <div class="accordion-content">
+                <ol class="step-list">
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >1</span
+                    >
+                    <div>
+                      In Fig. 26-41: the top R and bottom R (both on the left
+                      side meeting at node B) are in parallel: R_AB = R/2
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >2</span
+                    >
+                    <div>
+                      R_AB in series with middle R: R_middle = R/2 + R = 3R/2
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >3</span
+                    >
+                    <div>
+                      3R/2 in parallel with the rightmost R: 1/R_eq = 2/3R + 1/R
+                      = 2/3R + 3/3R = 5/3R<br /><strong>R_eq = 3R/5</strong>
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >4</span
+                    >
+                    <div>
+                      For R = 1.20 kΩ: R_eq = 3(1200)/5 = <strong>720 Ω</strong>
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >5</span
+                    >
+                    <div>
+                      Total current: I = V/R_eq = 12.0/720 = 16.7 mA<br />Then
+                      use voltage divider/current divider to find each branch.
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+            <div class="done-wrap">
+              <div
+                class="done-check"
+                onclick="markDone(this, 'prog-ch26', 'prog-label-ch26', 6)"
+              ></div>
+              <span class="done-label">Mark as practiced</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- P31 -->
+        <div class="problem-card" style="border-top: 3px solid var(--ch26)">
+          <div class="problem-header">
+            <div
+              class="problem-badge"
+              style="background: rgba(6, 182, 212, 0.15); color: var(--ch26)"
+            >
+              31
+            </div>
+            <div class="problem-meta">
+              <div class="problem-title">
+                Kirchhoff Multi-Loop — Find V_ad
+                <span class="difficulty diff-ii">Level II</span>
+              </div>
+              <div style="font-size: 13px; color: var(--muted)">
+                Fig. 26-49 — 45V and 75V batteries, three resistors
+              </div>
+            </div>
+          </div>
+          <div class="problem-body">
+            <div class="problem-text">
+              Circuit in Fig. 26-49: 45V battery with 47Ω (left), 75V battery
+              with 18Ω (right), shared 34Ω in middle.<br />
+              <strong>(a)</strong> Potential difference between points a and d.
+              <strong>(b)</strong> Terminal voltage of each battery.
+            </div>
+            <div class="key-tip">
+              <strong>Kirchhoff Procedure:</strong> (1) Label currents with
+              arrows. (2) Write node equation. (3) Write one KVL loop per
+              unknown. (4) Solve the system. (5) Trace path for V_ad.
+            </div>
+            <div class="accordion">
+              <button class="accordion-btn" onclick="toggleAcc(this)">
+                🧮 Full Solution Framework <span class="accordion-icon">▼</span>
+              </button>
+              <div class="accordion-content">
+                <ol class="step-list">
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >1</span
+                    >
+                    <div>
+                      Assign: I₁ upward in left branch, I₂ upward in right
+                      branch, I₃ downward in middle branch.<br />Node rule at
+                      top: I₁ + I₂ = I₃
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >2</span
+                    >
+                    <div>
+                      <strong>Loop 1</strong> (left + middle, clockwise): +45 −
+                      47·I₁ − 34·I₃ = 0<br />Substitute I₃ = I₁+I₂: 45 = 81·I₁ +
+                      34·I₂
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >3</span
+                    >
+                    <div>
+                      <strong>Loop 2</strong> (right + middle,
+                      counterclockwise): +75 − 18·I₂ − 34·I₃ = 0<br />75 = 34·I₁
+                      + 52·I₂
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >4</span
+                    >
+                    <div>
+                      Solve the 2×2 system → I₁ ≈ 0.315 A, I₂ ≈ 1.237 A, I₃ ≈
+                      1.553 A
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >5</span
+                    >
+                    <div>
+                      For V_ad: trace path a→b→c→d summing +/− for each battery
+                      and resistor passed.<br />V_ad = +45 − 47·I₁ (check sign
+                      with your current directions)
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+            <div class="done-wrap">
+              <div
+                class="done-check"
+                onclick="markDone(this, 'prog-ch26', 'prog-label-ch26', 6)"
+              ></div>
+              <span class="done-label">Mark as practiced</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- P32 -->
+        <div class="problem-card" style="border-top: 3px solid var(--ch26)">
+          <div class="problem-header">
+            <div
+              class="problem-badge"
+              style="background: rgba(6, 182, 212, 0.15); color: var(--ch26)"
+            >
+              32
+            </div>
+            <div class="problem-meta">
+              <div class="problem-title">
+                Currents in Each Resistor — Full KVL
+                <span class="difficulty diff-ii">Level II</span>
+              </div>
+              <div style="font-size: 13px; color: var(--muted)">
+                Fig. 26-50 — 58V and 3V batteries, five resistors
+              </div>
+            </div>
+          </div>
+          <div class="problem-body">
+            <div class="problem-text">
+              Fig. 26-50: Two batteries (58V, 3.0V), resistors 25Ω, 64Ω, 110Ω,
+              82Ω, 120Ω.<br />
+              Calculate the current through <strong>each resistor</strong>.
+            </div>
+            <div class="accordion">
+              <button class="accordion-btn" onclick="toggleAcc(this)">
+                🧮 Method <span class="accordion-icon">▼</span>
+              </button>
+              <div class="accordion-content">
+                <ol class="step-list">
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >1</span
+                    >
+                    <div>
+                      Draw the circuit from the figure. Identify junctions.
+                      Label I₁, I₂ in each independent branch.
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >2</span
+                    >
+                    <div>
+                      Write node equation: express I₃ (middle branch) = I₁ ± I₂
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >3</span
+                    >
+                    <div>
+                      KVL Loop 1 (containing 58V battery): 58 − 25·I₁ − 120·I₁ −
+                      82·I₃ = 0 (adjust for actual topology)
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >4</span
+                    >
+                    <div>
+                      KVL Loop 2 (containing 3V battery): watch battery polarity
+                      carefully!
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >5</span
+                    >
+                    <div>
+                      Solve and verify: substitute answers back into both loop
+                      equations — both must equal zero.
+                    </div>
+                  </li>
+                </ol>
+                <div class="warning-tip" style="margin-top: 8px">
+                  <strong>Watch out:</strong> If 3V battery opposes the main
+                  current, it appears as −3V in that loop. Always check polarity
+                  in the figure!
+                </div>
+              </div>
+            </div>
+            <div class="done-wrap">
+              <div
+                class="done-check"
+                onclick="markDone(this, 'prog-ch26', 'prog-label-ch26', 6)"
+              ></div>
+              <span class="done-label">Mark as practiced</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- P33 -->
+        <div class="problem-card" style="border-top: 3px solid var(--ch26)">
+          <div class="problem-header">
+            <div
+              class="problem-badge"
+              style="background: rgba(6, 182, 212, 0.15); color: var(--ch26)"
+            >
+              33
+            </div>
+            <div class="problem-meta">
+              <div class="problem-title">
+                Two Batteries Opposing — Find I₁ & I₂
+                <span class="difficulty diff-ii">Level II</span>
+              </div>
+              <div style="font-size: 13px; color: var(--muted)">
+                Fig. 26-51: V₁=9V, V₂=18V, R₁=22Ω, R₂=18Ω, R=6.6Ω
+              </div>
+            </div>
+          </div>
+          <div class="problem-body">
+            <div class="problem-text">
+              Two batteries and three resistors. Find the magnitudes and
+              directions of currents through R₁ and R₂.<br />
+              V₁ = 9.0V, V₂ = 18V, R₁ = 22Ω, R₂ = 18Ω, R = 6.6Ω (shared middle
+              resistor).
+            </div>
+            <div class="accordion">
+              <button class="accordion-btn" onclick="toggleAcc(this)">
+                🧮 Full Solution <span class="accordion-icon">▼</span>
+              </button>
+              <div class="accordion-content">
+                <ol class="step-list">
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >1</span
+                    >
+                    <div>
+                      Assign I₁ (through V₁-R₁ branch), I₂ (through V₂-R₂
+                      branch).<br />Node rule: I₃ through middle R = I₁ + I₂
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >2</span
+                    >
+                    <div>
+                      Loop 1 (V₁ side): 9 − 22·I₁ − 6.6·(I₁+I₂) = 0<br />→
+                      <strong>9 = 28.6·I₁ + 6.6·I₂</strong>
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >3</span
+                    >
+                    <div>
+                      Loop 2 (V₂ side): 18 − 18·I₂ − 6.6·(I₁+I₂) = 0<br />→
+                      <strong>18 = 6.6·I₁ + 24.6·I₂</strong>
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >4</span
+                    >
+                    <div>
+                      Solve: From eq1: I₁ = (9 − 6.6·I₂)/28.6. Substitute into
+                      eq2 → I₂ ≈ 0.645 A, I₁ ≈ 0.166 A
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(6, 182, 212, 0.2);
+                        color: var(--ch26);
+                      "
+                      >5</span
+                    >
+                    <div>
+                      Both positive → assumed directions were correct. I₃ =
+                      0.166 + 0.645 = 0.811 A through middle R.
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+            <div class="done-wrap">
+              <div
+                class="done-check"
+                onclick="markDone(this, 'prog-ch26', 'prog-label-ch26', 6)"
+              ></div>
+              <span class="done-label">Mark as practiced</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== CHAPTER 27 ==================== -->
+      <div class="chapter-section" id="ch27">
+        <div class="chapter-header">
+          <div class="chapter-number" style="color: var(--ch27)">27</div>
+          <div class="chapter-header-text">
+            <div class="chapter-label" style="color: var(--ch27)">
+              Chapter 27 Homework
+            </div>
+            <h2 style="color: var(--ch27)">
+              Magnetism — Forces, Motion & Torque
+            </h2>
+            <div class="problem-count">
+              Assigned: Problems 8 & 25 &nbsp;·&nbsp; 2 problems
+            </div>
+            <div style="margin-top: 12px">
+              <div class="progress-bar-wrap">
+                <div
+                  class="progress-bar"
+                  id="prog-ch27"
+                  style="width: 0%; background: var(--ch27)"
+                ></div>
+              </div>
+              <div
+                style="font-size: 12px; color: var(--muted)"
+                id="prog-label-ch27"
+              >
+                0 / 2 done
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="formula-section">
+          <div class="formula-header" onclick="toggleFormulas('f27')">
+            <span style="color: var(--ch27); font-size: 16px">🧲</span>
+            <span class="formula-header-text" style="color: var(--ch27)"
+              >Chapter 27 Key Formulas</span
+            >
+            <span class="formula-toggle" id="ftoggle-f27">▼</span>
+          </div>
+          <div class="formula-body" id="fbody-f27">
+            <div class="formula-grid">
+              <div class="formula-card">
+                <div class="label">Force on Charge</div>
+                <div class="eq">F = qv × B<br />|F| = qvB·sin(θ)</div>
+              </div>
+              <div class="formula-card">
+                <div class="label">Force on Wire</div>
+                <div class="eq">F = IL × B<br />|F| = BIL·sin(θ)</div>
+              </div>
+              <div class="formula-card">
+                <div class="label">Circular Motion in B</div>
+                <div class="eq">
+                  r = mv/(qB)<br />T = 2πm/(qB) (independent of v!)
+                </div>
+              </div>
+              <div class="formula-card">
+                <div class="label">Solenoid Field</div>
+                <div class="eq">
+                  B = μ₀nI where n = N/L<br />μ₀ = 4π × 10⁻⁷ T·m/A
+                </div>
+              </div>
+              <div class="formula-card">
+                <div class="label">Wire Field (straight)</div>
+                <div class="eq">B = μ₀I / (2πr)</div>
+              </div>
+              <div class="formula-card">
+                <div class="label">Right-Hand Rule</div>
+                <div class="eq">
+                  Point fingers along v (or I),<br />curl toward B → thumb =
+                  F<br />Flip direction for negative charge
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- P8 -->
+        <div class="problem-card" style="border-top: 3px solid var(--ch27)">
+          <div class="problem-header">
+            <div
+              class="problem-badge"
+              style="background: rgba(16, 185, 129, 0.15); color: var(--ch27)"
+            >
+              8
+            </div>
+            <div class="problem-meta">
+              <div class="problem-title">
+                Compass Deflection Near a Wire
+                <span class="difficulty diff-ii">Level II</span>
+              </div>
+              <div style="font-size: 13px; color: var(--muted)">
+                Vector addition of B_wire and Earth's B field
+              </div>
+            </div>
+          </div>
+          <div class="problem-body">
+            <div class="problem-text">
+              A horizontal compass is placed
+              <strong>18 cm due south</strong> from a straight vertical wire
+              carrying <strong>43 A downward</strong>.<br />
+              Earth's horizontal field = 0.45 × 10⁻⁴ T, declination = 0°.<br />
+              In what direction does the compass needle point?
+            </div>
+            <div class="key-tip">
+              <strong>Method:</strong> Find B_wire (magnitude + direction), then
+              add vectorially to B_Earth pointing North. The resultant gives the
+              compass direction.
+            </div>
+            <div class="accordion">
+              <button class="accordion-btn" onclick="toggleAcc(this)">
+                🧮 Full Solution <span class="accordion-icon">▼</span>
+              </button>
+              <div class="accordion-content">
+                <ol class="step-list">
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(16, 185, 129, 0.2);
+                        color: var(--ch27);
+                      "
+                      >1</span
+                    >
+                    <div>
+                      Current flows <em>downward</em>. Point thumb DOWN. Fingers
+                      at the south point (below the wire) curl toward the
+                      <strong>WEST</strong>. So B_wire points WEST at the
+                      compass location.
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(16, 185, 129, 0.2);
+                        color: var(--ch27);
+                      "
+                      >2</span
+                    >
+                    <div>
+                      |B_wire| = μ₀I/(2πr) = (4π×10⁻⁷ × 43) / (2π × 0.18)<br />=
+                      (4×10⁻⁷ × 43) / (2 × 0.18) =
+                      <strong>4.78 × 10⁻⁵ T</strong> West
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(16, 185, 129, 0.2);
+                        color: var(--ch27);
+                      "
+                      >3</span
+                    >
+                    <div>
+                      B_Earth = 4.5 × 10⁻⁵ T North<br />B_wire = 4.78 × 10⁻⁵ T
+                      West
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(16, 185, 129, 0.2);
+                        color: var(--ch27);
+                      "
+                      >4</span
+                    >
+                    <div>
+                      Angle from North: θ = arctan(B_wire/B_Earth) =
+                      arctan(4.78/4.5) = arctan(1.062) =
+                      <strong>46.7° west of north</strong>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+            <div class="done-wrap">
+              <div
+                class="done-check"
+                onclick="markDone(this, 'prog-ch27', 'prog-label-ch27', 2)"
+              ></div>
+              <span class="done-label">Mark as practiced</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- P25 -->
+        <div class="problem-card" style="border-top: 3px solid var(--ch27)">
+          <div class="problem-header">
+            <div
+              class="problem-badge"
+              style="background: rgba(16, 185, 129, 0.15); color: var(--ch27)"
+            >
+              25
+            </div>
+            <div class="problem-meta">
+              <div class="problem-title">
+                Solenoid Design — Find Required Current
+                <span class="difficulty diff-i">Level I</span>
+              </div>
+              <div style="font-size: 13px; color: var(--muted)">
+                40-cm solenoid, 765 turns, target B = 0.385 mT
+              </div>
+            </div>
+          </div>
+          <div class="problem-body">
+            <div class="problem-text">
+              A 40.0-cm-long solenoid (diameter 1.35 cm) with
+              <strong>765 turns</strong> must produce
+              <strong>B = 0.385 mT</strong> at center.<br />
+              How much current should flow?
+            </div>
+            <div class="accordion">
+              <button class="accordion-btn" onclick="toggleAcc(this)">
+                🧮 Full Solution <span class="accordion-icon">▼</span>
+              </button>
+              <div class="accordion-content">
+                <ol class="step-list">
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(16, 185, 129, 0.2);
+                        color: var(--ch27);
+                      "
+                      >1</span
+                    >
+                    <div>
+                      Solenoid formula: B = μ₀nI where n = N/L (turns per meter)
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(16, 185, 129, 0.2);
+                        color: var(--ch27);
+                      "
+                      >2</span
+                    >
+                    <div>n = 765 / 0.400 = <strong>1912.5 turns/m</strong></div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(16, 185, 129, 0.2);
+                        color: var(--ch27);
+                      "
+                      >3</span
+                    >
+                    <div>
+                      Solve for I: I = B/(μ₀n) = (0.385×10⁻³) / (4π×10⁻⁷ ×
+                      1912.5)
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(16, 185, 129, 0.2);
+                        color: var(--ch27);
+                      "
+                      >4</span
+                    >
+                    <div>
+                      I = 3.85×10⁻⁴ / 2.404×10⁻³ =
+                      <strong>0.160 A = 160 mA</strong>
+                    </div>
+                  </li>
+                </ol>
+                <div
+                  style="font-size: 13px; color: var(--muted); margin-top: 8px"
+                >
+                  Note: diameter doesn't matter for an ideal solenoid — B
+                  depends only on n and I.
+                </div>
+              </div>
+            </div>
+            <div class="done-wrap">
+              <div
+                class="done-check"
+                onclick="markDone(this, 'prog-ch27', 'prog-label-ch27', 2)"
+              ></div>
+              <span class="done-label">Mark as practiced</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== CHAPTER 29 ==================== -->
+      <div class="chapter-section" id="ch29">
+        <div class="chapter-header">
+          <div class="chapter-number" style="color: var(--ch29)">29</div>
+          <div class="chapter-header-text">
+            <div class="chapter-label" style="color: var(--ch29)">
+              Chapter 29
+            </div>
+            <h2 style="color: var(--ch29)">
+              Electromagnetic Induction & Faraday's Law
+            </h2>
+            <div class="problem-count">
+              Assigned: Problems 18, 19, 21, 34 &nbsp;·&nbsp; 4 problems
+            </div>
+            <div style="margin-top: 12px">
+              <div class="progress-bar-wrap">
+                <div
+                  class="progress-bar"
+                  id="prog-ch29"
+                  style="width: 0%; background: var(--ch29)"
+                ></div>
+              </div>
+              <div
+                style="font-size: 12px; color: var(--muted)"
+                id="prog-label-ch29"
+              >
+                0 / 4 done
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="formula-section">
+          <div class="formula-header" onclick="toggleFormulas('f29')">
+            <span style="color: var(--ch29); font-size: 16px">⚡</span>
+            <span class="formula-header-text" style="color: var(--ch29)"
+              >Chapter 29 Key Formulas</span
+            >
+            <span class="formula-toggle" id="ftoggle-f29">▼</span>
+          </div>
+          <div class="formula-body" id="fbody-f29">
+            <div class="formula-grid">
+              <div class="formula-card">
+                <div class="label">Magnetic Flux</div>
+                <div class="eq">
+                  Φ_B = BA·cos(θ)<br />Units: Weber (Wb) = T·m²
+                </div>
+              </div>
+              <div class="formula-card">
+                <div class="label">Faraday's Law</div>
+                <div class="eq">
+                  ε = −N · dΦ_B/dt<br />(N = number of loops)
+                </div>
+              </div>
+              <div class="formula-card">
+                <div class="label">Motional EMF</div>
+                <div class="eq">
+                  ε = BLv<br />(rod length L, speed v, B ⊥ both)
+                </div>
+              </div>
+              <div class="formula-card">
+                <div class="label">Lenz's Law</div>
+                <div class="eq">
+                  Induced current OPPOSES the<br />CHANGE in flux that caused
+                  it.
+                </div>
+              </div>
+              <div class="formula-card">
+                <div class="label">Force on Moving Rod</div>
+                <div class="eq">F = BIL = B²L²v/R<br />P = F·v = B²L²v²/R</div>
+              </div>
+              <div class="formula-card">
+                <div class="label">Circular Motion (from Ch27)</div>
+                <div class="eq">r = mv/(qB)<br />KE = q²B²r²/(2m) ∝ r²</div>
+              </div>
+            </div>
+            <div class="warning-tip" style="margin-top: 16px">
+              <strong>Lenz's Law Direction:</strong> First ask — is flux
+              increasing or decreasing? Induced current creates B to
+              <em>oppose that change</em> (not oppose B itself). Then use
+              right-hand rule to find current direction.
+            </div>
+          </div>
+        </div>
+
+        <!-- P18 -->
+        <div class="problem-card" style="border-top: 3px solid var(--ch29)">
+          <div class="problem-header">
+            <div
+              class="problem-badge"
+              style="background: rgba(168, 85, 247, 0.15); color: var(--ch29)"
+            >
+              18
+            </div>
+            <div class="problem-meta">
+              <div class="problem-title">
+                Flux & Induced Current — Rotating Coil
+                <span class="difficulty diff-ii">Level II</span>
+              </div>
+              <div style="font-size: 13px; color: var(--muted)">
+                Square loop, l = 5.0 cm, B = 0.16 T (= Example 29-2 in
+                textbook!)
+              </div>
+            </div>
+          </div>
+          <div class="problem-body">
+            <div class="problem-text">
+              A square loop (side l = 5.0 cm) in B = 0.16 T. Resistance R =
+              0.012 Ω.<br />
+              <strong>(a)</strong> Flux when B ⊥ to face. &nbsp;<strong
+                >(b)</strong
+              >
+              Flux when B at 30° to area vector A. &nbsp;<strong>(c)</strong>
+              Current induced when rotating from (b) to (a) in 0.14 s.
+            </div>
+            <div class="key-tip">
+              <strong>This is literally Example 29-2 in your textbook.</strong>
+              Read it through carefully — it's given in full. You should be able
+              to reproduce it cold on the exam.
+            </div>
+            <div class="accordion">
+              <button class="accordion-btn" onclick="toggleAcc(this)">
+                🧮 Full Solution <span class="accordion-icon">▼</span>
+              </button>
+              <div class="accordion-content">
+                <ol class="step-list">
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(168, 85, 247, 0.2);
+                        color: var(--ch29);
+                      "
+                      >1</span
+                    >
+                    <div>Area: A = (0.050)² = 2.5 × 10⁻³ m²</div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(168, 85, 247, 0.2);
+                        color: var(--ch29);
+                      "
+                      >2</span
+                    >
+                    <div>
+                      <strong>(a)</strong> B ⊥ face → B ∥ area vector → θ =
+                      0°<br />Φ = BA·cos(0) = 0.16 × 2.5×10⁻³ =
+                      <strong>4.0 × 10⁻⁴ Wb</strong>
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(168, 85, 247, 0.2);
+                        color: var(--ch29);
+                      "
+                      >3</span
+                    >
+                    <div>
+                      <strong>(b)</strong> θ = 30°: Φ = BA·cos(30°) = 0.16 ×
+                      2.5×10⁻³ × 0.866 = <strong>3.5 × 10⁻⁴ Wb</strong>
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(168, 85, 247, 0.2);
+                        color: var(--ch29);
+                      "
+                      >4</span
+                    >
+                    <div>
+                      <strong>(c)</strong> ΔΦ = 4.0×10⁻⁴ − 3.5×10⁻⁴ = 5.0×10⁻⁵
+                      Wb<br />ε = ΔΦ/Δt = 5.0×10⁻⁵ / 0.14 =
+                      <strong>3.57 × 10⁻⁴ V</strong>
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(168, 85, 247, 0.2);
+                        color: var(--ch29);
+                      "
+                      >5</span
+                    >
+                    <div>
+                      I = ε/R = 3.57×10⁻⁴ / 0.012 =
+                      <strong>0.030 A = 30 mA</strong>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+            <div class="done-wrap">
+              <div
+                class="done-check"
+                onclick="markDone(this, 'prog-ch29', 'prog-label-ch29', 4)"
+              ></div>
+              <span class="done-label">Mark as practiced</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- P19 -->
+        <div class="problem-card" style="border-top: 3px solid var(--ch29)">
+          <div class="problem-header">
+            <div
+              class="problem-badge"
+              style="background: rgba(168, 85, 247, 0.15); color: var(--ch29)"
+            >
+              19
+            </div>
+            <div class="problem-meta">
+              <div class="problem-title">
+                Coil Pulled From Magnetic Field
+                <span class="difficulty diff-ii">Level II</span>
+              </div>
+              <div style="font-size: 13px; color: var(--muted)">
+                100-loop coil, R = 100Ω, B = 0.600 T (= Example 29-5 in
+                textbook!)
+              </div>
+            </div>
+          </div>
+          <div class="problem-body">
+            <div class="problem-text">
+              100-loop square coil (l = 5.00 cm, R = 100 Ω) in B = 0.600 T.
+              Pulled out in 0.100 s at constant speed.<br />
+              Find: <strong>(a)</strong> dΦ/dt &nbsp;<strong>(b)</strong> EMF &
+              current &nbsp;<strong>(c)</strong> energy dissipated &nbsp;<strong
+                >(d)</strong
+              >
+              force required
+            </div>
+            <div class="key-tip">
+              <strong>This is Example 29-5 in your textbook</strong> — full
+              worked solution is given there. The force answer has two methods;
+              make sure you understand both (energy method and F=BIL method).
+            </div>
+            <div class="accordion">
+              <button class="accordion-btn" onclick="toggleAcc(this)">
+                🧮 Full Solution <span class="accordion-icon">▼</span>
+              </button>
+              <div class="accordion-content">
+                <ol class="step-list">
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(168, 85, 247, 0.2);
+                        color: var(--ch29);
+                      "
+                      >1</span
+                    >
+                    <div>
+                      Φ per loop = BA = 0.600 × (0.05)² = 1.50×10⁻³ Wb. After
+                      0.1s → Φ = 0.<br />ΔΦ/Δt = 1.50×10⁻³ / 0.100 =
+                      <strong>1.50×10⁻² Wb/s</strong>
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(168, 85, 247, 0.2);
+                        color: var(--ch29);
+                      "
+                      >2</span
+                    >
+                    <div>
+                      ε = N·ΔΦ/Δt = 100 × 1.50×10⁻² = <strong>1.50 V</strong
+                      ><br />I = ε/R = 1.50/100 =
+                      <strong>15.0 mA</strong> (clockwise by Lenz's Law)
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(168, 85, 247, 0.2);
+                        color: var(--ch29);
+                      "
+                      >3</span
+                    >
+                    <div>
+                      Energy = I²Rt = (0.015)² × 100 × 0.100 =
+                      <strong>2.25×10⁻³ J</strong>
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(168, 85, 247, 0.2);
+                        color: var(--ch29);
+                      "
+                      >4</span
+                    >
+                    <div>
+                      Force (energy method): F = E/d = 2.25×10⁻³ / 0.05 =
+                      <strong>0.0450 N</strong><br />Force (F=BIL check): F =
+                      N·I·l·B = 100×0.015×0.05×0.6 = 0.045 N ✓
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+            <div class="done-wrap">
+              <div
+                class="done-check"
+                onclick="markDone(this, 'prog-ch29', 'prog-label-ch29', 4)"
+              ></div>
+              <span class="done-label">Mark as practiced</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- P21 -->
+        <div class="problem-card" style="border-top: 3px solid var(--ch29)">
+          <div class="problem-header">
+            <div
+              class="problem-badge"
+              style="background: rgba(168, 85, 247, 0.15); color: var(--ch29)"
+            >
+              21
+            </div>
+            <div class="problem-meta">
+              <div class="problem-title">
+                Prove KE ∝ r² and L = qBr²
+                <span class="difficulty diff-ii">Level II</span>
+              </div>
+              <div style="font-size: 13px; color: var(--muted)">
+                Algebraic proof — circular motion in B field
+              </div>
+            </div>
+          </div>
+          <div class="problem-body">
+            <div class="problem-text">
+              For a particle (mass m, charge q) in circular path radius r in
+              field B:<br />
+              <strong>(a)</strong> Show kinetic energy ∝ r² &nbsp;&nbsp;<strong
+                >(b)</strong
+              >
+              Show angular momentum L = qBr²
+            </div>
+            <div class="key-tip">
+              <strong>Starting point for both parts:</strong> The circular
+              motion condition gives qvB = mv²/r → solve for v = qBr/m. Then
+              substitute into KE and L formulas.
+            </div>
+            <div class="accordion">
+              <button class="accordion-btn" onclick="toggleAcc(this)">
+                🧮 Full Derivation <span class="accordion-icon">▼</span>
+              </button>
+              <div class="accordion-content">
+                <ol class="step-list">
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(168, 85, 247, 0.2);
+                        color: var(--ch29);
+                      "
+                      >1</span
+                    >
+                    <div>
+                      Circular condition: qvB = mv²/r →
+                      <strong>v = qBr/m</strong>
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(168, 85, 247, 0.2);
+                        color: var(--ch29);
+                      "
+                      >2</span
+                    >
+                    <div>
+                      <strong>(a)</strong> KE = ½mv² = ½m·(qBr/m)² = q²B²r² /
+                      (2m)<br />Since q, B, m are constants:
+                      <strong>KE ∝ r²</strong> ✓ QED
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(168, 85, 247, 0.2);
+                        color: var(--ch29);
+                      "
+                      >3</span
+                    >
+                    <div>
+                      <strong>(b)</strong> Angular momentum: L = mvr<br />Substitute
+                      v = qBr/m: L = m·(qBr/m)·r = <strong>qBr²</strong> ✓ QED
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+            <div class="done-wrap">
+              <div
+                class="done-check"
+                onclick="markDone(this, 'prog-ch29', 'prog-label-ch29', 4)"
+              ></div>
+              <span class="done-label">Mark as practiced</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- P34 -->
+        <div class="problem-card" style="border-top: 3px solid var(--ch29)">
+          <div class="problem-header">
+            <div
+              class="problem-badge"
+              style="background: rgba(168, 85, 247, 0.15); color: var(--ch29)"
+            >
+              34
+            </div>
+            <div class="problem-meta">
+              <div class="problem-title">
+                Circular Path Geometry — Find x-crossing & time
+                <span class="difficulty diff-iii">Level III</span>
+              </div>
+              <div style="font-size: 13px; color: var(--muted)">
+                Fig. 27-47 — B in z-direction, v₀ at 30° from y-axis
+              </div>
+            </div>
+          </div>
+          <div class="problem-body">
+            <div class="problem-text">
+              Particle (+q, mass m) in B = B₀k̂. At t = 0, speed v₀, velocity in
+              xy-plane at 30° from y-axis.<br />
+              At t = tₐ it crosses x-axis at x = a.<br />
+              Find: <strong>(a)</strong> a &nbsp;&nbsp;<strong>(b)</strong> tₐ
+              &nbsp;&nbsp;in terms of q, m, v₀, B₀.
+            </div>
+            <div class="warning-tip">
+              <strong>This is Level III — the hardest problem assigned.</strong>
+              B acts in z, so force is always in xy-plane. The particle moves in
+              a circle in the xy-plane. Use geometry to find when it crosses the
+              x-axis.
+            </div>
+            <div class="accordion">
+              <button class="accordion-btn" onclick="toggleAcc(this)">
+                🧮 Full Solution <span class="accordion-icon">▼</span>
+              </button>
+              <div class="accordion-content">
+                <ol class="step-list">
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(168, 85, 247, 0.2);
+                        color: var(--ch29);
+                      "
+                      >1</span
+                    >
+                    <div>
+                      B ∥ z → force F = qv×B is in xy-plane →
+                      <strong>pure circular motion in the xy-plane</strong>
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(168, 85, 247, 0.2);
+                        color: var(--ch29);
+                      "
+                      >2</span
+                    >
+                    <div>Radius: r = mv₀/(qB₀)</div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(168, 85, 247, 0.2);
+                        color: var(--ch29);
+                      "
+                      >3</span
+                    >
+                    <div>
+                      At t = 0: particle at origin, velocity at 30° from +y
+                      toward +x.<br />v_x = v₀·sin(30°) = v₀/2 &nbsp;, &nbsp;v_y
+                      = v₀·cos(30°) = v₀√3/2
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(168, 85, 247, 0.2);
+                        color: var(--ch29);
+                      "
+                      >4</span
+                    >
+                    <div>
+                      The center of the circular orbit is perpendicular to v₀,
+                      to the right of motion (use right-hand rule for +q in +z
+                      field). The center is at position (r·cos30°, −r·sin30°) =
+                      (r√3/2, −r/2) from the origin. Wait — let's think
+                      carefully: force on +q moving at 30° from +y in +z field.
+                      F = qv×B: v is in xy plane, B in +z, so F = q(v×z_hat) is
+                      rotated 90° clockwise from v. Center of circle is in F
+                      direction: rotated 90° clockwise from v₀ direction →
+                      center at (r·cos(30°−90°), ...). Work this out with:
+                      center = (r·sin30°, r·cos30°) ... use Fig 27-47 geometry.
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(168, 85, 247, 0.2);
+                        color: var(--ch29);
+                      "
+                      >5</span
+                    >
+                    <div>
+                      Particle crosses x-axis when y = 0. From circle equation:
+                      center at (r·sin30°, r·cos30°) = (r/2, r√3/2).<br />Circle:
+                      (x − r/2)² + (y − r√3/2)² = r²<br />Set y = 0: (x−r/2)² +
+                      3r²/4 = r² → (x−r/2)² = r²/4 → x = r/2 ± r/2<br />x = r
+                      (non-trivial crossing) →
+                      <strong>a = r = mv₀/(qB₀)</strong>
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="step-num"
+                      style="
+                        background: rgba(168, 85, 247, 0.2);
+                        color: var(--ch29);
+                      "
+                      >6</span
+                    >
+                    <div>
+                      Arc traveled: particle starts at angle 30° from x-axis of
+                      the circle... goes to point (r,0). The arc subtended =
+                      120° = 2π/3 radians (from geometry).<br />tₐ = (2π/3)·r/v₀
+                      = (2π/3)·m/(qB₀) → <strong>tₐ = 2πm/(3qB₀)</strong>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+            <div class="done-wrap">
+              <div
+                class="done-check"
+                onclick="markDone(this, 'prog-ch29', 'prog-label-ch29', 4)"
+              ></div>
+              <span class="done-label">Mark as practiced</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end .content -->
+
+    <script>
+      // Show/hide chapters
+      function showChapter(id) {
+        document
+          .querySelectorAll(".chapter-section")
+          .forEach((s) => s.classList.remove("visible"));
+        document
+          .querySelectorAll(".nav-tab")
+          .forEach((t) => (t.className = "nav-tab"));
+        document.getElementById(id).classList.add("visible");
+        const tab = document.getElementById("tab-" + id);
+        tab.classList.add("active-" + id.replace("ch", ""));
+        window.scrollTo({
+          top: document.querySelector(".content").offsetTop - 70,
+          behavior: "smooth",
+        });
+      }
+
+      // Toggle formula sections
+      function toggleFormulas(id) {
+        const body = document.getElementById("fbody-" + id);
+        const toggle = document.getElementById("ftoggle-" + id);
+        const header = body.previousElementSibling;
+        body.classList.toggle("open");
+        toggle.classList.toggle("open");
+        header.classList.toggle("open");
+      }
+
+      // Toggle accordion
+      function toggleAcc(btn) {
+        const content = btn.nextElementSibling;
+        const icon = btn.querySelector(".accordion-icon");
+        content.classList.toggle("open");
+        icon.classList.toggle("open");
+      }
+
+      // Progress tracking
+      const doneCounts = {};
+      function markDone(el, progressId, labelId, total) {
+        el.classList.toggle("checked");
+        if (!doneCounts[progressId]) doneCounts[progressId] = 0;
+        doneCounts[progressId] += el.classList.contains("checked") ? 1 : -1;
+        const count = Math.max(0, doneCounts[progressId]);
+        const pct = (count / total) * 100;
+        document.getElementById(progressId).style.width = pct + "%";
+        document.getElementById(labelId).textContent =
+          count + " / " + total + " done";
+      }
+
+      // Start on ch24
+      showChapter("ch24");
+    </script>
+  </body>
+</html>

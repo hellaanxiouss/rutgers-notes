@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exam 2 — Physics 2 Spring 2026</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0a0a0f;
+        --border: #1e1e2e;
+        --accent: #cc0033;
+        --accent2: #ff6b6b;
+        --text: #e8e8f0;
+        --muted: #6b6b8a;
+        --card: #13131c;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "DM Mono", monospace;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(var(--border) 1px, transparent 1px),
+          linear-gradient(90deg, var(--border) 1px, transparent 1px);
+        background-size: 40px 40px;
+        opacity: 0.4;
+        z-index: 0;
+        pointer-events: none;
+      }
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .back-nav {
+        padding: 1.5rem 0;
+      }
+      .back-nav a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: color 0.2s;
+      }
+      .back-nav a:hover {
+        color: var(--accent);
+      }
+
+      header {
+        padding: 2rem 0 2.5rem;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 3rem;
+        animation: fadeDown 0.5s ease both;
+      }
+      .breadcrumb {
+        font-size: 0.65rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 0.75rem;
+      }
+      .breadcrumb span {
+        color: var(--accent);
+      }
+      h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+      .exam-date {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+        font-size: 0.75rem;
+        padding: 0.35rem 0.8rem;
+        background: rgba(204, 0, 51, 0.1);
+        border: 1px solid rgba(204, 0, 51, 0.3);
+        color: var(--accent2);
+      }
+      .exam-date .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--accent);
+        animation: pulse 2s infinite;
+      }
+
+      /* Countdown */
+      .countdown {
+        background: linear-gradient(
+          135deg,
+          rgba(204, 0, 51, 0.08),
+          rgba(204, 0, 51, 0.03)
+        );
+        border: 1px solid rgba(204, 0, 51, 0.2);
+        border-left: 3px solid var(--accent);
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 3rem;
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+        animation: fadeUp 0.5s 0.1s ease both;
+      }
+      .countdown-item {
+        text-align: center;
+      }
+      .countdown-num {
+        font-family: "Syne", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--accent2);
+        line-height: 1;
+      }
+      .countdown-label {
+        font-size: 0.6rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-top: 0.25rem;
+      }
+      .countdown-sep {
+        font-size: 1.5rem;
+        color: var(--border);
+        align-self: flex-start;
+        margin-top: 0.2rem;
+      }
+
+      /* Chapter coverage */
+      .chapter-pills {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-bottom: 3rem;
+        animation: fadeUp 0.5s 0.15s ease both;
+      }
+      .pill {
+        font-size: 0.65rem;
+        padding: 0.35rem 0.8rem;
+        border: 1px solid var(--border);
+        color: var(--muted);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .pill.active {
+        border-color: rgba(204, 0, 51, 0.4);
+        color: var(--accent2);
+        background: rgba(204, 0, 51, 0.08);
+      }
+
+      .section-label {
+        font-size: 0.65rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 1.2rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .section-label::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+      .section-label span {
+        color: var(--accent2);
+      }
+
+      /* Main resource cards */
+      .resource-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        margin-bottom: 3rem;
+        animation: fadeUp 0.5s 0.2s ease both;
+      }
+
+      .resource-card {
+        background: var(--card);
+        padding: 2rem;
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        position: relative;
+        overflow: hidden;
+        transition: background 0.2s;
+      }
+      .resource-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 3px;
+        height: 0;
+        background: var(--card-accent, var(--accent));
+        transition: height 0.3s ease;
+      }
+      .resource-card:hover {
+        background: #16161f;
+      }
+      .resource-card:hover::before {
+        height: 100%;
+      }
+
+      .resource-icon {
+        font-size: 2rem;
+        line-height: 1;
+      }
+      .resource-eyebrow {
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--card-accent, var(--accent));
+      }
+      .resource-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
+      .resource-desc {
+        font-size: 0.75rem;
+        color: var(--muted);
+        line-height: 1.7;
+        flex: 1;
+      }
+      .resource-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border);
+        font-size: 0.7rem;
+        color: var(--muted);
+      }
+      .resource-arrow {
+        font-size: 1rem;
+        color: var(--card-accent, var(--accent));
+        transition: transform 0.2s;
+      }
+      .resource-card:hover .resource-arrow {
+        transform: translate(3px, -3px);
+      }
+
+      /* PDF card has two buttons */
+      .btn-row {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+      }
+      .btn {
+        font-size: 0.65rem;
+        padding: 0.4rem 0.9rem;
+        border: 1px solid;
+        text-decoration: none;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        transition: all 0.2s;
+        font-family: "DM Mono", monospace;
+      }
+      .btn-view {
+        border-color: rgba(204, 0, 51, 0.4);
+        color: var(--accent2);
+        background: rgba(204, 0, 51, 0.08);
+      }
+      .btn-view:hover {
+        background: rgba(204, 0, 51, 0.18);
+      }
+      .btn-dl {
+        border-color: var(--border);
+        color: var(--muted);
+      }
+      .btn-dl:hover {
+        border-color: rgba(255, 255, 255, 0.2);
+        color: var(--text);
+      }
+
+      /* Chapter breakdown */
+      .chapters-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        margin-bottom: 3rem;
+        animation: fadeUp 0.5s 0.3s ease both;
+      }
+      .chapter-card {
+        background: var(--card);
+        padding: 1.25rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .ch-num {
+        font-family: "Syne", sans-serif;
+        font-size: 1.8rem;
+        font-weight: 800;
+        opacity: 0.2;
+        line-height: 1;
+      }
+      .ch-title {
+        font-family: "Syne", sans-serif;
+        font-size: 0.85rem;
+        font-weight: 700;
+      }
+      .ch-problems {
+        font-size: 0.65rem;
+        color: var(--muted);
+        margin-top: 0.25rem;
+      }
+      .ch-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.3rem;
+        margin-top: 0.4rem;
+      }
+      .ch-tag {
+        font-size: 0.55rem;
+        padding: 0.15rem 0.4rem;
+        background: rgba(204, 0, 51, 0.08);
+        border: 1px solid rgba(204, 0, 51, 0.15);
+        color: var(--accent2);
+      }
+
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 2rem 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.7rem;
+        color: var(--muted);
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      @keyframes fadeDown {
+        from {
+          opacity: 0;
+          transform: translateY(-15px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="back-nav">
+        <a href="../index.html">← Back to Physics 2</a>
+      </nav>
+
+      <header>
+        <div class="breadcrumb">Physics 2 · <span>Exam 2</span></div>
+        <h1>Exam 2 Study Hub</h1>
+        <div class="exam-date">
+          <span class="dot"></span> March 12, 2026 · Giancoli 4th Ed.
+        </div>
+      </header>
+
+      <!-- Countdown -->
+      <div class="countdown">
+        <div>
+          <div
+            style="
+              font-size: 0.65rem;
+              letter-spacing: 0.15em;
+              text-transform: uppercase;
+              color: var(--muted);
+              margin-bottom: 0.75rem;
+            "
+          >
+            Time until exam
+          </div>
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 1rem;
+              flex-wrap: wrap;
+            "
+          >
+            <div class="countdown-item">
+              <div class="countdown-num" id="cd-days">—</div>
+              <div class="countdown-label">Days</div>
+            </div>
+            <div class="countdown-sep">:</div>
+            <div class="countdown-item">
+              <div class="countdown-num" id="cd-hours">—</div>
+              <div class="countdown-label">Hours</div>
+            </div>
+            <div class="countdown-sep">:</div>
+            <div class="countdown-item">
+              <div class="countdown-num" id="cd-mins">—</div>
+              <div class="countdown-label">Mins</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chapter pills -->
+      <div class="chapter-pills">
+        <div class="pill active">Ch 24 — Capacitance</div>
+        <div class="pill active">Ch 26 — DC Circuits</div>
+        <div class="pill active">Ch 27 — Magnetism</div>
+        <div class="pill active">Ch 29 — Induction</div>
+      </div>
+
+      <!-- Main resources -->
+      <div class="section-label">
+        Resources <span>Study materials for Exam 2</span>
+      </div>
+      <div class="resource-grid">
+        <a
+          href="study-guide.html"
+          class="resource-card"
+          style="--card-accent: #cc0033"
+        >
+          <div class="resource-icon">⚡</div>
+          <div class="resource-eyebrow">Interactive</div>
+          <div class="resource-title">Exam 2 Study Guide</div>
+          <div class="resource-desc">
+            Every assigned problem broken down step-by-step. Chapter tabs,
+            formula dropdowns, key tips, progress tracker & mark-as-done
+            checkboxes.
+          </div>
+          <div class="resource-footer">
+            <span>Ch 24 · 26 · 27 · 29 — 15 problems</span>
+            <span class="resource-arrow">↗</span>
+          </div>
+        </a>
+
+        <div
+          class="resource-card"
+          style="--card-accent: #f97316; cursor: default"
+        >
+          <div class="resource-icon">📄</div>
+          <div class="resource-eyebrow">PDF</div>
+          <div class="resource-title">Assigned Problems PDF</div>
+          <div class="resource-desc">
+            Print-ready exam-style study guide. All assigned problems with full
+            solutions in a clean, formatted layout. Great for offline review.
+          </div>
+          <div class="btn-row">
+            <a
+              href="physics_assigned_problems.pdf"
+              target="_blank"
+              class="btn btn-view"
+              >View in Browser</a
+            >
+            <a href="physics_assigned_problems.pdf" download class="btn btn-dl"
+              >⬇ Download</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Chapter breakdown -->
+      <div class="section-label">Coverage <span>What's on Exam 2</span></div>
+      <div class="chapters-grid">
+        <div class="chapter-card">
+          <div class="ch-num" style="color: var(--accent)">24</div>
+          <div class="ch-title">Capacitance & Dielectrics</div>
+          <div class="ch-problems">Problems: 29, 30, 35</div>
+          <div class="ch-tags">
+            <span class="ch-tag">Series/Parallel</span>
+            <span class="ch-tag">Energy Storage</span>
+            <span class="ch-tag">Bridge Circuit</span>
+          </div>
+        </div>
+        <div class="chapter-card">
+          <div class="ch-num" style="color: #06b6d4">26</div>
+          <div class="ch-title">DC Circuits & Kirchhoff</div>
+          <div class="ch-problems">Problems: 14, 16, 19, 31, 32, 33</div>
+          <div class="ch-tags">
+            <span
+              class="ch-tag"
+              style="
+                background: rgba(6, 182, 212, 0.08);
+                border-color: rgba(6, 182, 212, 0.2);
+                color: #67e8f9;
+              "
+              >KVL/KCL</span
+            >
+            <span
+              class="ch-tag"
+              style="
+                background: rgba(6, 182, 212, 0.08);
+                border-color: rgba(6, 182, 212, 0.2);
+                color: #67e8f9;
+              "
+              >Power</span
+            >
+            <span
+              class="ch-tag"
+              style="
+                background: rgba(6, 182, 212, 0.08);
+                border-color: rgba(6, 182, 212, 0.2);
+                color: #67e8f9;
+              "
+              >RC</span
+            >
+          </div>
+        </div>
+        <div class="chapter-card">
+          <div class="ch-num" style="color: #10b981">27</div>
+          <div class="ch-title">Magnetism</div>
+          <div class="ch-problems">Problems: 8, 25</div>
+          <div class="ch-tags">
+            <span
+              class="ch-tag"
+              style="
+                background: rgba(16, 185, 129, 0.08);
+                border-color: rgba(16, 185, 129, 0.2);
+                color: #6ee7b7;
+              "
+              >Right-Hand Rule</span
+            >
+            <span
+              class="ch-tag"
+              style="
+                background: rgba(16, 185, 129, 0.08);
+                border-color: rgba(16, 185, 129, 0.2);
+                color: #6ee7b7;
+              "
+              >Solenoid</span
+            >
+          </div>
+        </div>
+        <div class="chapter-card">
+          <div class="ch-num" style="color: #a855f7">29</div>
+          <div class="ch-title">Electromagnetic Induction</div>
+          <div class="ch-problems">Problems: 18, 19, 21, 34</div>
+          <div class="ch-tags">
+            <span
+              class="ch-tag"
+              style="
+                background: rgba(168, 85, 247, 0.08);
+                border-color: rgba(168, 85, 247, 0.2);
+                color: #d8b4fe;
+              "
+              >Faraday</span
+            >
+            <span
+              class="ch-tag"
+              style="
+                background: rgba(168, 85, 247, 0.08);
+                border-color: rgba(168, 85, 247, 0.2);
+                color: #d8b4fe;
+              "
+              >Lenz's Law</span
+            >
+            <span
+              class="ch-tag"
+              style="
+                background: rgba(168, 85, 247, 0.08);
+                border-color: rgba(168, 85, 247, 0.2);
+                color: #d8b4fe;
+              "
+              >Motional EMF</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <span>rutgers-notes / spring-2026 / physics-2 / exam-2</span>
+        <a
+          href="../index.html"
+          style="color: var(--accent); text-decoration: none"
+          >← Physics 2</a
+        >
+      </footer>
+    </div>
+
+    <script>
+      // Countdown to March 12 2026
+      const examDate = new Date("2026-03-12T00:00:00");
+      function updateCountdown() {
+        const now = new Date();
+        const diff = examDate - now;
+        if (diff <= 0) {
+          document.querySelector(".countdown").innerHTML =
+            "<div style=\"font-family:'Syne',sans-serif;font-size:1.2rem;color:var(--accent2)\">Exam day! Good luck 🎯</div>";
+          return;
+        }
+        const days = Math.floor(diff / 86400000);
+        const hours = Math.floor((diff % 86400000) / 3600000);
+        const mins = Math.floor((diff % 3600000) / 60000);
+        document.getElementById("cd-days").textContent = String(days).padStart(
+          2,
+          "0",
+        );
+        document.getElementById("cd-hours").textContent = String(
+          hours,
+        ).padStart(2, "0");
+        document.getElementById("cd-mins").textContent = String(mins).padStart(
+          2,
+          "0",
+        );
+      }
+      updateCountdown();
+      setInterval(updateCountdown, 60000);
+    </script>
+  </body>
+</html>

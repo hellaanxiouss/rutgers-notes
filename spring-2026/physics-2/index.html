@@ -50,8 +50,6 @@
         position: relative;
         z-index: 1;
       }
-
-      /* Back nav */
       .back-nav {
         padding: 1.5rem 0;
         animation: fadeDown 0.4s ease both;
@@ -69,7 +67,6 @@
       .back-nav a:hover {
         color: var(--accent);
       }
-
       header {
         padding: 2rem 0 2.5rem;
         border-bottom: 1px solid var(--border);
@@ -95,8 +92,22 @@
         margin-top: 0.5rem;
         line-height: 1.6;
       }
-
-      /* Topic grid */
+      .section-block {
+        margin-bottom: 3rem;
+        animation: fadeUp 0.5s ease both;
+      }
+      .section-block:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      .section-block:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .section-block:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+      .section-block:nth-child(4) {
+        animation-delay: 0.4s;
+      }
       .section-label {
         font-size: 0.65rem;
         letter-spacing: 0.25em;
@@ -104,22 +115,29 @@
         color: var(--muted);
         margin-bottom: 1.2rem;
         font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .section-label::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border);
       }
       .section-label span {
         color: var(--accent2);
       }
-
-      .topics-grid {
+      .grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 1px;
         background: var(--border);
         border: 1px solid var(--border);
-        margin-bottom: 3rem;
       }
-      .topic-card {
+      .card {
         background: var(--card);
-        padding: 1.5rem;
+        padding: 1.5rem 2rem;
         text-decoration: none;
         color: inherit;
         display: flex;
@@ -128,110 +146,89 @@
         position: relative;
         overflow: hidden;
         transition: background 0.2s;
-        animation: fadeUp 0.5s ease both;
       }
-      .topic-card:nth-child(1) {
-        animation-delay: 0.05s;
-      }
-      .topic-card:nth-child(2) {
-        animation-delay: 0.1s;
-      }
-      .topic-card:nth-child(3) {
-        animation-delay: 0.15s;
-      }
-      .topic-card:nth-child(4) {
-        animation-delay: 0.2s;
-      }
-      .topic-card:nth-child(5) {
-        animation-delay: 0.25s;
-      }
-      .topic-card:nth-child(6) {
-        animation-delay: 0.3s;
-      }
-
-      .topic-card::before {
+      .card::before {
         content: "";
         position: absolute;
         top: 0;
         left: 0;
         width: 3px;
         height: 0;
-        background: var(--accent);
+        background: var(--card-accent, var(--accent));
         transition: height 0.3s ease;
       }
-      .topic-card:hover {
+      .card:hover {
         background: #16161f;
       }
-      .topic-card:hover::before {
+      .card:hover::before {
         height: 100%;
       }
-
-      .topic-num {
-        font-size: 0.65rem;
-        color: var(--muted);
-        letter-spacing: 0.1em;
+      .card.exam-card {
+        background: linear-gradient(135deg, #13131c, #16101a);
       }
-      .topic-name {
-        font-family: "Syne", sans-serif;
-        font-size: 1rem;
-        font-weight: 700;
+      .card.exam-card:hover {
+        background: linear-gradient(135deg, #16161f, #1a121f);
       }
-      .topic-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.4rem;
-        margin-top: 0.2rem;
-      }
-      .tag {
+      .card-eyebrow {
         font-size: 0.6rem;
-        padding: 0.2rem 0.5rem;
-        background: rgba(204, 0, 51, 0.1);
-        border: 1px solid rgba(204, 0, 51, 0.2);
-        color: var(--accent2);
-        letter-spacing: 0.05em;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--card-accent, var(--accent));
       }
-      .topic-arrow {
-        font-size: 0.85rem;
-        color: var(--accent);
-        margin-top: auto;
-        transition: transform 0.2s;
-      }
-      .topic-card:hover .topic-arrow {
-        transform: translate(3px, -3px);
-      }
-
-      /* Quick refs section */
-      .quick-refs {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1px;
-        background: var(--border);
-        border: 1px solid var(--border);
-        margin-bottom: 3rem;
-      }
-      .ref-card {
-        background: var(--card);
-        padding: 1.5rem;
-        text-decoration: none;
-        color: inherit;
-        transition: background 0.2s;
-        animation: fadeUp 0.5s 0.35s ease both;
-      }
-      .ref-card:hover {
-        background: #16161f;
-      }
-      .ref-title {
+      .card-title {
         font-family: "Syne", sans-serif;
         font-size: 1rem;
         font-weight: 700;
-        margin-bottom: 0.5rem;
       }
-      .ref-desc {
+      .card-desc {
         font-size: 0.75rem;
         color: var(--muted);
         line-height: 1.6;
+        flex: 1;
       }
-
+      .card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 0.8rem;
+        border-top: 1px solid var(--border);
+        font-size: 0.7rem;
+        color: var(--muted);
+      }
+      .card-arrow {
+        color: var(--card-accent, var(--accent));
+        transition: transform 0.2s;
+      }
+      .card:hover .card-arrow {
+        transform: translate(3px, -3px);
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.6rem;
+        padding: 0.25rem 0.6rem;
+        border-radius: 100px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+      }
+      .badge-upcoming {
+        background: rgba(204, 0, 51, 0.15);
+        border: 1px solid rgba(204, 0, 51, 0.3);
+        color: var(--accent2);
+      }
+      .badge-done {
+        background: rgba(34, 197, 94, 0.1);
+        border: 1px solid rgba(34, 197, 94, 0.2);
+        color: #4ade80;
+      }
+      .badge-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: currentColor;
+        animation: pulse 2s infinite;
+      }
       footer {
         border-top: 1px solid var(--border);
         padding: 2rem 0;
@@ -242,6 +239,7 @@
         color: var(--muted);
         flex-wrap: wrap;
         gap: 1rem;
+        margin-top: 2rem;
       }
       @keyframes fadeDown {
         from {
@@ -263,6 +261,15 @@
           transform: none;
         }
       }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
     </style>
   </head>
   <body>
@@ -270,7 +277,6 @@
       <nav class="back-nav">
         <a href="../../index.html">← Back to All Subjects</a>
       </nav>
-
       <header>
         <div class="course-code">PHY 204 — Spring 2026</div>
         <h1>Physics 2</h1>
@@ -279,98 +285,224 @@
         </div>
       </header>
 
-      <div class="section-label">
-        Topics — <span>Click to open notes & simulations</span>
+      <!-- EXAMS -->
+      <div class="section-block">
+        <div class="section-label">
+          Exams <span>Study guides, assigned problems & resources</span>
+        </div>
+        <div class="grid">
+          <a
+            href="exam-1/index.html"
+            class="card exam-card"
+            style="--card-accent: #6b6b8a"
+          >
+            <div class="card-eyebrow">Exam 1</div>
+            <div class="card-title">Exam 1</div>
+            <div class="card-desc">
+              Ch 21–23 · Electric charge, fields & Gauss's Law.
+            </div>
+            <div class="card-footer">
+              <span class="badge badge-done">✓ Done</span
+              ><span class="card-arrow">↗</span>
+            </div>
+          </a>
+          <a
+            href="exam-2/index.html"
+            class="card exam-card"
+            style="--card-accent: #cc0033"
+          >
+            <div class="card-eyebrow">Exam 2</div>
+            <div class="card-title">Exam 2 — March 12</div>
+            <div class="card-desc">
+              Ch 24, 26, 27, 29 · Capacitance, Circuits, Magnetism & Induction.
+            </div>
+            <div class="card-footer">
+              <span class="badge badge-upcoming"
+                ><span class="badge-dot"></span>Upcoming</span
+              ><span class="card-arrow">↗</span>
+            </div>
+          </a>
+          <a
+            href="exam-3/index.html"
+            class="card exam-card"
+            style="--card-accent: #3b3b5a"
+          >
+            <div class="card-eyebrow">Exam 3</div>
+            <div class="card-title">Exam 3</div>
+            <div class="card-desc">
+              Coming soon — add resources as the semester progresses.
+            </div>
+            <div class="card-footer">
+              <span style="color: var(--muted); font-size: 0.7rem">Not yet</span
+              ><span class="card-arrow" style="color: var(--muted)">↗</span>
+            </div>
+          </a>
+        </div>
       </div>
 
-      <div class="topics-grid">
-        <a href="notes/electrostatics.html" class="topic-card">
-          <div class="topic-num">01</div>
-          <div class="topic-name">Electrostatics</div>
-          <div class="topic-tags">
-            <span class="tag">Coulomb's Law</span>
-            <span class="tag">Electric Field</span>
-            <span class="tag">Gauss's Law</span>
-          </div>
-          <div class="topic-arrow">↗</div>
-        </a>
-        <a href="notes/electric-potential.html" class="topic-card">
-          <div class="topic-num">02</div>
-          <div class="topic-name">Electric Potential</div>
-          <div class="topic-tags">
-            <span class="tag">Potential Energy</span>
-            <span class="tag">Capacitance</span>
-            <span class="tag">Dielectrics</span>
-          </div>
-          <div class="topic-arrow">↗</div>
-        </a>
-        <a href="notes/current-circuits.html" class="topic-card">
-          <div class="topic-num">03</div>
-          <div class="topic-name">Current & Circuits</div>
-          <div class="topic-tags">
-            <span class="tag">Ohm's Law</span>
-            <span class="tag">Kirchhoff</span>
-            <span class="tag">RC Circuits</span>
-          </div>
-          <div class="topic-arrow">↗</div>
-        </a>
-        <a href="notes/magnetism.html" class="topic-card">
-          <div class="topic-num">04</div>
-          <div class="topic-name">Magnetism</div>
-          <div class="topic-tags">
-            <span class="tag">Biot-Savart</span>
-            <span class="tag">Ampere's Law</span>
-            <span class="tag">Lorentz Force</span>
-          </div>
-          <div class="topic-arrow">↗</div>
-        </a>
-        <a href="notes/induction.html" class="topic-card">
-          <div class="topic-num">05</div>
-          <div class="topic-name">Electromagnetic Induction</div>
-          <div class="topic-tags">
-            <span class="tag">Faraday's Law</span>
-            <span class="tag">Lenz's Law</span>
-            <span class="tag">Inductance</span>
-          </div>
-          <div class="topic-arrow">↗</div>
-        </a>
-        <a href="notes/waves-optics.html" class="topic-card">
-          <div class="topic-num">06</div>
-          <div class="topic-name">Waves & Optics</div>
-          <div class="topic-tags">
-            <span class="tag">EM Waves</span>
-            <span class="tag">Interference</span>
-            <span class="tag">Diffraction</span>
-          </div>
-          <div class="topic-arrow">↗</div>
-        </a>
+      <!-- NOTES -->
+      <div class="section-block">
+        <div class="section-label">Notes <span>By topic</span></div>
+        <div class="grid">
+          <a
+            href="notes/electrostatics.html"
+            class="card"
+            style="--card-accent: #cc0033"
+          >
+            <div class="card-eyebrow">Ch 21–23</div>
+            <div class="card-title">Electrostatics</div>
+            <div class="card-desc">
+              Coulomb's Law, Electric Field, Gauss's Law.
+            </div>
+            <div class="card-footer">
+              <span>Notes</span><span class="card-arrow">↗</span>
+            </div>
+          </a>
+          <a
+            href="notes/electric-potential.html"
+            class="card"
+            style="--card-accent: #cc0033"
+          >
+            <div class="card-eyebrow">Ch 23–24</div>
+            <div class="card-title">Electric Potential & Capacitance</div>
+            <div class="card-desc">
+              Potential energy, capacitors, dielectrics.
+            </div>
+            <div class="card-footer">
+              <span>Notes</span><span class="card-arrow">↗</span>
+            </div>
+          </a>
+          <a
+            href="notes/current-circuits.html"
+            class="card"
+            style="--card-accent: #cc0033"
+          >
+            <div class="card-eyebrow">Ch 25–26</div>
+            <div class="card-title">Current & DC Circuits</div>
+            <div class="card-desc">
+              Ohm's Law, Kirchhoff's rules, RC circuits.
+            </div>
+            <div class="card-footer">
+              <span>Notes</span><span class="card-arrow">↗</span>
+            </div>
+          </a>
+          <a
+            href="notes/magnetism.html"
+            class="card"
+            style="--card-accent: #cc0033"
+          >
+            <div class="card-eyebrow">Ch 27–28</div>
+            <div class="card-title">Magnetism</div>
+            <div class="card-desc">
+              Biot-Savart, Ampere's Law, Lorentz Force.
+            </div>
+            <div class="card-footer">
+              <span>Notes</span><span class="card-arrow">↗</span>
+            </div>
+          </a>
+          <a
+            href="notes/induction.html"
+            class="card"
+            style="--card-accent: #cc0033"
+          >
+            <div class="card-eyebrow">Ch 29–30</div>
+            <div class="card-title">Electromagnetic Induction</div>
+            <div class="card-desc">Faraday's Law, Lenz's Law, inductance.</div>
+            <div class="card-footer">
+              <span>Notes</span><span class="card-arrow">↗</span>
+            </div>
+          </a>
+          <a
+            href="notes/waves-optics.html"
+            class="card"
+            style="--card-accent: #cc0033"
+          >
+            <div class="card-eyebrow">Ch 31–35</div>
+            <div class="card-title">Waves & Optics</div>
+            <div class="card-desc">EM waves, interference, diffraction.</div>
+            <div class="card-footer">
+              <span>Notes</span><span class="card-arrow">↗</span>
+            </div>
+          </a>
+        </div>
       </div>
 
-      <div class="section-label">Quick Access</div>
-      <div class="quick-refs">
-        <a href="formulas.html" class="ref-card">
-          <div class="ref-title">📐 Formula Sheet</div>
-          <div class="ref-desc">
-            All key equations organized by topic. Print-friendly version
-            included.
-          </div>
-        </a>
-        <a href="past-exams/" class="ref-card">
-          <div class="ref-title">📄 Past Exams</div>
-          <div class="ref-desc">
-            Practice exams, quizzes & problem sets with solutions.
-          </div>
-        </a>
-        <a href="simulations/" class="ref-card">
-          <div class="ref-title">⚡ Simulations</div>
-          <div class="ref-desc">
-            Interactive electric field, circuit & wave visualizers.
-          </div>
-        </a>
-        <a href="notes/" class="ref-card">
-          <div class="ref-title">📝 All Notes</div>
-          <div class="ref-desc">Browse raw notes folder by folder.</div>
-        </a>
+      <!-- SIMULATIONS -->
+      <div class="section-block">
+        <div class="section-label">
+          Simulations <span>Interactive visualizers</span>
+        </div>
+        <div class="grid">
+          <a
+            href="simulations/electric-field.html"
+            class="card"
+            style="--card-accent: #f97316"
+          >
+            <div class="card-eyebrow">Interactive</div>
+            <div class="card-title">Electric Field Visualizer</div>
+            <div class="card-desc">
+              Place charges, see field lines update in real time.
+            </div>
+            <div class="card-footer">
+              <span>Simulation</span><span class="card-arrow">↗</span>
+            </div>
+          </a>
+          <a
+            href="simulations/circuit-builder.html"
+            class="card"
+            style="--card-accent: #f97316"
+          >
+            <div class="card-eyebrow">Interactive</div>
+            <div class="card-title">Circuit Builder</div>
+            <div class="card-desc">
+              Build series/parallel circuits, compute V, I, R, P.
+            </div>
+            <div class="card-footer">
+              <span>Simulation</span><span class="card-arrow">↗</span>
+            </div>
+          </a>
+          <a
+            href="simulations/magnetic-field.html"
+            class="card"
+            style="--card-accent: #f97316"
+          >
+            <div class="card-eyebrow">Interactive</div>
+            <div class="card-title">Magnetic Field Lines</div>
+            <div class="card-desc">
+              Visualize B fields around wires and solenoids.
+            </div>
+            <div class="card-footer">
+              <span>Simulation</span><span class="card-arrow">↗</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- QUICK ACCESS -->
+      <div class="section-block">
+        <div class="section-label">Quick Access</div>
+        <div class="grid">
+          <a href="formulas.html" class="card" style="--card-accent: #a855f7">
+            <div class="card-eyebrow">Reference</div>
+            <div class="card-title">📐 Master Formula Sheet</div>
+            <div class="card-desc">
+              All equations for the entire course, organized by chapter.
+            </div>
+            <div class="card-footer">
+              <span>Print-friendly</span><span class="card-arrow">↗</span>
+            </div>
+          </a>
+          <a href="past-exams/" class="card" style="--card-accent: #a855f7">
+            <div class="card-eyebrow">Archive</div>
+            <div class="card-title">📄 Past Exams</div>
+            <div class="card-desc">
+              All past exams and quizzes with solutions.
+            </div>
+            <div class="card-footer">
+              <span>PDFs</span><span class="card-arrow">↗</span>
+            </div>
+          </a>
+        </div>
       </div>
 
       <footer>

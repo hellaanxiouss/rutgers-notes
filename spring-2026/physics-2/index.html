@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Physics 2 — Spring 2026</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0a0a0f;
+        --surface: #111118;
+        --border: #1e1e2e;
+        --accent: #cc0033;
+        --accent2: #ff6b6b;
+        --text: #e8e8f0;
+        --muted: #6b6b8a;
+        --card: #13131c;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "DM Mono", monospace;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(var(--border) 1px, transparent 1px),
+          linear-gradient(90deg, var(--border) 1px, transparent 1px);
+        background-size: 40px 40px;
+        opacity: 0.4;
+        z-index: 0;
+        pointer-events: none;
+      }
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Back nav */
+      .back-nav {
+        padding: 1.5rem 0;
+        animation: fadeDown 0.4s ease both;
+      }
+      .back-nav a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: color 0.2s;
+      }
+      .back-nav a:hover {
+        color: var(--accent);
+      }
+
+      header {
+        padding: 2rem 0 2.5rem;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 3rem;
+        animation: fadeDown 0.5s ease both;
+      }
+      .course-code {
+        font-size: 0.7rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 0.5rem;
+      }
+      h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+      .header-sub {
+        color: var(--muted);
+        font-size: 0.8rem;
+        margin-top: 0.5rem;
+        line-height: 1.6;
+      }
+
+      /* Topic grid */
+      .section-label {
+        font-size: 0.65rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 1.2rem;
+        font-weight: 600;
+      }
+      .section-label span {
+        color: var(--accent2);
+      }
+
+      .topics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        margin-bottom: 3rem;
+      }
+      .topic-card {
+        background: var(--card);
+        padding: 1.5rem;
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+        position: relative;
+        overflow: hidden;
+        transition: background 0.2s;
+        animation: fadeUp 0.5s ease both;
+      }
+      .topic-card:nth-child(1) {
+        animation-delay: 0.05s;
+      }
+      .topic-card:nth-child(2) {
+        animation-delay: 0.1s;
+      }
+      .topic-card:nth-child(3) {
+        animation-delay: 0.15s;
+      }
+      .topic-card:nth-child(4) {
+        animation-delay: 0.2s;
+      }
+      .topic-card:nth-child(5) {
+        animation-delay: 0.25s;
+      }
+      .topic-card:nth-child(6) {
+        animation-delay: 0.3s;
+      }
+
+      .topic-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 3px;
+        height: 0;
+        background: var(--accent);
+        transition: height 0.3s ease;
+      }
+      .topic-card:hover {
+        background: #16161f;
+      }
+      .topic-card:hover::before {
+        height: 100%;
+      }
+
+      .topic-num {
+        font-size: 0.65rem;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+      }
+      .topic-name {
+        font-family: "Syne", sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+      }
+      .topic-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-top: 0.2rem;
+      }
+      .tag {
+        font-size: 0.6rem;
+        padding: 0.2rem 0.5rem;
+        background: rgba(204, 0, 51, 0.1);
+        border: 1px solid rgba(204, 0, 51, 0.2);
+        color: var(--accent2);
+        letter-spacing: 0.05em;
+      }
+      .topic-arrow {
+        font-size: 0.85rem;
+        color: var(--accent);
+        margin-top: auto;
+        transition: transform 0.2s;
+      }
+      .topic-card:hover .topic-arrow {
+        transform: translate(3px, -3px);
+      }
+
+      /* Quick refs section */
+      .quick-refs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        margin-bottom: 3rem;
+      }
+      .ref-card {
+        background: var(--card);
+        padding: 1.5rem;
+        text-decoration: none;
+        color: inherit;
+        transition: background 0.2s;
+        animation: fadeUp 0.5s 0.35s ease both;
+      }
+      .ref-card:hover {
+        background: #16161f;
+      }
+      .ref-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+      .ref-desc {
+        font-size: 0.75rem;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 2rem 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.7rem;
+        color: var(--muted);
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      @keyframes fadeDown {
+        from {
+          opacity: 0;
+          transform: translateY(-15px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="back-nav">
+        <a href="../../index.html">← Back to All Subjects</a>
+      </nav>
+
+      <header>
+        <div class="course-code">PHY 204 — Spring 2026</div>
+        <h1>Physics 2</h1>
+        <div class="header-sub">
+          Electricity · Magnetism · Waves · Optics · Modern Physics
+        </div>
+      </header>
+
+      <div class="section-label">
+        Topics — <span>Click to open notes & simulations</span>
+      </div>
+
+      <div class="topics-grid">
+        <a href="notes/electrostatics.html" class="topic-card">
+          <div class="topic-num">01</div>
+          <div class="topic-name">Electrostatics</div>
+          <div class="topic-tags">
+            <span class="tag">Coulomb's Law</span>
+            <span class="tag">Electric Field</span>
+            <span class="tag">Gauss's Law</span>
+          </div>
+          <div class="topic-arrow">↗</div>
+        </a>
+        <a href="notes/electric-potential.html" class="topic-card">
+          <div class="topic-num">02</div>
+          <div class="topic-name">Electric Potential</div>
+          <div class="topic-tags">
+            <span class="tag">Potential Energy</span>
+            <span class="tag">Capacitance</span>
+            <span class="tag">Dielectrics</span>
+          </div>
+          <div class="topic-arrow">↗</div>
+        </a>
+        <a href="notes/current-circuits.html" class="topic-card">
+          <div class="topic-num">03</div>
+          <div class="topic-name">Current & Circuits</div>
+          <div class="topic-tags">
+            <span class="tag">Ohm's Law</span>
+            <span class="tag">Kirchhoff</span>
+            <span class="tag">RC Circuits</span>
+          </div>
+          <div class="topic-arrow">↗</div>
+        </a>
+        <a href="notes/magnetism.html" class="topic-card">
+          <div class="topic-num">04</div>
+          <div class="topic-name">Magnetism</div>
+          <div class="topic-tags">
+            <span class="tag">Biot-Savart</span>
+            <span class="tag">Ampere's Law</span>
+            <span class="tag">Lorentz Force</span>
+          </div>
+          <div class="topic-arrow">↗</div>
+        </a>
+        <a href="notes/induction.html" class="topic-card">
+          <div class="topic-num">05</div>
+          <div class="topic-name">Electromagnetic Induction</div>
+          <div class="topic-tags">
+            <span class="tag">Faraday's Law</span>
+            <span class="tag">Lenz's Law</span>
+            <span class="tag">Inductance</span>
+          </div>
+          <div class="topic-arrow">↗</div>
+        </a>
+        <a href="notes/waves-optics.html" class="topic-card">
+          <div class="topic-num">06</div>
+          <div class="topic-name">Waves & Optics</div>
+          <div class="topic-tags">
+            <span class="tag">EM Waves</span>
+            <span class="tag">Interference</span>
+            <span class="tag">Diffraction</span>
+          </div>
+          <div class="topic-arrow">↗</div>
+        </a>
+      </div>
+
+      <div class="section-label">Quick Access</div>
+      <div class="quick-refs">
+        <a href="formulas.html" class="ref-card">
+          <div class="ref-title">📐 Formula Sheet</div>
+          <div class="ref-desc">
+            All key equations organized by topic. Print-friendly version
+            included.
+          </div>
+        </a>
+        <a href="past-exams/" class="ref-card">
+          <div class="ref-title">📄 Past Exams</div>
+          <div class="ref-desc">
+            Practice exams, quizzes & problem sets with solutions.
+          </div>
+        </a>
+        <a href="simulations/" class="ref-card">
+          <div class="ref-title">⚡ Simulations</div>
+          <div class="ref-desc">
+            Interactive electric field, circuit & wave visualizers.
+          </div>
+        </a>
+        <a href="notes/" class="ref-card">
+          <div class="ref-title">📝 All Notes</div>
+          <div class="ref-desc">Browse raw notes folder by folder.</div>
+        </a>
+      </div>
+
+      <footer>
+        <span>rutgers-notes / spring-2026 / physics-2</span>
+        <a
+          href="../../index.html"
+          style="color: var(--accent); text-decoration: none"
+          >← Home</a
+        >
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,76 @@
+{
+  "student": {
+    "name": "hellaanxiouss",
+    "university": "Rutgers University",
+    "gpa": "3.80"
+  },
+  "semesters": [
+    {
+      "id": "spring-2026",
+      "season": "Spring",
+      "year": "2026",
+      "semesterNumber": 6,
+      "status": "current",
+      "path": "spring-2026/index.html",
+      "color": "#cc0033",
+      "upcomingExam": {
+        "name": "Physics 2 Exam 2",
+        "date": "2026-03-12"
+      },
+      "subjects": [
+        {
+          "name": "Physics 2",
+          "code": "PHY 132",
+          "path": "spring-2026/physics-2/index.html",
+          "color": "#cc0033"
+        },
+        {
+          "name": "Physics 2 Lab",
+          "code": "PHY 134",
+          "path": "spring-2026/physics-2-lab/index.html",
+          "color": "#f97316"
+        },
+        {
+          "name": "Data Structures",
+          "code": "CS 213",
+          "path": "spring-2026/data-structures/index.html",
+          "color": "#3b82f6"
+        },
+        {
+          "name": "Operating Systems",
+          "code": "CS 341",
+          "path": "spring-2026/operating-systems/index.html",
+          "color": "#22c55e"
+        },
+        {
+          "name": "Machine Learning",
+          "code": "CS 454",
+          "path": "spring-2026/machine-learning/index.html",
+          "color": "#a855f7"
+        },
+        {
+          "name": "Stagecraft",
+          "code": "THTR 241",
+          "path": "spring-2026/stagecraft/index.html",
+          "color": "#ec4899"
+        },
+        {
+          "name": "Emergency Spanish",
+          "code": "SPAN 103",
+          "path": "spring-2026/emergency-spanish/index.html",
+          "color": "#facc15"
+        }
+      ]
+    },
+    {
+      "id": "fall-2025",
+      "season": "Fall",
+      "year": "2025",
+      "semesterNumber": 5,
+      "status": "done",
+      "path": "fall-2025/index.html",
+      "color": "#3b82f6",
+      "subjects": []
+    }
+  ]
+}

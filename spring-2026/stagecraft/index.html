@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stagecraft — Spring 2026</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0a0a0f;
+        --border: #1e1e2e;
+        --accent: #ec4899;
+        --accent2: #f9a8d4;
+        --text: #e8e8f0;
+        --muted: #6b6b8a;
+        --card: #13131c;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "DM Mono", monospace;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(var(--border) 1px, transparent 1px),
+          linear-gradient(90deg, var(--border) 1px, transparent 1px);
+        background-size: 40px 40px;
+        opacity: 0.4;
+        z-index: 0;
+        pointer-events: none;
+      }
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        position: relative;
+        z-index: 1;
+      }
+      .back-nav {
+        padding: 1.5rem 0;
+      }
+      .back-nav a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: color 0.2s;
+      }
+      .back-nav a:hover {
+        color: var(--accent);
+      }
+      header {
+        padding: 2rem 0 2.5rem;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 3rem;
+      }
+      .course-code {
+        font-size: 0.7rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 0.5rem;
+      }
+      h1 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+      .header-sub {
+        color: var(--muted);
+        font-size: 0.8rem;
+        margin-top: 0.5rem;
+        line-height: 1.6;
+      }
+      .section-label {
+        font-size: 0.65rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 1.2rem;
+        font-weight: 600;
+      }
+      .section-label span {
+        color: var(--accent2);
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        margin-bottom: 3rem;
+      }
+      .card {
+        background: var(--card);
+        padding: 1.5rem;
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+        position: relative;
+        overflow: hidden;
+        transition: background 0.2s;
+      }
+      .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 3px;
+        height: 0;
+        background: var(--accent);
+        transition: height 0.3s ease;
+      }
+      .card:hover {
+        background: #16161f;
+      }
+      .card:hover::before {
+        height: 100%;
+      }
+      .card-num {
+        font-size: 0.65rem;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+      }
+      .card-name {
+        font-family: "Syne", sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+      }
+      .card-desc {
+        font-size: 0.75rem;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+      .card-arrow {
+        font-size: 0.85rem;
+        color: var(--accent);
+        margin-top: auto;
+        transition: transform 0.2s;
+      }
+      .card:hover .card-arrow {
+        transform: translate(3px, -3px);
+      }
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 2rem 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.7rem;
+        color: var(--muted);
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="back-nav">
+        <a href="../index.html">← Back to All Subjects</a>
+      </nav>
+      <header>
+        <div class="course-code">THTR 241 — Spring 2026</div>
+        <h1>Stagecraft</h1>
+        <div class="header-sub">Scenic design · Lighting · Costumes · Technical theatre</div>
+      </header>
+      <div class="section-label">
+        Resources — <span>Add notes and materials here</span>
+      </div>
+      <div class="grid">
+        <a href="#" class="card">
+          <div class="card-num">NOTES</div>
+          <div class="card-name">Class Notes</div>
+          <div class="card-desc">
+            Lecture notes, readings & design concepts.
+          </div>
+          <div class="card-arrow">↗</div>
+        </a>
+        <a href="#" class="card">
+          <div class="card-num">PROJECTS</div>
+          <div class="card-name">Projects & Assignments</div>
+          <div class="card-desc">Design work, build docs & crew assignments.</div>
+          <div class="card-arrow">↗</div>
+        </a>
+        <a href="#" class="card">
+          <div class="card-num">REF</div>
+          <div class="card-name">Reference</div>
+          <div class="card-desc">Technical specs, safety & terminology.</div>
+          <div class="card-arrow">↗</div>
+        </a>
+      </div>
+      <footer>
+        <span>rutgers-notes / spring-2026 / stagecraft</span>
+        <a
+          href="../index.html"
+          style="color: var(--accent); text-decoration: none"
+          >← Home</a
+        >
+      </footer>
+    </div>
+  </body>
+</html>

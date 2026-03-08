@@ -1,254 +1,394 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Midterm — Machine Learning Spring 2026</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      :root {
-        --bg: #0a0a0f;
-        --border: #1e1e2e;
-        --accent: #a855f7;
-        --accent2: #d8b4fe;
-        --text: #e8e8f0;
-        --muted: #6b6b8a;
-        --card: #13131c;
-      }
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      body {
-        background: var(--bg);
-        color: var(--text);
-        font-family: "DM Mono", monospace;
-        min-height: 100vh;
-        overflow-x: hidden;
-      }
-      body::before {
-        content: "";
-        position: fixed;
-        inset: 0;
-        background-image:
-          linear-gradient(var(--border) 1px, transparent 1px),
-          linear-gradient(90deg, var(--border) 1px, transparent 1px);
-        background-size: 40px 40px;
-        opacity: 0.4;
-        z-index: 0;
-        pointer-events: none;
-      }
-      .container {
-        max-width: 1100px;
-        margin: 0 auto;
-        padding: 0 2rem;
-        position: relative;
-        z-index: 1;
-      }
-      .back-nav {
-        padding: 1.5rem 0;
-      }
-      .back-nav a {
-        color: var(--muted);
-        text-decoration: none;
-        font-size: 0.75rem;
-        letter-spacing: 0.1em;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        transition: color 0.2s;
-      }
-      .back-nav a:hover {
-        color: var(--accent);
-      }
-      header {
-        padding: 2rem 0 2.5rem;
-        border-bottom: 1px solid var(--border);
-        margin-bottom: 3rem;
-      }
-      .breadcrumb {
-        font-size: 0.65rem;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        color: var(--muted);
-        margin-bottom: 0.75rem;
-      }
-      .breadcrumb span {
-        color: var(--accent);
-      }
-      h1 {
-        font-family: "Syne", sans-serif;
-        font-size: clamp(2rem, 4vw, 3rem);
-        font-weight: 800;
-        letter-spacing: -0.02em;
-      }
-      .exam-date {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        margin-top: 0.75rem;
-        font-size: 0.75rem;
-        padding: 0.35rem 0.8rem;
-        background: rgba(168, 85, 247, 0.1);
-        border: 1px solid rgba(168, 85, 247, 0.3);
-        color: var(--accent2);
-      }
-      .exam-date .dot {
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background: var(--accent);
-        animation: pulse 2s infinite;
-      }
-      .section-label {
-        font-size: 0.65rem;
-        letter-spacing: 0.25em;
-        text-transform: uppercase;
-        color: var(--muted);
-        margin-bottom: 1.2rem;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-      }
-      .section-label::after {
-        content: "";
-        flex: 1;
-        height: 1px;
-        background: var(--border);
-      }
-      .section-label span {
-        color: var(--accent2);
-      }
-      .resource-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-        gap: 1px;
-        background: var(--border);
-        border: 1px solid var(--border);
-        margin-bottom: 3rem;
-      }
-      .resource-card {
-        background: var(--card);
-        padding: 2rem;
-        text-decoration: none;
-        color: inherit;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        position: relative;
-        overflow: hidden;
-        transition: background 0.2s;
-      }
-      .resource-card::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 3px;
-        height: 0;
-        background: var(--accent);
-        transition: height 0.3s ease;
-      }
-      .resource-card:hover {
-        background: #16161f;
-      }
-      .resource-card:hover::before {
-        height: 100%;
-      }
-      .resource-icon {
-        font-size: 2rem;
-        line-height: 1;
-      }
-      .resource-eyebrow {
-        font-size: 0.6rem;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: var(--accent);
-      }
-      .resource-title {
-        font-family: "Syne", sans-serif;
-        font-size: 1.2rem;
-        font-weight: 700;
-      }
-      .resource-desc {
-        font-size: 0.75rem;
-        color: var(--muted);
-        line-height: 1.7;
-        flex: 1;
-      }
-      .resource-footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-top: 1rem;
-        border-top: 1px solid var(--border);
-        font-size: 0.7rem;
-        color: var(--muted);
-      }
-      .resource-arrow {
-        font-size: 1rem;
-        color: var(--accent);
-        transition: transform 0.2s;
-      }
-      .resource-card:hover .resource-arrow {
-        transform: translate(3px, -3px);
-      }
-      footer {
-        border-top: 1px solid var(--border);
-        padding: 2rem 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-size: 0.7rem;
-        color: var(--muted);
-        flex-wrap: wrap;
-        gap: 1rem;
-      }
-      @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.4; }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <nav class="back-nav">
-        <a href="../index.html">← Back to Machine Learning</a>
-      </nav>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ML Midterm — Spring 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #07080f;
+      --surface: #0e0f1a;
+      --border: #1a1b2e;
+      --border2: #252640;
+      --accent: #a855f7;
+      --accent2: #c084fc;
+      --accent3: #7c3aed;
+      --text: #e2e4f0;
+      --muted: #5a5c7a;
+      --card: #0e0f1a;
+      --green: #22c55e;
+      --yellow: #f59e0b;
+      --cyan: #06b6d4;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--bg); color: var(--text); font-family: 'Outfit', sans-serif; min-height: 100vh; overflow-x: hidden; }
 
-      <header>
-        <div class="breadcrumb">Machine Learning · <span>Midterm</span></div>
-        <h1>Midterm Study Hub</h1>
-        <div class="exam-date">
-          <span class="dot"></span> March 10, 2026
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 80% 10%, rgba(168,85,247,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 30% at 10% 80%, rgba(124,58,237,0.04) 0%, transparent 50%);
+      z-index: 0; pointer-events: none;
+    }
+
+    .container { max-width: 1060px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+
+    /* NAV */
+    .back-nav { padding: 1.5rem 0; animation: fadeDown .4s ease both; }
+    .back-nav a { color: var(--muted); text-decoration: none; font-family: 'Space Mono', monospace; font-size: .7rem; display: inline-flex; align-items: center; gap: .5rem; transition: color .2s; letter-spacing: .05em; }
+    .back-nav a:hover { color: var(--accent2); }
+
+    /* HEADER */
+    header { padding: 2rem 0 3rem; border-bottom: 1px solid var(--border); margin-bottom: 3rem; animation: fadeDown .5s ease both; position: relative; }
+    .course-tag {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-family: 'Space Mono', monospace; font-size: .65rem;
+      letter-spacing: .15em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1rem;
+      padding: .3rem .75rem; border: 1px solid rgba(168,85,247,.3);
+      background: rgba(168,85,247,.06);
+    }
+    h1 { font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 800; letter-spacing: -.02em; line-height: 1; margin-bottom: .75rem; }
+    h1 span { color: var(--accent2); }
+    .header-meta { font-family: 'Space Mono', monospace; font-size: .7rem; color: var(--muted); line-height: 2; }
+    .exam-alert {
+      position: absolute; top: 2rem; right: 0;
+      background: rgba(168,85,247,.08); border: 1px solid rgba(168,85,247,.25);
+      border-left: 3px solid var(--accent);
+      padding: 1rem 1.25rem; min-width: 200px;
+    }
+    .alert-label { font-family: 'Space Mono', monospace; font-size: .55rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-bottom: .4rem; }
+    .alert-days { font-size: 2.5rem; font-weight: 800; color: var(--accent2); line-height: 1; }
+    .alert-sub { font-size: .7rem; color: var(--muted); margin-top: .25rem; }
+    @media(max-width:700px) { .exam-alert { position: static; margin-top: 1.5rem; } }
+
+    /* PROFESSOR NOTE */
+    .prof-note {
+      background: rgba(6,182,212,.05); border: 1px solid rgba(6,182,212,.2);
+      border-left: 3px solid var(--cyan);
+      padding: 1.25rem 1.5rem; margin-bottom: 3rem;
+      font-size: .85rem; color: #a0c4cc; line-height: 1.7;
+      animation: fadeUp .5s .1s ease both;
+    }
+    .prof-note strong { color: var(--cyan); font-family: 'Space Mono', monospace; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; display: block; margin-bottom: .5rem; }
+
+    /* SECTION */
+    .section-label {
+      font-family: 'Space Mono', monospace; font-size: .6rem;
+      letter-spacing: .2em; text-transform: uppercase; color: var(--muted);
+      margin-bottom: 1.25rem; display: flex; align-items: center; gap: 1rem;
+    }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .section-label span { color: var(--accent2); }
+    .section-block { margin-bottom: 3rem; animation: fadeUp .5s ease both; }
+    .section-block:nth-child(1) { animation-delay: .1s; }
+    .section-block:nth-child(2) { animation-delay: .15s; }
+    .section-block:nth-child(3) { animation-delay: .2s; }
+    .section-block:nth-child(4) { animation-delay: .25s; }
+
+    /* RESOURCE CARDS */
+    .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-bottom: 3rem; }
+    .resource-card { background: var(--card); padding: 2rem; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 1rem; position: relative; overflow: hidden; transition: background .2s; }
+    .resource-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0; background: var(--accent); transition: height .3s; }
+    .resource-card:hover { background: #111224; }
+    .resource-card:hover::before { height: 100%; }
+    .rc-icon { font-size: 1.8rem; }
+    .rc-tag { font-family: 'Space Mono', monospace; font-size: .6rem; letter-spacing: .15em; text-transform: uppercase; color: var(--accent); }
+    .rc-title { font-size: 1.1rem; font-weight: 700; }
+    .rc-desc { font-size: .8rem; color: var(--muted); line-height: 1.65; flex: 1; }
+    .rc-footer { display: flex; justify-content: space-between; align-items: center; padding-top: .75rem; border-top: 1px solid var(--border); font-family: 'Space Mono', monospace; font-size: .65rem; color: var(--muted); }
+    .rc-arrow { color: var(--accent); transition: transform .2s; }
+    .resource-card:hover .rc-arrow { transform: translate(3px,-3px); }
+    .btn-row { display: flex; gap: .5rem; margin-top: .25rem; }
+    .btn { font-family: 'Space Mono', monospace; font-size: .6rem; padding: .4rem .85rem; border: 1px solid; text-decoration: none; text-transform: uppercase; letter-spacing: .08em; transition: all .2s; cursor: pointer; }
+    .btn-view { border-color: rgba(168,85,247,.4); color: var(--accent2); background: rgba(168,85,247,.08); }
+    .btn-view:hover { background: rgba(168,85,247,.18); }
+    .btn-dl { border-color: var(--border2); color: var(--muted); background: transparent; }
+    .btn-dl:hover { border-color: rgba(255,255,255,.2); color: var(--text); }
+
+    /* LECTURE GRID */
+    .lecture-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .lecture-card { background: var(--card); padding: 1.25rem 1.5rem; display: flex; flex-direction: column; gap: .6rem; transition: background .2s; cursor: default; }
+    .lecture-card:hover { background: #111224; }
+    .lc-num { font-family: 'Space Mono', monospace; font-size: .6rem; color: var(--muted); letter-spacing: .1em; }
+    .lc-title { font-size: .9rem; font-weight: 600; line-height: 1.3; }
+    .lc-tags { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .2rem; }
+    .lc-tag { font-size: .55rem; padding: .15rem .45rem; background: rgba(168,85,247,.08); border: 1px solid rgba(168,85,247,.2); color: var(--accent2); font-family: 'Space Mono', monospace; }
+    .lc-tip { font-size: .7rem; color: #7c6a9a; line-height: 1.5; margin-top: .2rem; border-top: 1px solid var(--border); padding-top: .5rem; }
+
+    /* CHEATSHEET */
+    .cheat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .cheat-card { background: var(--card); padding: 1.25rem 1.5rem; }
+    .cheat-label { font-family: 'Space Mono', monospace; font-size: .55rem; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); margin-bottom: .5rem; }
+    .cheat-eq { font-family: 'Space Mono', monospace; font-size: .75rem; color: var(--accent2); line-height: 1.8; }
+    .cheat-desc { font-size: .72rem; color: var(--muted); margin-top: .4rem; line-height: 1.5; }
+
+    /* EXAM TIPS */
+    .tips-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+    .tip-card { background: var(--card); padding: 1.25rem 1.5rem; display: flex; gap: .85rem; }
+    .tip-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: .1rem; }
+    .tip-text { font-size: .78rem; color: var(--muted); line-height: 1.65; }
+    .tip-text strong { color: var(--text); display: block; margin-bottom: .2rem; font-size: .82rem; }
+
+    footer { border-top: 1px solid var(--border); padding: 2rem 0; display: flex; justify-content: space-between; font-family: 'Space Mono', monospace; font-size: .65rem; color: var(--muted); flex-wrap: wrap; gap: 1rem; margin-top: 1rem; }
+
+    @keyframes fadeDown { from { opacity: 0; transform: translateY(-15px); } to { opacity: 1; transform: none; } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body>
+<div class="container">
+  <nav class="back-nav"><a href="../index.html">← Back to Machine Learning</a></nav>
+
+  <header>
+    <div class="course-tag">CS 454 · Spring 2026</div>
+    <h1>ML <span>Midterm</span></h1>
+    <div class="header-meta">
+      Lectures 1–11 · Probability & Decision Theory Module<br>
+      Tuesday, March 10, 2026 · During class time
+    </div>
+    <div class="exam-alert">
+      <div class="alert-label">Time Left</div>
+      <div class="alert-days" id="daysLeft">—</div>
+      <div class="alert-sub" id="examSub">days until exam</div>
+    </div>
+  </header>
+
+  <!-- PROF NOTE -->
+  <div class="prof-note">
+    <strong>📋 Professor's Note</strong>
+    Focus on concepts, intuition & how models work — NOT mathematical proofs. Assignments and highlighted class materials are most important. Complete & comprehensive explanations are preferred over mathematical precision. You can explain how a model works in plain language.
+  </div>
+
+  <!-- RESOURCES -->
+  <div class="section-block">
+    <div class="section-label">Resources <span>Study materials</span></div>
+    <div class="resource-grid">
+      <a href="study-guide.html" class="resource-card">
+        <div class="rc-icon">🧠</div>
+        <div class="rc-tag">Interactive</div>
+        <div class="rc-title">ML Midterm Study Guide</div>
+        <div class="rc-desc">Full lecture-by-lecture breakdown covering all 11 lectures + Probability & Decision Theory. Concept explanations, key formulas, exam tips & likely question types.</div>
+        <div class="rc-footer"><span>L1–L11 · Prob & DT</span><span class="rc-arrow">↗</span></div>
+      </a>
+      <div class="resource-card" style="cursor:default;">
+        <div class="rc-icon">📄</div>
+        <div class="rc-tag">Document</div>
+        <div class="rc-title">Master Study Guide PDF</div>
+        <div class="rc-desc">Complete study guide as a document — all lectures, formulas, exam tips and likely question types. Great for offline reading or printing.</div>
+        <div class="btn-row">
+          <a href="ML_Midterm_Study_Guide.pdf" target="_blank" class="btn btn-view">View in Browser</a>
+          <a href="ML_Midterm_Study_Guide.pdf" download class="btn btn-dl">⬇ Download</a>
         </div>
-      </header>
+      </div>
+    </div>
+  </div>
 
-      <div class="section-label">Resources <span>Study guide & materials</span></div>
-      <div class="resource-grid">
-        <a href="ML_Midterm_Study_Guide.docx" class="resource-card" download>
-          <div class="resource-icon">📄</div>
-          <div class="resource-eyebrow">Study Guide</div>
-          <div class="resource-title">ML Midterm Study Guide</div>
-          <div class="resource-desc">
-            Key topics, concepts and practice for the midterm (Word document).
-          </div>
-          <div class="resource-footer">
-            <span>DOCX</span>
-            <span class="resource-arrow">↗</span>
-          </div>
-        </a>
+  <!-- LECTURE COVERAGE -->
+  <div class="section-block">
+    <div class="section-label">Coverage <span>What's on the midterm</span></div>
+    <div class="lecture-grid">
+
+      <div class="lecture-card">
+        <div class="lc-num">L1</div>
+        <div class="lc-title">The Learning Problem</div>
+        <div class="lc-tags"><span class="lc-tag">ML Framework</span><span class="lc-tag">When to use ML</span></div>
+        <div class="lc-tip">Know: X, Y, f, D, H, A, g — map any real problem to these</div>
       </div>
 
-      <footer>
-        <span>rutgers-notes / spring-2026 / machine-learning / midterm</span>
-        <a href="../index.html" style="color: var(--accent); text-decoration: none;">← Machine Learning</a>
-      </footer>
+      <div class="lecture-card">
+        <div class="lc-num">L2</div>
+        <div class="lc-title">Perceptron & PLA</div>
+        <div class="lc-tags"><span class="lc-tag">PLA</span><span class="lc-tag">Pocket Algorithm</span></div>
+        <div class="lc-tip">PLA = linearly separable only. Pocket = noisy/non-separable data</div>
+      </div>
+
+      <div class="lecture-card">
+        <div class="lc-num">L3</div>
+        <div class="lc-title">Types of Learning</div>
+        <div class="lc-tags"><span class="lc-tag">Supervised</span><span class="lc-tag">Unsupervised</span><span class="lc-tag">RL</span></div>
+        <div class="lc-tip">4 axes: output Y, label type, protocol, input X</div>
+      </div>
+
+      <div class="lecture-card">
+        <div class="lc-num">L4</div>
+        <div class="lc-title">Feasibility of Learning</div>
+        <div class="lc-tags"><span class="lc-tag">Hoeffding</span><span class="lc-tag">VC Bound</span></div>
+        <div class="lc-tip">More data = better generalization. More complex model = harder to generalize</div>
+      </div>
+
+      <div class="lecture-card">
+        <div class="lc-num">L5</div>
+        <div class="lc-title">Noise & Error</div>
+        <div class="lc-tags"><span class="lc-tag">0/1 Loss</span><span class="lc-tag">Squared Error</span><span class="lc-tag">Cross-Entropy</span></div>
+        <div class="lc-tip">Error measure choice affects what the algorithm optimizes</div>
+      </div>
+
+      <div class="lecture-card">
+        <div class="lc-num">L6</div>
+        <div class="lc-title">Linear Regression</div>
+        <div class="lc-tags"><span class="lc-tag">Closed-Form</span><span class="lc-tag">Pseudo-Inverse</span></div>
+        <div class="lc-tip">No sign function. Minimize squared error. Has closed-form solution wLIN = X†y</div>
+      </div>
+
+      <div class="lecture-card">
+        <div class="lc-num">L7</div>
+        <div class="lc-title">Logistic Regression</div>
+        <div class="lc-tags"><span class="lc-tag">Sigmoid</span><span class="lc-tag">Gradient Descent</span></div>
+        <div class="lc-tip">Outputs PROBABILITIES not hard labels. No closed form → gradient descent</div>
+      </div>
+
+      <div class="lecture-card">
+        <div class="lc-num">L8</div>
+        <div class="lc-title">Linear Models for Classification</div>
+        <div class="lc-tags"><span class="lc-tag">SGD</span><span class="lc-tag">OvA / OvO</span><span class="lc-tag">Softmax</span></div>
+        <div class="lc-tip">All 3 models share s = wᵀx — differ in how they interpret it</div>
+      </div>
+
+      <div class="lecture-card">
+        <div class="lc-num">L9</div>
+        <div class="lc-title">Hazard of Overfitting</div>
+        <div class="lc-tags"><span class="lc-tag">Bias-Variance</span><span class="lc-tag">Ein vs Eout</span></div>
+        <div class="lc-tip">Overfitting: Ein↓ but Eout↑. Know 3+ causes</div>
+      </div>
+
+      <div class="lecture-card">
+        <div class="lc-num">L10</div>
+        <div class="lc-title">Regularization</div>
+        <div class="lc-tags"><span class="lc-tag">Ridge L2</span><span class="lc-tag">Lasso L1</span><span class="lc-tag">λ</span></div>
+        <div class="lc-tip">Ridge shrinks all weights. Lasso zeros some out (feature selection)</div>
+      </div>
+
+      <div class="lecture-card">
+        <div class="lc-num">L11</div>
+        <div class="lc-title">Validation</div>
+        <div class="lc-tags"><span class="lc-tag">LOOCV</span><span class="lc-tag">K-Fold CV</span><span class="lc-tag">Model Selection</span></div>
+        <div class="lc-tip">Can't use Ein for model selection — always overfits to most complex model</div>
+      </div>
+
+      <div class="lecture-card">
+        <div class="lc-num">Prob & DT</div>
+        <div class="lc-title">Probability & Decision Theory</div>
+        <div class="lc-tags"><span class="lc-tag">Bayes' Theorem</span><span class="lc-tag">Expected Loss</span></div>
+        <div class="lc-tip">Bayes optimal: pick argmax P(y|x). Asymmetric losses shift decision threshold</div>
+      </div>
+
     </div>
-  </body>
+  </div>
+
+  <!-- FORMULA CHEATSHEET -->
+  <div class="section-block">
+    <div class="section-label">Formula Cheatsheet <span>Key equations only</span></div>
+    <div class="cheat-grid">
+      <div class="cheat-card">
+        <div class="cheat-label">Perceptron Update</div>
+        <div class="cheat-eq">w ← w + yₙ·xₙ</div>
+        <div class="cheat-desc">Only when sign(wᵀxₙ) ≠ yₙ</div>
+      </div>
+      <div class="cheat-card">
+        <div class="cheat-label">Linear Regression</div>
+        <div class="cheat-eq">wLIN = (XᵀX)⁻¹Xᵀy = X†y<br>Ein = (1/N)||Xw − y||²</div>
+        <div class="cheat-desc">Closed-form, minimize squared error</div>
+      </div>
+      <div class="cheat-card">
+        <div class="cheat-label">Logistic / Sigmoid</div>
+        <div class="cheat-eq">θ(s) = 1 / (1 + e^(−s))<br>Range: (0,1) · θ(0) = 0.5</div>
+        <div class="cheat-desc">Maps any score s to a probability</div>
+      </div>
+      <div class="cheat-card">
+        <div class="cheat-label">Logistic Regression Error</div>
+        <div class="cheat-eq">Ein = (1/N) Σ ln(1 + exp(−yₙwᵀxₙ))</div>
+        <div class="cheat-desc">Cross-entropy loss, minimized via gradient descent</div>
+      </div>
+      <div class="cheat-card">
+        <div class="cheat-label">Gradient Descent Update</div>
+        <div class="cheat-eq">w(t+1) = w(t) − η·∇Ein(w(t))</div>
+        <div class="cheat-desc">η = learning rate. Too large → diverge. Too small → slow</div>
+      </div>
+      <div class="cheat-card">
+        <div class="cheat-label">Regularized Error (Ridge)</div>
+        <div class="cheat-eq">Eaug(w) = Ein(w) + (λ/N)||w||²</div>
+        <div class="cheat-desc">λ large → simpler model. λ=0 → no regularization</div>
+      </div>
+      <div class="cheat-card">
+        <div class="cheat-label">Hoeffding's Inequality</div>
+        <div class="cheat-eq">P[|Ein − Eout| > ε] ≤ 2e^(−2ε²N)</div>
+        <div class="cheat-desc">More data N → better generalization guarantee</div>
+      </div>
+      <div class="cheat-card">
+        <div class="cheat-label">Bayes' Theorem</div>
+        <div class="cheat-eq">P(A|B) = P(B|A)·P(A) / P(B)</div>
+        <div class="cheat-desc">Posterior = likelihood × prior / evidence</div>
+      </div>
+      <div class="cheat-card">
+        <div class="cheat-label">Bayes Optimal Classifier</div>
+        <div class="cheat-eq">g*(x) = argmax_y P(y|x)</div>
+        <div class="cheat-desc">Minimizes expected 0/1 loss</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXAM TIPS -->
+  <div class="section-block">
+    <div class="section-label">Likely Question Types <span>What to expect</span></div>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="tip-icon">💬</div>
+        <div class="tip-text">
+          <strong>Concept Explanation</strong>
+          "Explain overfitting and its causes", "How does regularization help?", "Difference between PLA and Pocket?"
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🗺️</div>
+        <div class="tip-text">
+          <strong>Problem Setup / Model ID</strong>
+          Given a scenario, identify: binary classification vs regression vs multiclass. Map to ML framework (X, Y, f, D, H, A, g).
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">⚖️</div>
+        <div class="tip-text">
+          <strong>Compare Models</strong>
+          Linear regression vs logistic regression vs linear classification. Ridge vs Lasso. Batch GD vs SGD.
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🧩</div>
+        <div class="tip-text">
+          <strong>Conceptual Reasoning</strong>
+          "What happens to Ein/Eout as complexity increases?" "If N is small, what about regularization?" "When to use ML vs explicit rules?"
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>rutgers-notes / spring-2026 / machine-learning / midterm</span>
+    <a href="../index.html" style="color:var(--accent);text-decoration:none;">← Machine Learning</a>
+  </footer>
+</div>
+
+<script>
+  const exam = new Date('2026-03-10T00:00:00');
+  const now = new Date();
+  const diff = exam - now;
+  const days = Math.ceil(diff / 86400000);
+  const el = document.getElementById('daysLeft');
+  const sub = document.getElementById('examSub');
+  if (days > 0) {
+    el.textContent = days;
+    sub.textContent = days === 1 ? 'day until exam' : 'days until exam';
+  } else if (days === 0) {
+    el.textContent = '🎯';
+    sub.textContent = 'Exam is TODAY!';
+  } else {
+    el.textContent = 'Done';
+    sub.textContent = 'Exam has passed';
+    el.style.color = 'var(--green)';
+  }
+</script>
+</body>
 </html>

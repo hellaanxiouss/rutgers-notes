@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Machine Learning — Spring 2026</title>
+    <title>Midterm — Machine Learning Spring 2026</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap"
       rel="stylesheet"
@@ -70,12 +70,15 @@
         border-bottom: 1px solid var(--border);
         margin-bottom: 3rem;
       }
-      .course-code {
-        font-size: 0.7rem;
-        letter-spacing: 0.25em;
+      .breadcrumb {
+        font-size: 0.65rem;
+        letter-spacing: 0.15em;
         text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 0.75rem;
+      }
+      .breadcrumb span {
         color: var(--accent);
-        margin-bottom: 0.5rem;
       }
       h1 {
         font-family: "Syne", sans-serif;
@@ -83,11 +86,23 @@
         font-weight: 800;
         letter-spacing: -0.02em;
       }
-      .header-sub {
-        color: var(--muted);
-        font-size: 0.8rem;
-        margin-top: 0.5rem;
-        line-height: 1.6;
+      .exam-date {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+        font-size: 0.75rem;
+        padding: 0.35rem 0.8rem;
+        background: rgba(168, 85, 247, 0.1);
+        border: 1px solid rgba(168, 85, 247, 0.3);
+        color: var(--accent2);
+      }
+      .exam-date .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--accent);
+        animation: pulse 2s infinite;
       }
       .section-label {
         font-size: 0.65rem;
@@ -96,31 +111,40 @@
         color: var(--muted);
         margin-bottom: 1.2rem;
         font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .section-label::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border);
       }
       .section-label span {
         color: var(--accent2);
       }
-      .grid {
+      .resource-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
         gap: 1px;
         background: var(--border);
         border: 1px solid var(--border);
         margin-bottom: 3rem;
       }
-      .card {
+      .resource-card {
         background: var(--card);
-        padding: 1.5rem;
+        padding: 2rem;
         text-decoration: none;
         color: inherit;
         display: flex;
         flex-direction: column;
-        gap: 0.8rem;
+        gap: 1rem;
         position: relative;
         overflow: hidden;
         transition: background 0.2s;
       }
-      .card::before {
+      .resource-card::before {
         content: "";
         position: absolute;
         top: 0;
@@ -130,34 +154,48 @@
         background: var(--accent);
         transition: height 0.3s ease;
       }
-      .card:hover {
+      .resource-card:hover {
         background: #16161f;
       }
-      .card:hover::before {
+      .resource-card:hover::before {
         height: 100%;
       }
-      .card-num {
-        font-size: 0.65rem;
-        color: var(--muted);
-        letter-spacing: 0.1em;
+      .resource-icon {
+        font-size: 2rem;
+        line-height: 1;
       }
-      .card-name {
+      .resource-eyebrow {
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+      .resource-title {
         font-family: "Syne", sans-serif;
-        font-size: 1rem;
+        font-size: 1.2rem;
         font-weight: 700;
       }
-      .card-desc {
+      .resource-desc {
         font-size: 0.75rem;
         color: var(--muted);
-        line-height: 1.6;
+        line-height: 1.7;
+        flex: 1;
       }
-      .card-arrow {
-        font-size: 0.85rem;
+      .resource-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border);
+        font-size: 0.7rem;
+        color: var(--muted);
+      }
+      .resource-arrow {
+        font-size: 1rem;
         color: var(--accent);
-        margin-top: auto;
         transition: transform 0.2s;
       }
-      .card:hover .card-arrow {
+      .resource-card:hover .resource-arrow {
         transform: translate(3px, -3px);
       }
       footer {
@@ -171,92 +209,45 @@
         flex-wrap: wrap;
         gap: 1rem;
       }
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.4; }
+      }
     </style>
   </head>
   <body>
     <div class="container">
       <nav class="back-nav">
-        <a href="../index.html">← Back to All Subjects</a>
+        <a href="../index.html">← Back to Machine Learning</a>
       </nav>
+
       <header>
-        <div class="course-code">CS 461 — Spring 2026</div>
-        <h1>Machine Learning</h1>
-        <div class="header-sub">
-          Supervised · Unsupervised · Neural Networks · Model Evaluation
+        <div class="breadcrumb">Machine Learning · <span>Midterm</span></div>
+        <h1>Midterm Study Hub</h1>
+        <div class="exam-date">
+          <span class="dot"></span> March 10, 2026
         </div>
       </header>
 
-      <!-- EXAMS -->
-      <div class="section-label">Exams <span>Study guides & resources</span></div>
-      <div class="grid">
-        <a href="midterm/index.html" class="card">
-          <div class="card-num">EXAM</div>
-          <div class="card-name">Midterm — March 10</div>
-          <div class="card-desc">
-            Study guide and materials for the ML midterm.
+      <div class="section-label">Resources <span>Study guide & materials</span></div>
+      <div class="resource-grid">
+        <a href="ML_Midterm_Study_Guide.docx" class="resource-card" download>
+          <div class="resource-icon">📄</div>
+          <div class="resource-eyebrow">Study Guide</div>
+          <div class="resource-title">ML Midterm Study Guide</div>
+          <div class="resource-desc">
+            Key topics, concepts and practice for the midterm (Word document).
           </div>
-          <div class="card-arrow">↗</div>
+          <div class="resource-footer">
+            <span>DOCX</span>
+            <span class="resource-arrow">↗</span>
+          </div>
         </a>
       </div>
 
-      <div class="section-label">Topics — <span>Notes & Notebooks</span></div>
-      <div class="grid">
-        <a href="#" class="card">
-          <div class="card-num">01</div>
-          <div class="card-name">Regression</div>
-          <div class="card-desc">
-            Linear, polynomial, ridge & lasso regression with gradient descent.
-          </div>
-          <div class="card-arrow">↗</div>
-        </a>
-        <a href="#" class="card">
-          <div class="card-num">02</div>
-          <div class="card-name">Classification</div>
-          <div class="card-desc">
-            Logistic regression, KNN, SVM, decision trees & random forests.
-          </div>
-          <div class="card-arrow">↗</div>
-        </a>
-        <a href="#" class="card">
-          <div class="card-num">03</div>
-          <div class="card-name">Neural Networks</div>
-          <div class="card-desc">
-            Perceptrons, backprop, activation functions, CNNs & RNNs.
-          </div>
-          <div class="card-arrow">↗</div>
-        </a>
-        <a href="#" class="card">
-          <div class="card-num">04</div>
-          <div class="card-name">Unsupervised Learning</div>
-          <div class="card-desc">
-            K-means, DBSCAN, PCA & dimensionality reduction.
-          </div>
-          <div class="card-arrow">↗</div>
-        </a>
-        <a href="#" class="card">
-          <div class="card-num">05</div>
-          <div class="card-name">Model Evaluation</div>
-          <div class="card-desc">
-            Cross-validation, precision/recall, ROC curves & overfitting.
-          </div>
-          <div class="card-arrow">↗</div>
-        </a>
-        <a href="#" class="card">
-          <div class="card-num">NB</div>
-          <div class="card-name">Jupyter Notebooks</div>
-          <div class="card-desc">
-            Practical implementations and experiments.
-          </div>
-          <div class="card-arrow">↗</div>
-        </a>
-      </div>
       <footer>
-        <span>rutgers-notes / spring-2026 / machine-learning</span>
-        <a
-          href="../index.html"
-          style="color: var(--accent); text-decoration: none"
-          >← Home</a
-        >
+        <span>rutgers-notes / spring-2026 / machine-learning / midterm</span>
+        <a href="../index.html" style="color: var(--accent); text-decoration: none;">← Machine Learning</a>
       </footer>
     </div>
   </body>

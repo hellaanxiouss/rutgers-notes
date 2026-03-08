@@ -1,0 +1,2101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ML Midterm — Master Study Guide</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #07080f;
+        --surface: #0e0f1a;
+        --border: #1a1b2e;
+        --border2: #252640;
+        --accent: #a855f7;
+        --accent2: #c084fc;
+        --text: #e2e4f0;
+        --muted: #5a5c7a;
+        --card: #0e0f1a;
+        --green: #22c55e;
+        --yellow: #f59e0b;
+        --cyan: #06b6d4;
+        --red: #f43f5e;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Outfit", sans-serif;
+        font-size: 15px;
+        line-height: 1.65;
+        min-height: 100vh;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 60% 40% at 80% 10%,
+            rgba(168, 85, 247, 0.06) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse 40% 30% at 10% 80%,
+            rgba(124, 58, 237, 0.04) 0%,
+            transparent 50%
+          );
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      /* NAV */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(7, 8, 15, 0.95);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+        padding: 0 2rem;
+        display: flex;
+        align-items: center;
+        height: 54px;
+        overflow-x: auto;
+        gap: 0;
+      }
+      .nav-brand {
+        font-family: "Space Mono", monospace;
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
+        color: var(--text);
+        white-space: nowrap;
+        margin-right: 2rem;
+        flex-shrink: 0;
+      }
+      .nav-brand span {
+        color: var(--accent2);
+      }
+      .nav-tabs {
+        display: flex;
+        gap: 2px;
+      }
+      .nav-tab {
+        padding: 5px 14px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        color: var(--muted);
+        transition: all 0.18s;
+        white-space: nowrap;
+        font-family: "Outfit", sans-serif;
+        letter-spacing: 0.02em;
+      }
+      .nav-tab:hover {
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.05);
+      }
+      .nav-tab.active {
+        background: rgba(168, 85, 247, 0.15);
+        color: var(--accent2);
+      }
+
+      /* HERO */
+      .hero {
+        max-width: 1060px;
+        margin: 0 auto;
+        padding: 4rem 2rem 3rem;
+        border-bottom: 1px solid var(--border);
+        position: relative;
+        z-index: 1;
+      }
+      .hero-eyebrow {
+        font-family: "Space Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 1rem;
+      }
+      .hero h1 {
+        font-size: clamp(2.5rem, 6vw, 4.5rem);
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        line-height: 0.95;
+        margin-bottom: 1rem;
+      }
+      .hero h1 span {
+        color: var(--accent2);
+      }
+      .hero-sub {
+        font-size: 0.9rem;
+        color: var(--muted);
+        margin-bottom: 2rem;
+        max-width: 500px;
+        line-height: 1.7;
+      }
+
+      .lecture-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .lpill {
+        font-size: 0.65rem;
+        padding: 0.3rem 0.75rem;
+        border: 1px solid rgba(168, 85, 247, 0.3);
+        color: var(--accent2);
+        background: rgba(168, 85, 247, 0.06);
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: "Space Mono", monospace;
+        letter-spacing: 0.05em;
+      }
+      .lpill:hover {
+        background: rgba(168, 85, 247, 0.15);
+      }
+      .lpill.active {
+        background: rgba(168, 85, 247, 0.2);
+        border-color: var(--accent);
+        color: white;
+      }
+
+      /* CONTENT */
+      .content {
+        max-width: 1060px;
+        margin: 0 auto;
+        padding: 3rem 2rem 6rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* SECTIONS */
+      .section {
+        display: none;
+        animation: fadeIn 0.3s ease;
+      }
+      .section.visible {
+        display: block;
+      }
+
+      /* BIG PICTURE */
+      .framework-box {
+        background: var(--surface);
+        border: 1px solid var(--border2);
+        border-left: 3px solid var(--accent);
+        padding: 1.5rem 2rem;
+        margin-bottom: 2rem;
+      }
+      .framework-box h3 {
+        font-family: "Space Mono", monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 1rem;
+      }
+      .framework-items {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 0.6rem;
+      }
+      .fi {
+        display: flex;
+        gap: 0.75rem;
+        align-items: flex-start;
+        background: rgba(168, 85, 247, 0.05);
+        border: 1px solid rgba(168, 85, 247, 0.12);
+        padding: 0.75rem 1rem;
+      }
+      .fi-letter {
+        font-family: "Space Mono", monospace;
+        font-size: 1.1rem;
+        color: var(--accent2);
+        font-weight: 700;
+        flex-shrink: 0;
+        width: 18px;
+      }
+      .fi-text {
+        font-size: 0.8rem;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+      .fi-text strong {
+        color: var(--text);
+        display: block;
+        font-size: 0.82rem;
+      }
+
+      /* LECTURE CARDS */
+      .lecture-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-top: 3px solid var(--accent);
+        margin-bottom: 1.5rem;
+        overflow: hidden;
+      }
+      .lc-header {
+        padding: 1.5rem 2rem 0;
+        display: flex;
+        align-items: flex-start;
+        gap: 1.25rem;
+      }
+      .lc-num {
+        font-family: "Space Mono", monospace;
+        font-size: 3rem;
+        font-weight: 700;
+        line-height: 0.85;
+        opacity: 0.15;
+        flex-shrink: 0;
+        color: var(--accent);
+      }
+      .lc-meta {
+        flex: 1;
+      }
+      .lc-tag {
+        font-family: "Space Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 0.4rem;
+      }
+      .lc-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+      .lc-body {
+        padding: 0.75rem 2rem 1.5rem 2rem;
+      }
+
+      /* CONCEPT BLOCK */
+      .concept {
+        background: rgba(168, 85, 247, 0.04);
+        border: 1px solid rgba(168, 85, 247, 0.12);
+        padding: 1rem 1.25rem;
+        margin-bottom: 0.75rem;
+        border-radius: 4px;
+      }
+      .concept h4 {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--accent2);
+        margin-bottom: 0.4rem;
+      }
+      .concept p {
+        font-size: 0.82rem;
+        color: #b0b4cc;
+        line-height: 1.7;
+      }
+
+      /* KEY FORMULA */
+      .key-formula {
+        background: rgba(168, 85, 247, 0.08);
+        border: 1px solid rgba(168, 85, 247, 0.25);
+        border-left: 3px solid var(--accent2);
+        padding: 0.75rem 1rem;
+        margin: 0.75rem 0;
+        font-family: "Space Mono", monospace;
+        font-size: 0.75rem;
+        color: var(--accent2);
+        line-height: 1.8;
+      }
+      .key-formula .kf-label {
+        font-size: 0.55rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--muted);
+        display: block;
+        margin-bottom: 0.3rem;
+        font-family: "Outfit", sans-serif;
+      }
+
+      /* EXAM TIP */
+      .exam-tip {
+        background: rgba(245, 158, 11, 0.05);
+        border: 1px solid rgba(245, 158, 11, 0.2);
+        border-left: 3px solid var(--yellow);
+        padding: 0.75rem 1rem;
+        margin: 0.75rem 0;
+        font-size: 0.8rem;
+        color: #c9a84c;
+        line-height: 1.65;
+      }
+      .exam-tip strong {
+        color: var(--yellow);
+      }
+
+      /* WARNING */
+      .warning {
+        background: rgba(244, 63, 94, 0.05);
+        border: 1px solid rgba(244, 63, 94, 0.2);
+        border-left: 3px solid var(--red);
+        padding: 0.75rem 1rem;
+        margin: 0.75rem 0;
+        font-size: 0.8rem;
+        color: #c47080;
+        line-height: 1.65;
+      }
+      .warning strong {
+        color: var(--red);
+      }
+
+      /* COMPARISON TABLE */
+      .compare-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0;
+        font-size: 0.78rem;
+      }
+      .compare-table th {
+        background: rgba(168, 85, 247, 0.12);
+        color: var(--accent2);
+        font-family: "Space Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.6rem 0.9rem;
+        text-align: left;
+        border: 1px solid var(--border2);
+      }
+      .compare-table td {
+        padding: 0.6rem 0.9rem;
+        border: 1px solid var(--border);
+        color: #b0b4cc;
+        vertical-align: top;
+        line-height: 1.5;
+      }
+      .compare-table tr:nth-child(even) td {
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      /* BULLET LIST */
+      .blist {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        margin: 0.75rem 0;
+      }
+      .blist li {
+        display: flex;
+        gap: 0.6rem;
+        font-size: 0.82rem;
+        color: #b0b4cc;
+        line-height: 1.6;
+      }
+      .blist li::before {
+        content: "▸";
+        color: var(--accent);
+        flex-shrink: 0;
+        margin-top: 0.05rem;
+      }
+
+      /* ACCORDION */
+      .acc {
+        border: 1px solid var(--border);
+        margin-bottom: 0.5rem;
+      }
+      .acc-btn {
+        width: 100%;
+        padding: 0.85rem 1.1rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: none;
+        color: var(--text);
+        font-family: "Outfit", sans-serif;
+        font-size: 0.82rem;
+        font-weight: 600;
+        text-align: left;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background 0.15s;
+      }
+      .acc-btn:hover {
+        background: rgba(255, 255, 255, 0.06);
+      }
+      .acc-icon {
+        transition: transform 0.2s;
+        color: var(--muted);
+        font-size: 0.75rem;
+      }
+      .acc-icon.open {
+        transform: rotate(180deg);
+      }
+      .acc-body {
+        display: none;
+        padding: 1rem 1.1rem;
+        border-top: 1px solid var(--border);
+        background: var(--bg);
+      }
+      .acc-body.open {
+        display: block;
+      }
+
+      /* DONE CHECK */
+      .done-row {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin-top: 1rem;
+        padding-top: 0.75rem;
+        border-top: 1px solid var(--border);
+      }
+      .done-check {
+        width: 18px;
+        height: 18px;
+        border: 2px solid var(--border2);
+        border-radius: 3px;
+        cursor: pointer;
+        transition: all 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .done-check.checked {
+        background: var(--green);
+        border-color: var(--green);
+      }
+      .done-check.checked::after {
+        content: "✓";
+        color: white;
+        font-size: 11px;
+        font-weight: bold;
+      }
+      .done-label {
+        font-size: 0.72rem;
+        color: var(--muted);
+        cursor: pointer;
+      }
+
+      /* PROGRESS */
+      .prog-wrap {
+        background: var(--border);
+        height: 3px;
+        border-radius: 100px;
+        overflow: hidden;
+        margin-top: 0.5rem;
+      }
+      .prog-bar {
+        height: 3px;
+        border-radius: 100px;
+        background: var(--accent);
+        transition: width 0.4s ease;
+      }
+
+      /* FORMULA SHEET SECTION */
+      .formula-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+      }
+      .formula-card {
+        background: var(--card);
+        padding: 1.25rem 1.5rem;
+      }
+      .fc-label {
+        font-family: "Space Mono", monospace;
+        font-size: 0.55rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 0.5rem;
+      }
+      .fc-eq {
+        font-family: "Space Mono", monospace;
+        font-size: 0.75rem;
+        color: var(--accent2);
+        line-height: 1.9;
+      }
+      .fc-note {
+        font-size: 0.72rem;
+        color: var(--muted);
+        margin-top: 0.4rem;
+        line-height: 1.5;
+      }
+
+      /* EXAM QS SECTION */
+      .qtype {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 0.75rem;
+      }
+      .qtype h4 {
+        font-size: 0.88rem;
+        font-weight: 700;
+        margin-bottom: 0.6rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .qtype ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+      }
+      .qtype ul li {
+        font-size: 0.8rem;
+        color: var(--muted);
+        padding-left: 1rem;
+        position: relative;
+        line-height: 1.6;
+      }
+      .qtype ul li::before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: var(--accent);
+      }
+
+      /* SECTION DIVIDER */
+      .sdiv {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin: 2rem 0 1.5rem;
+      }
+      .sdiv-line {
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+      .sdiv-label {
+        font-family: "Space Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+      .sdiv-label span {
+        color: var(--accent2);
+      }
+
+      /* OVERALL PROGRESS */
+      .overall-prog {
+        background: var(--surface);
+        border: 1px solid var(--border2);
+        padding: 1rem 1.5rem;
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+      }
+      .op-label {
+        font-family: "Space Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+      .op-bar-wrap {
+        flex: 1;
+        background: var(--border);
+        height: 4px;
+        border-radius: 100px;
+        overflow: hidden;
+        min-width: 120px;
+      }
+      .op-bar {
+        height: 4px;
+        border-radius: 100px;
+        background: var(--accent);
+        transition: width 0.4s ease;
+        width: 0%;
+      }
+      .op-count {
+        font-family: "Space Mono", monospace;
+        font-size: 0.7rem;
+        color: var(--accent2);
+        white-space: nowrap;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-brand">ML <span>MIDTERM</span></div>
+      <div class="nav-tabs">
+        <button class="nav-tab" onclick="show('overview')" id="tab-overview">
+          🗺 Overview
+        </button>
+        <button class="nav-tab" onclick="show('l1')" id="tab-l1">
+          L1 — Learning Problem
+        </button>
+        <button class="nav-tab" onclick="show('l2')" id="tab-l2">
+          L2 — Perceptron
+        </button>
+        <button class="nav-tab" onclick="show('l3')" id="tab-l3">
+          L3 — Types
+        </button>
+        <button class="nav-tab" onclick="show('l4')" id="tab-l4">
+          L4 — Feasibility
+        </button>
+        <button class="nav-tab" onclick="show('l5')" id="tab-l5">
+          L5 — Noise
+        </button>
+        <button class="nav-tab" onclick="show('l6')" id="tab-l6">
+          L6 — Lin. Reg
+        </button>
+        <button class="nav-tab" onclick="show('l7')" id="tab-l7">
+          L7 — Log. Reg
+        </button>
+        <button class="nav-tab" onclick="show('l8')" id="tab-l8">
+          L8 — Classification
+        </button>
+        <button class="nav-tab" onclick="show('l9')" id="tab-l9">
+          L9 — Overfitting
+        </button>
+        <button class="nav-tab" onclick="show('l10')" id="tab-l10">
+          L10 — Regularization
+        </button>
+        <button class="nav-tab" onclick="show('l11')" id="tab-l11">
+          L11 — Validation
+        </button>
+        <button class="nav-tab" onclick="show('prob')" id="tab-prob">
+          Prob & DT
+        </button>
+        <button class="nav-tab" onclick="show('formulas')" id="tab-formulas">
+          📐 Formulas
+        </button>
+        <button class="nav-tab" onclick="show('examqs')" id="tab-examqs">
+          ❓ Exam Qs
+        </button>
+      </div>
+    </nav>
+
+    <div class="hero">
+      <div class="hero-eyebrow">CS 454 · Spring 2026 · Lectures 1–11</div>
+      <h1>ML MIDTERM<br /><span>STUDY GUIDE</span></h1>
+      <p class="hero-sub">
+        Complete breakdown of every lecture. Click a tab above or a lecture
+        below to jump straight in.
+      </p>
+      <div class="lecture-pills">
+        <button class="lpill" onclick="show('overview')">🗺 Big Picture</button>
+        <button class="lpill" onclick="show('l1')">L1</button>
+        <button class="lpill" onclick="show('l2')">L2</button>
+        <button class="lpill" onclick="show('l3')">L3</button>
+        <button class="lpill" onclick="show('l4')">L4</button>
+        <button class="lpill" onclick="show('l5')">L5</button>
+        <button class="lpill" onclick="show('l6')">L6</button>
+        <button class="lpill" onclick="show('l7')">L7</button>
+        <button class="lpill" onclick="show('l8')">L8</button>
+        <button class="lpill" onclick="show('l9')">L9</button>
+        <button class="lpill" onclick="show('l10')">L10</button>
+        <button class="lpill" onclick="show('l11')">L11</button>
+        <button class="lpill" onclick="show('prob')">Prob & DT</button>
+        <button class="lpill" onclick="show('formulas')">📐 Formulas</button>
+        <button class="lpill" onclick="show('examqs')">❓ Exam Qs</button>
+      </div>
+    </div>
+
+    <div class="content">
+      <!-- OVERALL PROGRESS -->
+      <div class="overall-prog">
+        <div class="op-label">Study Progress</div>
+        <div class="op-bar-wrap">
+          <div class="op-bar" id="overallBar"></div>
+        </div>
+        <div class="op-count" id="overallCount">0 / 12 sections done</div>
+      </div>
+
+      <!-- ══════════════ OVERVIEW ══════════════ -->
+      <div class="section" id="overview">
+        <div class="sdiv">
+          <div class="sdiv-line"></div>
+          <div class="sdiv-label">
+            The <span>ML Framework</span> — memorize this first
+          </div>
+          <div class="sdiv-line"></div>
+        </div>
+
+        <div class="framework-box">
+          <h3>🔑 The Core Setup</h3>
+          <p
+            style="
+              font-size: 0.82rem;
+              color: var(--muted);
+              margin-bottom: 1.25rem;
+            "
+          >
+            Use data <strong style="color: var(--text)">D</strong> to compute
+            hypothesis <strong style="color: var(--text)">g</strong> (from
+            hypothesis set <strong style="color: var(--text)">H</strong>, via
+            algorithm <strong style="color: var(--text)">A</strong>) that
+            approximates an unknown target function
+            <strong style="color: var(--text)">f</strong>.
+          </p>
+          <div class="framework-items">
+            <div class="fi">
+              <div class="fi-letter">X</div>
+              <div class="fi-text">
+                <strong>Input Space</strong>Features — e.g. customer info, pixel
+                values
+              </div>
+            </div>
+            <div class="fi">
+              <div class="fi-letter">Y</div>
+              <div class="fi-text">
+                <strong>Output Space</strong>{+1,−1} for classification, ℝ for
+                regression
+              </div>
+            </div>
+            <div class="fi">
+              <div class="fi-letter">f</div>
+              <div class="fi-text">
+                <strong>Target Function</strong>The ideal formula we want —
+                unknown
+              </div>
+            </div>
+            <div class="fi">
+              <div class="fi-letter">D</div>
+              <div class="fi-text">
+                <strong>Training Data</strong>{(x₁,y₁), ..., (xₙ,yₙ)} —
+                historical records
+              </div>
+            </div>
+            <div class="fi">
+              <div class="fi-letter">H</div>
+              <div class="fi-text">
+                <strong>Hypothesis Set</strong>Candidate formulas we consider
+              </div>
+            </div>
+            <div class="fi">
+              <div class="fi-letter">A</div>
+              <div class="fi-text">
+                <strong>Learning Algorithm</strong>Picks best h from H — e.g.
+                PLA, GD
+              </div>
+            </div>
+            <div class="fi">
+              <div class="fi-letter">g</div>
+              <div class="fi-text">
+                <strong>Final Hypothesis</strong>What we output — hopefully ≈ f
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="exam-tip">
+          <strong>📝 Exam Tip:</strong> You WILL be asked to map a real-world
+          problem (spam detection, credit approval) onto these 7 components.
+          Practice this for every topic you study.
+        </div>
+
+        <div class="sdiv">
+          <div class="sdiv-line"></div>
+          <div class="sdiv-label">Professor's <span>Focus Areas</span></div>
+          <div class="sdiv-line"></div>
+        </div>
+        <div
+          style="
+            background: rgba(6, 182, 212, 0.05);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-left: 3px solid var(--cyan);
+            padding: 1.25rem 1.5rem;
+            font-size: 0.82rem;
+            color: #a0c4cc;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+          "
+        >
+          <strong
+            style="
+              color: var(--cyan);
+              font-family: &quot;Space Mono&quot;, monospace;
+              font-size: 0.65rem;
+              letter-spacing: 0.1em;
+              text-transform: uppercase;
+              display: block;
+              margin-bottom: 0.5rem;
+            "
+            >📋 From the Professor</strong
+          >
+          Focus on
+          <strong style="color: var(--text)"
+            >concepts, intuition & how models work</strong
+          >
+          — NOT mathematical proofs. Assignments and class-highlighted materials
+          are most important. Complete & comprehensive explanations are
+          preferred over mathematical precision. You can explain how a model
+          works in plain language — mathematical terms preferred but not
+          required.
+        </div>
+
+        <div class="sdiv">
+          <div class="sdiv-line"></div>
+          <div class="sdiv-label">All <span>Lectures</span> at a Glance</div>
+          <div class="sdiv-line"></div>
+        </div>
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Lecture</th>
+              <th>Topic</th>
+              <th>Key Concept</th>
+              <th>Must Know</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>L1</td>
+              <td>The Learning Problem</td>
+              <td>ML Framework (X,Y,f,D,H,A,g)</td>
+              <td>When to use ML vs explicit rules</td>
+            </tr>
+            <tr>
+              <td>L2</td>
+              <td>Perceptron & PLA</td>
+              <td>h(x) = sign(wᵀx)</td>
+              <td>PLA vs Pocket algorithm</td>
+            </tr>
+            <tr>
+              <td>L3</td>
+              <td>Types of Learning</td>
+              <td>4 axes of classification</td>
+              <td>Supervised/Unsupervised/RL</td>
+            </tr>
+            <tr>
+              <td>L4</td>
+              <td>Feasibility</td>
+              <td>Hoeffding's Inequality, VC bound</td>
+              <td>Ein ≈ Eout for large N</td>
+            </tr>
+            <tr>
+              <td>L5</td>
+              <td>Noise & Error</td>
+              <td>Error measures: 0/1, squared, CE</td>
+              <td>Error measure affects optimization</td>
+            </tr>
+            <tr>
+              <td>L6</td>
+              <td>Linear Regression</td>
+              <td>wLIN = X†y (closed-form)</td>
+              <td>No sign function, minimize squared error</td>
+            </tr>
+            <tr>
+              <td>L7</td>
+              <td>Logistic Regression</td>
+              <td>θ(s) = 1/(1+e^−s)</td>
+              <td>Outputs probabilities, needs GD</td>
+            </tr>
+            <tr>
+              <td>L8</td>
+              <td>Linear Classification</td>
+              <td>SGD, OvA, OvO, Softmax</td>
+              <td>All models share s = wᵀx</td>
+            </tr>
+            <tr>
+              <td>L9</td>
+              <td>Overfitting</td>
+              <td>Ein↓ but Eout↑</td>
+              <td>3+ causes of overfitting</td>
+            </tr>
+            <tr>
+              <td>L10</td>
+              <td>Regularization</td>
+              <td>Eaug = Ein + (λ/N)||w||²</td>
+              <td>Ridge vs Lasso</td>
+            </tr>
+            <tr>
+              <td>L11</td>
+              <td>Validation</td>
+              <td>K-fold CV, LOOCV</td>
+              <td>Why not use Ein for model selection</td>
+            </tr>
+            <tr>
+              <td>Prob & DT</td>
+              <td>Probability & Decision Theory</td>
+              <td>Bayes' Theorem, Optimal Classifier</td>
+              <td>Posterior = likelihood × prior / evidence</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ══════════════ L1 ══════════════ -->
+      <div class="section" id="l1">
+        <div class="lecture-card">
+          <div class="lc-header">
+            <div class="lc-num">1</div>
+            <div class="lc-meta">
+              <div class="lc-tag">Lecture 1</div>
+              <div class="lc-title">The Learning Problem</div>
+            </div>
+          </div>
+          <div class="lc-body">
+            <div class="concept">
+              <h4>What is Machine Learning?</h4>
+              <p>
+                ML = improving some performance measure with experience computed
+                from data. It is used when a rule cannot be explicitly
+                programmed — e.g., recognizing faces, filtering spam.
+              </p>
+            </div>
+            <div class="concept">
+              <h4>When Should We Use ML?</h4>
+              <ul class="blist">
+                <li>
+                  When the pattern <strong>exists</strong> (there IS something
+                  to learn)
+                </li>
+                <li>
+                  When we
+                  <strong>cannot define the rule mathematically</strong> (no
+                  explicit formula)
+                </li>
+                <li>When we <strong>have data</strong> on the pattern</li>
+              </ul>
+            </div>
+            <div class="concept">
+              <h4>ML vs. Related Fields</h4>
+              <ul class="blist">
+                <li>
+                  <strong>ML vs. AI:</strong> ML is one route to AI (others:
+                  game trees, expert systems)
+                </li>
+                <li>
+                  <strong>ML vs. Statistics:</strong> Stats focuses on math
+                  proofs, ML focuses on computation
+                </li>
+                <li>
+                  <strong>ML vs. Data Mining:</strong> DM finds interesting
+                  properties, ML approximates f
+                </li>
+              </ul>
+            </div>
+            <div class="exam-tip">
+              <strong>📝 Exam Tip:</strong> Be ready to explain WHY ML is used
+              instead of writing explicit rules. Also practice mapping spam
+              detection, credit approval, face recognition onto X, Y, f, D, H,
+              A, g.
+            </div>
+            <div class="done-row">
+              <div class="done-check" onclick="markDone(this, 'l1')"></div>
+              <span class="done-label">Mark L1 as studied</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════ L2 ══════════════ -->
+      <div class="section" id="l2">
+        <div class="lecture-card">
+          <div class="lc-header">
+            <div class="lc-num">2</div>
+            <div class="lc-meta">
+              <div class="lc-tag">Lecture 2</div>
+              <div class="lc-title">
+                Learning to Answer Yes/No — Perceptron & PLA
+              </div>
+            </div>
+          </div>
+          <div class="lc-body">
+            <div class="concept">
+              <h4>The Perceptron Hypothesis</h4>
+              <p>
+                A perceptron computes a weighted score of features and
+                thresholds it. In 2D it's a line; in higher dimensions it's a
+                hyperplane.
+              </p>
+            </div>
+            <div class="key-formula">
+              <span class="kf-label">Perceptron Formula</span>h(x) = sign(w₀ +
+              w₁x₁ + ... + wdxd) = sign(wᵀx)
+            </div>
+            <div class="concept">
+              <h4>Perceptron Learning Algorithm (PLA)</h4>
+              <ul class="blist">
+                <li>Start with w₀ = 0 (or any vector)</li>
+                <li>
+                  Find a misclassified point (xₙ, yₙ) where sign(wᵀxₙ) ≠ yₙ
+                </li>
+                <li>
+                  Update: <strong>w ← w + yₙ·xₙ</strong> (correct the mistake)
+                </li>
+                <li>Repeat until no mistakes on training data</li>
+              </ul>
+            </div>
+            <div class="key-formula">
+              <span class="kf-label">Guarantee</span>PLA ONLY guaranteed to halt
+              if data is <strong>linearly separable</strong>.<br />Max mistakes
+              T ≤ (R/ρ)² where R = max data radius, ρ = margin
+            </div>
+            <div class="concept">
+              <h4>Pocket Algorithm (for non-separable data)</h4>
+              <p>
+                Keep the "best so far" weights (fewest training errors) in your
+                "pocket". Run for a fixed number of iterations and return pocket
+                weights.
+              </p>
+              <ul class="blist" style="margin-top: 0.5rem">
+                <li>
+                  <strong>Pros:</strong> works on noisy, non-separable data
+                </li>
+                <li>
+                  <strong>Cons:</strong> slower than PLA (must check if new
+                  weights are better each round)
+                </li>
+              </ul>
+            </div>
+            <div class="warning">
+              <strong>⚠️ Key Distinction:</strong> PLA = linearly separable data
+              only. Pocket = noise-tolerant version for messy real data. This
+              comparison is very likely to appear on the exam.
+            </div>
+            <div class="done-row">
+              <div class="done-check" onclick="markDone(this, 'l2')"></div>
+              <span class="done-label">Mark L2 as studied</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════ L3 ══════════════ -->
+      <div class="section" id="l3">
+        <div class="lecture-card">
+          <div class="lc-header">
+            <div class="lc-num">3</div>
+            <div class="lc-meta">
+              <div class="lc-tag">Lecture 3</div>
+              <div class="lc-title">Types of Learning</div>
+            </div>
+          </div>
+          <div class="lc-body">
+            <div class="concept">
+              <h4>By Output Space Y</h4>
+              <ul class="blist">
+                <li>
+                  <strong>Binary Classification:</strong> Y = {−1, +1} →
+                  spam/not spam, sick/not sick
+                </li>
+                <li>
+                  <strong>Multiclass Classification:</strong> Y = {1,...,K} →
+                  digit recognition (0–9)
+                </li>
+                <li>
+                  <strong>Regression:</strong> Y = ℝ → stock price, temperature,
+                  credit limit
+                </li>
+                <li>
+                  <strong>Structured Learning:</strong> Y = complex structures →
+                  sentence parsing
+                </li>
+              </ul>
+            </div>
+            <div class="concept">
+              <h4>By Data Label Type</h4>
+              <ul class="blist">
+                <li>
+                  <strong>Supervised:</strong> every xₙ comes with a label yₙ
+                </li>
+                <li>
+                  <strong>Unsupervised:</strong> no labels — e.g., clustering,
+                  density estimation
+                </li>
+                <li>
+                  <strong>Semi-supervised:</strong> some labels, many unlabeled
+                </li>
+                <li>
+                  <strong>Reinforcement Learning:</strong> learn from
+                  reward/penalty signals (e.g., game agents)
+                </li>
+              </ul>
+            </div>
+            <div class="concept">
+              <h4>By Protocol (How Data Arrives)</h4>
+              <ul class="blist">
+                <li>
+                  <strong>Batch learning:</strong> all data at once (most
+                  common)
+                </li>
+                <li>
+                  <strong>Online learning:</strong> data arrives sequentially,
+                  model updates one at a time
+                </li>
+                <li>
+                  <strong>Active learning:</strong> model asks for labels on
+                  confusing examples
+                </li>
+              </ul>
+            </div>
+            <div class="concept">
+              <h4>By Input Space X</h4>
+              <ul class="blist">
+                <li>
+                  <strong>Concrete features:</strong> hand-crafted, informative
+                  (e.g., coin size and mass)
+                </li>
+                <li>
+                  <strong>Raw features:</strong> need processing (e.g., pixel
+                  values)
+                </li>
+                <li>
+                  <strong>Abstract features:</strong> not directly informative
+                  (e.g., user ID)
+                </li>
+              </ul>
+            </div>
+            <div class="exam-tip">
+              <strong>📝 Exam Tip:</strong> Know the 4 axes (Y, label type,
+              protocol, X) and be able to classify a described problem on each
+              axis.
+            </div>
+            <div class="done-row">
+              <div class="done-check" onclick="markDone(this, 'l3')"></div>
+              <span class="done-label">Mark L3 as studied</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════ L4 ══════════════ -->
+      <div class="section" id="l4">
+        <div class="lecture-card">
+          <div class="lc-header">
+            <div class="lc-num">4</div>
+            <div class="lc-meta">
+              <div class="lc-tag">Lecture 4</div>
+              <div class="lc-title">Feasibility of Learning</div>
+            </div>
+          </div>
+          <div class="lc-body">
+            <div class="concept">
+              <h4>The Core Problem</h4>
+              <p>
+                Without assumptions, learning is impossible — there are always
+                multiple valid target functions consistent with training data
+                (the "No Free Lunch" intuition).
+              </p>
+            </div>
+            <div class="concept">
+              <h4>Hoeffding's Inequality — Probability to the Rescue</h4>
+              <p>
+                If we sample marbles from a bin, the fraction of orange marbles
+                in our sample (ν) is close to the true fraction (μ) with high
+                probability. This extends to learning: Ein (in-sample error) ≈
+                Eout (out-of-sample error) for large N.
+              </p>
+            </div>
+            <div class="key-formula">
+              <span class="kf-label">Hoeffding's Bound</span>P[|Ein(h) −
+              Eout(h)| > ε] ≤ 2·exp(−2ε²N)<br /><br />Works for a FIXED h. For
+              multiple hypotheses → multiply by |H| (Union Bound)
+            </div>
+            <div class="concept">
+              <h4>The VC Bound</h4>
+              <ul class="blist">
+                <li>Eout(g) ≤ Ein(g) + complexity penalty</li>
+                <li>
+                  Penalty grows with model complexity (dVC) and shrinks with N
+                </li>
+                <li>dVC = VC dimension = max points the model can shatter</li>
+                <li>Perceptron in ℝd has dVC = d + 1</li>
+                <li>Rule of thumb: need <strong>N ≥ 10 × dVC</strong></li>
+              </ul>
+            </div>
+            <div class="exam-tip">
+              <strong>📝 Exam Tip:</strong> You don't need to derive the VC
+              bound — just explain what it says: more data = better
+              generalization; more complex model = harder to generalize.
+            </div>
+            <div class="done-row">
+              <div class="done-check" onclick="markDone(this, 'l4')"></div>
+              <span class="done-label">Mark L4 as studied</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════ L5 ══════════════ -->
+      <div class="section" id="l5">
+        <div class="lecture-card">
+          <div class="lc-header">
+            <div class="lc-num">5</div>
+            <div class="lc-meta">
+              <div class="lc-tag">Lecture 5</div>
+              <div class="lc-title">Noise and Error</div>
+            </div>
+          </div>
+          <div class="lc-body">
+            <div class="concept">
+              <h4>Probabilistic Target</h4>
+              <p>
+                Instead of a deterministic f(x), we have a target distribution
+                P(y|x). The "ideal" label at x is the most likely class, and the
+                rest is noise.
+              </p>
+            </div>
+            <div class="key-formula">
+              <span class="kf-label">Example</span>P(+1 | x) = 0.7, P(−1 | x) =
+              0.3 → ideal f(x) = +1, noise level = 0.3
+            </div>
+            <div class="concept">
+              <h4>Error Measures</h4>
+              <ul class="blist">
+                <li>
+                  <strong>0/1 loss:</strong> count misclassifications — used for
+                  binary classification
+                </li>
+                <li>
+                  <strong>Squared error:</strong> (ŷ − y)² — used for regression
+                </li>
+                <li>
+                  <strong>Cross-entropy (log-loss):</strong> used for logistic
+                  regression
+                </li>
+              </ul>
+            </div>
+            <div class="concept">
+              <h4>Weighted Classification</h4>
+              <p>
+                Different mistakes can have different costs. Example: false
+                negatives (missing cancer) are far more costly than false
+                positives. We can weight errors asymmetrically in training.
+              </p>
+            </div>
+            <div class="exam-tip">
+              <strong>📝 Exam Tip:</strong> Understand that the choice of error
+              measure affects what the algorithm optimizes — this is why we use
+              different models for classification vs regression.
+            </div>
+            <div class="done-row">
+              <div class="done-check" onclick="markDone(this, 'l5')"></div>
+              <span class="done-label">Mark L5 as studied</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════ L6 ══════════════ -->
+      <div class="section" id="l6">
+        <div class="lecture-card">
+          <div class="lc-header">
+            <div class="lc-num">6</div>
+            <div class="lc-meta">
+              <div class="lc-tag">Lecture 6</div>
+              <div class="lc-title">Linear Regression</div>
+            </div>
+          </div>
+          <div class="lc-body">
+            <div class="concept">
+              <h4>The Problem</h4>
+              <p>
+                Predict a real-valued output (e.g., credit limit). Use
+                hypothesis h(x) = wᵀx — NO sign function. Error = squared
+                distance between prediction and truth.
+              </p>
+            </div>
+            <div class="key-formula">
+              <span class="kf-label">In-Sample Error</span>Ein(w) = (1/N) Σ(wᵀxₙ
+              − yₙ)² = (1/N)||Xw − y||²
+            </div>
+            <div class="concept">
+              <h4>The Algorithm — Closed-Form Solution</h4>
+              <p>
+                Unlike PLA, linear regression has an analytic solution. We
+                minimize Ein by taking the gradient and setting it to zero.
+              </p>
+            </div>
+            <div class="key-formula">
+              <span class="kf-label">Optimal Weights (Closed Form)</span>wLIN =
+              (XᵀX)⁻¹Xᵀy = X†y<br />where X† is the pseudo-inverse of X
+            </div>
+            <div class="concept">
+              <h4>Using Linear Regression for Classification</h4>
+              <p>
+                Use linear regression to get an initial weight vector, then
+                apply sign() for binary classification. Fast way to initialize
+                PLA.
+              </p>
+              <ul class="blist" style="margin-top: 0.5rem">
+                <li><strong>Pros:</strong> very fast closed-form solution</li>
+                <li>
+                  <strong>Cons:</strong> squared error is a loose upper bound on
+                  0/1 error for large |ys|
+                </li>
+              </ul>
+            </div>
+            <div class="exam-tip">
+              <strong>📝 Exam Tip:</strong> Linear regression = no sign function
+              + minimize squared error + has closed-form solution. Know all
+              three distinguishing facts.
+            </div>
+            <div class="done-row">
+              <div class="done-check" onclick="markDone(this, 'l6')"></div>
+              <span class="done-label">Mark L6 as studied</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════ L7 ══════════════ -->
+      <div class="section" id="l7">
+        <div class="lecture-card">
+          <div class="lc-header">
+            <div class="lc-num">7</div>
+            <div class="lc-meta">
+              <div class="lc-tag">Lecture 7</div>
+              <div class="lc-title">Logistic Regression</div>
+            </div>
+          </div>
+          <div class="lc-body">
+            <div class="concept">
+              <h4>The Problem</h4>
+              <p>
+                Predict the PROBABILITY of an outcome (e.g., P(heart attack |
+                patient features)). Output must be in [0, 1].
+              </p>
+            </div>
+            <div class="key-formula">
+              <span class="kf-label">Logistic / Sigmoid Function</span>h(x) =
+              θ(wᵀx) = 1 / (1 + e^(−wᵀx))<br />θ(0) = 0.5 · Large positive
+              scores → prob near 1 · Large negative → near 0
+            </div>
+            <div class="concept">
+              <h4>Error — Cross-Entropy</h4>
+              <p>
+                We use maximum likelihood: find w that makes observed training
+                labels most probable. Maximizing likelihood = minimizing
+                cross-entropy loss.
+              </p>
+            </div>
+            <div class="key-formula">
+              <span class="kf-label">Cross-Entropy Loss</span>Ein(w) = (1/N) Σ
+              ln(1 + exp(−yₙ wᵀxₙ))
+            </div>
+            <div class="concept">
+              <h4>Gradient Descent Optimization</h4>
+              <p>No closed-form solution! We use gradient descent.</p>
+              <ul class="blist" style="margin-top: 0.5rem">
+                <li>η (eta) = learning rate — controls step size</li>
+                <li>Too large η: oscillates, may diverge</li>
+                <li>Too small η: converges very slowly</li>
+                <li>
+                  Logistic Ein is smooth and convex → GD guaranteed to find
+                  global minimum
+                </li>
+              </ul>
+            </div>
+            <div class="exam-tip">
+              <strong>📝 Exam Tip:</strong> Logistic regression outputs
+              PROBABILITIES (soft classification), not hard {−1, +1} labels.
+              This is its biggest differentiator from the other two linear
+              models.
+            </div>
+            <div class="done-row">
+              <div class="done-check" onclick="markDone(this, 'l7')"></div>
+              <span class="done-label">Mark L7 as studied</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════ L8 ══════════════ -->
+      <div class="section" id="l8">
+        <div class="lecture-card">
+          <div class="lc-header">
+            <div class="lc-num">8</div>
+            <div class="lc-meta">
+              <div class="lc-tag">Lecture 8</div>
+              <div class="lc-title">Linear Models for Classification</div>
+            </div>
+          </div>
+          <div class="lc-body">
+            <div class="sdiv" style="margin-top: 0">
+              <div class="sdiv-line"></div>
+              <div class="sdiv-label">
+                The <span>3 Linear Models</span> Compared
+              </div>
+              <div class="sdiv-line"></div>
+            </div>
+            <table class="compare-table">
+              <thead>
+                <tr>
+                  <th>Model</th>
+                  <th>Output</th>
+                  <th>Error Measure</th>
+                  <th>Solution Method</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Linear Classification (PLA)</td>
+                  <td>sign(wᵀx) → {−1,+1}</td>
+                  <td>0/1 loss</td>
+                  <td>Iterative (PLA)</td>
+                </tr>
+                <tr>
+                  <td>Linear Regression</td>
+                  <td>wᵀx → ℝ</td>
+                  <td>Squared error</td>
+                  <td>Closed-form X†y</td>
+                </tr>
+                <tr>
+                  <td>Logistic Regression</td>
+                  <td>θ(wᵀx) → (0,1)</td>
+                  <td>Cross-entropy</td>
+                  <td>Gradient Descent</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="concept">
+              <h4>Stochastic Gradient Descent (SGD)</h4>
+              <p>
+                Instead of computing gradient on ALL N points each step, SGD
+                picks ONE random point and updates with its gradient.
+              </p>
+              <ul class="blist" style="margin-top: 0.5rem">
+                <li>
+                  <strong>Full GD:</strong> precise direction, expensive per
+                  step
+                </li>
+                <li>
+                  <strong>SGD:</strong> noisy direction, cheap per step — often
+                  preferred in practice for large datasets
+                </li>
+              </ul>
+            </div>
+            <div class="concept">
+              <h4>Multiclass Classification</h4>
+              <ul class="blist">
+                <li>
+                  <strong>One-vs-All (OvA):</strong> train K binary classifiers.
+                  Assign class with highest confidence score.
+                </li>
+                <li>
+                  <strong>One-vs-One (OvO):</strong> train K(K−1)/2 classifiers
+                  for each pair. Use majority vote.
+                </li>
+                <li>
+                  <strong>Softmax:</strong> logistic regression extended to K
+                  classes simultaneously
+                </li>
+              </ul>
+            </div>
+            <div class="exam-tip">
+              <strong>📝 Exam Tip:</strong> The key insight — all 3 linear
+              models share the same scoring function <strong>s = wᵀx</strong>.
+              They differ only in how they interpret and optimize that score.
+            </div>
+            <div class="done-row">
+              <div class="done-check" onclick="markDone(this, 'l8')"></div>
+              <span class="done-label">Mark L8 as studied</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════ L9 ══════════════ -->
+      <div class="section" id="l9">
+        <div class="lecture-card">
+          <div class="lc-header">
+            <div class="lc-num">9</div>
+            <div class="lc-meta">
+              <div class="lc-tag">Lecture 9</div>
+              <div class="lc-title">Hazard of Overfitting</div>
+            </div>
+          </div>
+          <div class="lc-body">
+            <div class="concept">
+              <h4>What is Overfitting?</h4>
+              <p>
+                Ein ↓ (lower training error) BUT Eout ↑ (higher test error).
+                Model memorizes training data instead of learning the underlying
+                pattern.
+              </p>
+              <p style="margin-top: 0.5rem">
+                <strong>Contrast with underfitting:</strong> both Ein AND Eout
+                are high — model is too simple.
+              </p>
+            </div>
+            <div class="concept">
+              <h4>Causes of Overfitting</h4>
+              <ul class="blist">
+                <li>
+                  Excessive model complexity (dVC too large relative to N)
+                </li>
+                <li>Stochastic noise: random noise in labels yₙ</li>
+                <li>
+                  Deterministic noise: part of f too complex for H to capture
+                </li>
+                <li>Limited data size N</li>
+              </ul>
+            </div>
+            <div class="concept">
+              <h4>The Bias-Complexity Tradeoff</h4>
+              <p>As model complexity increases:</p>
+              <ul class="blist" style="margin-top: 0.5rem">
+                <li>
+                  Bias decreases (model can represent more complex functions)
+                </li>
+                <li>
+                  Variance increases (model overfits to specific training data)
+                </li>
+                <li>
+                  Optimal complexity balances both — neither underfit nor
+                  overfit
+                </li>
+              </ul>
+            </div>
+            <div class="concept">
+              <h4>The Driving Analogy</h4>
+              <p>
+                Overfitting = causing a car accident because you drive too fast
+                on a bumpy road with limited visibility. Solution: slow down
+                (reduce complexity) or get better road info (more data).
+              </p>
+            </div>
+            <div class="exam-tip">
+              <strong>📝 Exam Tip:</strong> Be able to explain overfitting using
+              the Ein/Eout diagram and name at least 3 causes. This is one of
+              the highest-probability exam topics.
+            </div>
+            <div class="done-row">
+              <div class="done-check" onclick="markDone(this, 'l9')"></div>
+              <span class="done-label">Mark L9 as studied</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════ L10 ══════════════ -->
+      <div class="section" id="l10">
+        <div class="lecture-card">
+          <div class="lc-header">
+            <div class="lc-num">10</div>
+            <div class="lc-meta">
+              <div class="lc-tag">Lecture 10</div>
+              <div class="lc-title">Regularization</div>
+            </div>
+          </div>
+          <div class="lc-body">
+            <div class="concept">
+              <h4>What is Regularization?</h4>
+              <p>
+                A technique to combat overfitting by penalizing model
+                complexity. Instead of just minimizing Ein, we minimize a
+                combined objective.
+              </p>
+            </div>
+            <div class="key-formula">
+              <span class="kf-label">Augmented Error</span>Eaug(w) = Ein(w) +
+              (λ/N) · Ω(w)<br />where Ω(w) is the regularizer (penalty for large
+              weights)
+            </div>
+            <div class="concept">
+              <h4>L2 Regularization — Ridge / Weight Decay</h4>
+              <div class="key-formula" style="margin: 0.5rem 0">
+                <span class="kf-label">L2 Regularizer</span>Ω(w) = ||w||² = Σwᵢ²
+              </div>
+              <p>
+                Penalizes large weights. Encourages smaller, more spread-out
+                weights.
+              </p>
+              <ul class="blist" style="margin-top: 0.5rem">
+                <li>
+                  λ large → stronger regularization → simpler model → may
+                  underfit
+                </li>
+                <li>λ small → weaker regularization → may overfit</li>
+                <li>λ = 0 → no regularization (same as unregularized)</li>
+              </ul>
+            </div>
+            <div class="concept">
+              <h4>L1 Regularization — Lasso</h4>
+              <div class="key-formula" style="margin: 0.5rem 0">
+                <span class="kf-label">L1 Regularizer</span>Ω(w) = ||w||₁ =
+                Σ|wᵢ|
+              </div>
+              <p>
+                Encourages sparse solutions — many weights go to exactly 0.
+                Useful for feature selection.
+              </p>
+            </div>
+            <table class="compare-table" style="margin: 1rem 0">
+              <thead>
+                <tr>
+                  <th>Property</th>
+                  <th>Ridge (L2)</th>
+                  <th>Lasso (L1)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Weight behavior</td>
+                  <td>Shrinks all weights equally</td>
+                  <td>Zeros out many weights</td>
+                </tr>
+                <tr>
+                  <td>Feature selection</td>
+                  <td>No (keeps all features)</td>
+                  <td>Yes (automatic)</td>
+                </tr>
+                <tr>
+                  <td>Solution</td>
+                  <td>Closed-form exists</td>
+                  <td>No closed-form (iterative)</td>
+                </tr>
+                <tr>
+                  <td>Best for</td>
+                  <td>When all features matter</td>
+                  <td>When only some features matter</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="exam-tip">
+              <strong>📝 Exam Tip:</strong> Explain regularization as a "soft
+              constraint" on weights — we're not hard-setting weights to 0, but
+              penalizing large ones. λ controls the tradeoff.
+            </div>
+            <div class="done-row">
+              <div class="done-check" onclick="markDone(this, 'l10')"></div>
+              <span class="done-label">Mark L10 as studied</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════ L11 ══════════════ -->
+      <div class="section" id="l11">
+        <div class="lecture-card">
+          <div class="lc-header">
+            <div class="lc-num">11</div>
+            <div class="lc-meta">
+              <div class="lc-tag">Lecture 11</div>
+              <div class="lc-title">Validation</div>
+            </div>
+          </div>
+          <div class="lc-body">
+            <div class="concept">
+              <h4>The Model Selection Problem</h4>
+              <p>
+                After training multiple models (different λ, polynomial orders),
+                which do we deploy? We cannot use Ein because it always favors
+                the most complex model.
+              </p>
+            </div>
+            <div class="warning">
+              <strong>⚠️ Why not use Ein?</strong> Selecting by lowest Ein leads
+              to overfitting — complex models always win on training data by
+              memorizing it.
+            </div>
+            <div class="concept">
+              <h4>Validation Set Approach</h4>
+              <p>
+                Split data into Dtrain and Dval. Train on Dtrain, evaluate on
+                Dval, pick model with lowest Eval.
+              </p>
+              <ul class="blist" style="margin-top: 0.5rem">
+                <li>Typical split: 80/20 or 70/30 train/validation</li>
+                <li>
+                  Eval is unbiased estimate of Eout... as long as you don't
+                  "peek" at Dval during training
+                </li>
+                <li>
+                  After model selection, retrain the chosen model on ALL data
+                  (Dtrain + Dval)
+                </li>
+              </ul>
+            </div>
+            <div class="concept">
+              <h4>Leave-One-Out Cross Validation (LOOCV)</h4>
+              <p>
+                Train N times, each time holding out exactly 1 point. Average
+                the N validation errors.
+              </p>
+              <ul class="blist" style="margin-top: 0.5rem">
+                <li>
+                  <strong>Pros:</strong> maximum use of data, nearly unbiased
+                  estimate of Eout
+                </li>
+                <li>
+                  <strong>Cons:</strong> computationally expensive (N training
+                  runs)
+                </li>
+              </ul>
+            </div>
+            <div class="concept">
+              <h4>K-Fold Cross Validation</h4>
+              <p>
+                Split into K equal folds. Train K times, each time holding out 1
+                fold. Average K errors.
+              </p>
+              <ul class="blist" style="margin-top: 0.5rem">
+                <li>Common choice: K = 5 or K = 10</li>
+                <li>Balances bias vs. computational cost</li>
+                <li>More practically useful than LOOCV</li>
+              </ul>
+            </div>
+            <div class="exam-tip">
+              <strong>📝 Exam Tip:</strong> Cross-validation is crucial for
+              model selection. Understand WHY we can't use Ein and why we need a
+              held-out set.
+            </div>
+            <div class="done-row">
+              <div class="done-check" onclick="markDone(this, 'l11')"></div>
+              <span class="done-label">Mark L11 as studied</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════ PROB & DT ══════════════ -->
+      <div class="section" id="prob">
+        <div class="lecture-card">
+          <div class="lc-header">
+            <div class="lc-num" style="font-size: 2rem">P&DT</div>
+            <div class="lc-meta">
+              <div class="lc-tag">Canvas Module</div>
+              <div class="lc-title">Probability & Decision Theory</div>
+            </div>
+          </div>
+          <div class="lc-body">
+            <div class="concept">
+              <h4>Bayes' Theorem</h4>
+              <ul class="blist">
+                <li>
+                  <strong>P(A):</strong> prior — what we believe before seeing
+                  data
+                </li>
+                <li>
+                  <strong>P(B|A):</strong> likelihood — how likely is evidence B
+                  given A is true
+                </li>
+                <li>
+                  <strong>P(A|B):</strong> posterior — updated belief after
+                  seeing evidence
+                </li>
+              </ul>
+            </div>
+            <div class="key-formula">
+              <span class="kf-label">Bayes' Formula</span>P(A|B) = P(B|A) · P(A)
+              / P(B)<br /><br />Example: P(disease | positive test) = P(positive
+              test | disease) × P(disease) / P(positive test)
+            </div>
+            <div class="concept">
+              <h4>Bayes Optimal Classifier</h4>
+              <p>
+                Given class posteriors P(y|x), assign the class with the highest
+                probability. This minimizes the expected 0/1 loss.
+              </p>
+            </div>
+            <div class="key-formula">
+              <span class="kf-label">Decision Rule</span>g*(x) = argmax_y P(y|x)
+            </div>
+            <div class="concept">
+              <h4>Decision Theory Basics</h4>
+              <ul class="blist">
+                <li>
+                  <strong>Expected loss / risk:</strong> E[loss] = Σ_y P(y|x) ·
+                  loss(predicted, y)
+                </li>
+                <li>
+                  <strong>Minimum risk decision:</strong> pick the class that
+                  minimizes expected loss
+                </li>
+                <li>
+                  <strong>Asymmetric losses:</strong> (e.g., false negative more
+                  costly) → decision threshold shifts
+                </li>
+              </ul>
+            </div>
+            <div class="concept">
+              <h4>Key Probability Concepts</h4>
+              <ul class="blist">
+                <li>
+                  <strong>Random variable:</strong> variable whose value is
+                  outcome of a random process
+                </li>
+                <li>
+                  <strong>Expectation:</strong> E[X] = Σ x·P(X=x) (discrete) or
+                  ∫ x·f(x)dx (continuous)
+                </li>
+                <li>
+                  <strong>Variance:</strong> Var(X) = E[(X − E[X])²] = E[X²] −
+                  (E[X])²
+                </li>
+                <li>
+                  <strong>Conditional probability:</strong> P(A|B) = P(A∩B)/P(B)
+                </li>
+                <li>
+                  <strong>Independence:</strong> P(A∩B) = P(A)·P(B) iff A and B
+                  are independent
+                </li>
+              </ul>
+            </div>
+            <div class="done-row">
+              <div class="done-check" onclick="markDone(this, 'prob')"></div>
+              <span class="done-label">Mark Prob & DT as studied</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════ FORMULAS ══════════════ -->
+      <div class="section" id="formulas">
+        <div class="sdiv" style="margin-top: 0">
+          <div class="sdiv-line"></div>
+          <div class="sdiv-label">
+            📐 Complete <span>Formula Cheatsheet</span>
+          </div>
+          <div class="sdiv-line"></div>
+        </div>
+        <div class="formula-grid">
+          <div class="formula-card">
+            <div class="fc-label">Perceptron Update Rule</div>
+            <div class="fc-eq">w ← w + yₙ·xₙ</div>
+            <div class="fc-note">Only when sign(wᵀxₙ) ≠ yₙ</div>
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Linear Regression — Closed Form</div>
+            <div class="fc-eq">wLIN = (XᵀX)⁻¹Xᵀy = X†y</div>
+            <div class="fc-note">X† = pseudo-inverse of X</div>
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Linear Regression — Error</div>
+            <div class="fc-eq">Ein(w) = (1/N)||Xw − y||²</div>
+            <div class="fc-note">Minimize squared error</div>
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Logistic / Sigmoid Function</div>
+            <div class="fc-eq">
+              θ(s) = 1 / (1 + e^(−s))<br />θ(0) = 0.5 · Range: (0,1)
+            </div>
+            <div class="fc-note">Maps any score s to a probability</div>
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Logistic Regression — Error</div>
+            <div class="fc-eq">Ein(w) = (1/N) Σ ln(1 + exp(−yₙwᵀxₙ))</div>
+            <div class="fc-note">Cross-entropy loss</div>
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Gradient Descent Update</div>
+            <div class="fc-eq">w(t+1) = w(t) − η·∇Ein(w(t))</div>
+            <div class="fc-note">
+              η = learning rate. Convex → finds global min
+            </div>
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Regularized Error (Ridge L2)</div>
+            <div class="fc-eq">Eaug(w) = Ein(w) + (λ/N)||w||²</div>
+            <div class="fc-note">
+              λ large → simpler model · λ=0 → no regularization
+            </div>
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">L1 Regularization (Lasso)</div>
+            <div class="fc-eq">Ω(w) = ||w||₁ = Σ|wᵢ|</div>
+            <div class="fc-note">Promotes sparsity — zeros out weights</div>
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Hoeffding's Inequality</div>
+            <div class="fc-eq">P[|Ein − Eout| > ε] ≤ 2e^(−2ε²N)</div>
+            <div class="fc-note">More N → better generalization guarantee</div>
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">VC Dimension — Perceptron</div>
+            <div class="fc-eq">dVC(perceptron in ℝd) = d + 1</div>
+            <div class="fc-note">Rule of thumb: N ≥ 10 × dVC</div>
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Bayes' Theorem</div>
+            <div class="fc-eq">P(A|B) = P(B|A) · P(A) / P(B)</div>
+            <div class="fc-note">Posterior = likelihood × prior / evidence</div>
+          </div>
+          <div class="formula-card">
+            <div class="fc-label">Bayes Optimal Classifier</div>
+            <div class="fc-eq">g*(x) = argmax_y P(y|x)</div>
+            <div class="fc-note">Minimizes expected 0/1 loss</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════ EXAM QS ══════════════ -->
+      <div class="section" id="examqs">
+        <div class="sdiv" style="margin-top: 0">
+          <div class="sdiv-line"></div>
+          <div class="sdiv-label">
+            ❓ Likely <span>Exam Question Types</span>
+          </div>
+          <div class="sdiv-line"></div>
+        </div>
+        <div class="exam-tip" style="margin-bottom: 1.5rem">
+          <strong>📋 Professor said:</strong> Complete and comprehensive
+          explanation > mathematical precision. Focus on understanding the WHY
+          behind each concept.
+        </div>
+        <div class="qtype">
+          <h4>💬 Concept Explanation</h4>
+          <ul>
+            <li>Explain what overfitting is and name its causes</li>
+            <li>How does regularization help prevent overfitting?</li>
+            <li>What is the difference between PLA and Pocket algorithm?</li>
+            <li>
+              Explain why we use cross-validation instead of just looking at Ein
+            </li>
+            <li>What is logistic regression and what does it output?</li>
+          </ul>
+        </div>
+        <div class="qtype">
+          <h4>🗺️ Model ID / Problem Setup</h4>
+          <ul>
+            <li>
+              Given a scenario, identify: binary classification, regression,
+              multiclass, etc.
+            </li>
+            <li>
+              Map a real-world problem to the ML framework (X, Y, f, D, H, A, g)
+            </li>
+            <li>
+              Identify: supervised vs unsupervised vs reinforcement learning
+            </li>
+          </ul>
+        </div>
+        <div class="qtype">
+          <h4>⚖️ Compare Models</h4>
+          <ul>
+            <li>
+              Compare linear regression vs logistic regression vs linear
+              classification
+            </li>
+            <li>Compare Ridge (L2) vs Lasso (L1) regularization</li>
+            <li>Compare batch GD vs SGD</li>
+            <li>Compare LOOCV vs K-fold cross validation</li>
+          </ul>
+        </div>
+        <div class="qtype">
+          <h4>🧩 Conceptual Reasoning</h4>
+          <ul>
+            <li>What happens to Ein and Eout as model complexity increases?</li>
+            <li>If N is very small, what should we do about regularization?</li>
+            <li>When should we use ML vs writing explicit rules?</li>
+            <li>Why does PLA fail on non-linearly separable data?</li>
+            <li>Why can't we use Ein for model selection?</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- end content -->
+
+    <script>
+      const sections = [
+        "overview",
+        "l1",
+        "l2",
+        "l3",
+        "l4",
+        "l5",
+        "l6",
+        "l7",
+        "l8",
+        "l9",
+        "l10",
+        "l11",
+        "prob",
+        "formulas",
+        "examqs",
+      ];
+      const doneSet = new Set(
+        JSON.parse(localStorage.getItem("mlDone") || "[]"),
+      );
+      const studyableSections = [
+        "l1",
+        "l2",
+        "l3",
+        "l4",
+        "l5",
+        "l6",
+        "l7",
+        "l8",
+        "l9",
+        "l10",
+        "l11",
+        "prob",
+      ];
+
+      function show(id) {
+        sections.forEach((s) => {
+          document.getElementById(s)?.classList.remove("visible");
+          document.getElementById("tab-" + s)?.classList.remove("active");
+        });
+        document.getElementById(id)?.classList.add("visible");
+        document.getElementById("tab-" + id)?.classList.add("active");
+        document
+          .querySelectorAll(".lpill")
+          .forEach((p) => p.classList.remove("active"));
+        window.scrollTo({
+          top: document.querySelector(".content").offsetTop - 60,
+          behavior: "smooth",
+        });
+        updateDoneChecks();
+      }
+
+      function toggleAcc(btn) {
+        const body = btn.nextElementSibling;
+        const icon = btn.querySelector(".acc-icon");
+        body.classList.toggle("open");
+        icon?.classList.toggle("open");
+      }
+
+      function markDone(el, id) {
+        el.classList.toggle("checked");
+        if (el.classList.contains("checked")) doneSet.add(id);
+        else doneSet.delete(id);
+        localStorage.setItem("mlDone", JSON.stringify([...doneSet]));
+        updateOverallProgress();
+      }
+
+      function updateDoneChecks() {
+        document.querySelectorAll(".done-check").forEach((el) => {
+          const id = el.getAttribute("onclick")?.match(/'(\w+)'\)/)?.[1];
+          if (id && doneSet.has(id)) el.classList.add("checked");
+          else el.classList.remove("checked");
+        });
+      }
+
+      function updateOverallProgress() {
+        const done = studyableSections.filter((s) => doneSet.has(s)).length;
+        const total = studyableSections.length;
+        const pct = (done / total) * 100;
+        document.getElementById("overallBar").style.width = pct + "%";
+        document.getElementById("overallCount").textContent =
+          done + " / " + total + " sections done";
+      }
+
+      // Init
+      show("overview");
+      updateOverallProgress();
+    </script>
+  </body>
+</html>

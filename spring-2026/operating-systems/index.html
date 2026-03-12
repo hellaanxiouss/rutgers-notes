@@ -5,18 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Operating Systems — Spring 2026</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <style>
       :root {
-        --bg: #0a0a0f;
-        --border: #1e1e2e;
+        --bg: #07080f;
+        --surface: #0e0f1a;
+        --border: #1a1b2e;
+        --border2: #252640;
         --accent: #22c55e;
-        --accent2: #86efac;
-        --text: #e8e8f0;
-        --muted: #6b6b8a;
-        --card: #13131c;
+        --accent2: #4ade80;
+        --text: #e2e4f0;
+        --muted: #5a5c7a;
+        --card: #0e0f1a;
       }
       * {
         margin: 0;
@@ -26,101 +28,138 @@
       body {
         background: var(--bg);
         color: var(--text);
-        font-family: "DM Mono", monospace;
+        font-family: "Outfit", sans-serif;
         min-height: 100vh;
-        overflow-x: hidden;
       }
       body::before {
         content: "";
         position: fixed;
         inset: 0;
-        background-image:
-          linear-gradient(var(--border) 1px, transparent 1px),
-          linear-gradient(90deg, var(--border) 1px, transparent 1px);
-        background-size: 40px 40px;
-        opacity: 0.4;
+        background:
+          radial-gradient(
+            ellipse 60% 40% at 80% 10%,
+            rgba(34, 197, 94, 0.05) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse 40% 30% at 10% 80%,
+            rgba(34, 197, 94, 0.03) 0%,
+            transparent 50%
+          );
         z-index: 0;
         pointer-events: none;
       }
       .container {
-        max-width: 1100px;
+        max-width: 1060px;
         margin: 0 auto;
         padding: 0 2rem;
         position: relative;
         z-index: 1;
       }
+
+      /* NAV */
       .back-nav {
         padding: 1.5rem 0;
       }
       .back-nav a {
         color: var(--muted);
         text-decoration: none;
-        font-size: 0.75rem;
-        letter-spacing: 0.1em;
+        font-family: "Space Mono", monospace;
+        font-size: 0.7rem;
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
         transition: color 0.2s;
+        letter-spacing: 0.05em;
       }
       .back-nav a:hover {
-        color: var(--accent);
+        color: var(--accent2);
       }
+
+      /* HEADER */
       header {
-        padding: 2rem 0 2.5rem;
+        padding: 2rem 0 3rem;
         border-bottom: 1px solid var(--border);
         margin-bottom: 3rem;
       }
-      .course-code {
-        font-size: 0.7rem;
-        letter-spacing: 0.25em;
+      .course-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: "Space Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.15em;
         text-transform: uppercase;
         color: var(--accent);
-        margin-bottom: 0.5rem;
+        margin-bottom: 1rem;
+        padding: 0.3rem 0.75rem;
+        border: 1px solid rgba(34, 197, 94, 0.3);
+        background: rgba(34, 197, 94, 0.06);
       }
       h1 {
-        font-family: "Syne", sans-serif;
-        font-size: clamp(2rem, 4vw, 3rem);
+        font-size: clamp(2.5rem, 5vw, 4rem);
         font-weight: 800;
         letter-spacing: -0.02em;
+        line-height: 0.95;
+        margin-bottom: 0.75rem;
       }
-      .header-sub {
+      h1 span {
+        color: var(--accent2);
+      }
+      .header-meta {
+        font-family: "Space Mono", monospace;
+        font-size: 0.7rem;
         color: var(--muted);
-        font-size: 0.8rem;
-        margin-top: 0.5rem;
-        line-height: 1.6;
+        line-height: 2;
       }
+
+      /* SECTION LABEL */
       .section-label {
-        font-size: 0.65rem;
-        letter-spacing: 0.25em;
+        font-family: "Space Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
         text-transform: uppercase;
         color: var(--muted);
-        margin-bottom: 1.2rem;
-        font-weight: 600;
+        margin-bottom: 1.25rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .section-label::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border);
       }
       .section-label span {
         color: var(--accent2);
       }
-      .grid {
+      .section-block {
+        margin-bottom: 3rem;
+      }
+
+      /* EXAM CARDS */
+      .exam-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 1px;
         background: var(--border);
         border: 1px solid var(--border);
         margin-bottom: 3rem;
       }
-      .card {
+      .exam-card {
         background: var(--card);
-        padding: 1.5rem;
+        padding: 2rem;
         text-decoration: none;
         color: inherit;
         display: flex;
         flex-direction: column;
-        gap: 0.8rem;
+        gap: 1rem;
         position: relative;
         overflow: hidden;
         transition: background 0.2s;
       }
-      .card::before {
+      .exam-card::before {
         content: "";
         position: absolute;
         top: 0;
@@ -128,123 +167,259 @@
         width: 3px;
         height: 0;
         background: var(--accent);
-        transition: height 0.3s ease;
+        transition: height 0.3s;
       }
-      .card:hover {
-        background: #16161f;
+      .exam-card:hover {
+        background: #111224;
       }
-      .card:hover::before {
+      .exam-card:hover::before {
         height: 100%;
       }
-      .card-num {
-        font-size: 0.65rem;
-        color: var(--muted);
-        letter-spacing: 0.1em;
+      .exam-card.locked {
+        opacity: 0.45;
+        cursor: default;
+        pointer-events: none;
       }
-      .card-name {
-        font-family: "Syne", sans-serif;
-        font-size: 1rem;
+      .ec-tag {
+        font-family: "Space Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+      .ec-tag.done {
+        color: var(--muted);
+      }
+      .ec-tag.locked {
+        color: var(--muted);
+      }
+      .ec-title {
+        font-size: 1.15rem;
         font-weight: 700;
       }
-      .card-desc {
-        font-size: 0.75rem;
+      .ec-meta {
+        font-size: 0.78rem;
         color: var(--muted);
         line-height: 1.6;
       }
-      .card-arrow {
-        font-size: 0.85rem;
+      .ec-arrow {
+        font-family: "Space Mono", monospace;
+        font-size: 0.7rem;
         color: var(--accent);
         margin-top: auto;
-        transition: transform 0.2s;
       }
-      .card:hover .card-arrow {
-        transform: translate(3px, -3px);
+      .ec-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "Space Mono", monospace;
+        font-size: 0.6rem;
+        padding: 0.25rem 0.6rem;
+        border: 1px solid;
+        border-radius: 2px;
+        width: fit-content;
       }
+      .status-upcoming {
+        border-color: rgba(34, 197, 94, 0.4);
+        color: var(--accent);
+        background: rgba(34, 197, 94, 0.08);
+      }
+      .status-locked {
+        border-color: var(--border2);
+        color: var(--muted);
+      }
+
+      /* NOTES GRID */
+      .notes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+      }
+      .note-card {
+        background: var(--card);
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        transition: background 0.2s;
+        cursor: default;
+        opacity: 0.5;
+      }
+      .nc-tag {
+        font-family: "Space Mono", monospace;
+        font-size: 0.55rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .nc-title {
+        font-size: 0.95rem;
+        font-weight: 600;
+      }
+      .nc-coming {
+        font-size: 0.7rem;
+        color: var(--muted);
+        font-family: "Space Mono", monospace;
+      }
+
+      /* COUNTDOWN */
+      .countdown-bar {
+        background: rgba(34, 197, 94, 0.06);
+        border: 1px solid rgba(34, 197, 94, 0.2);
+        border-left: 3px solid var(--accent);
+        padding: 1rem 1.5rem;
+        margin-bottom: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .cb-label {
+        font-family: "Space Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .cb-val {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: var(--accent2);
+        line-height: 1;
+      }
+      .cb-sub {
+        font-size: 0.7rem;
+        color: var(--muted);
+        margin-top: 0.2rem;
+      }
+
       footer {
         border-top: 1px solid var(--border);
         padding: 2rem 0;
         display: flex;
         justify-content: space-between;
-        align-items: center;
-        font-size: 0.7rem;
+        font-family: "Space Mono", monospace;
+        font-size: 0.65rem;
         color: var(--muted);
         flex-wrap: wrap;
         gap: 1rem;
+        margin-top: 1rem;
       }
     </style>
   </head>
   <body>
     <div class="container">
       <nav class="back-nav">
-        <a href="../index.html">← Back to All Subjects</a>
+        <a href="../index.html">← Back to Spring 2026</a>
       </nav>
+
       <header>
-        <div class="course-code">CS 416 — Spring 2026</div>
-        <h1>Operating Systems</h1>
-        <div class="header-sub">
-          Processes · Memory Management · Scheduling · File Systems
+        <div class="course-tag">CS 341 · Spring 2026</div>
+        <h1>Operating<br /><span>Systems</span></h1>
+        <div class="header-meta">
+          Processes · Threads · CPU Scheduling · Memory Management<br />
+          Spring 2026 · Rutgers University
         </div>
       </header>
-      <div class="section-label">Topics — <span>Notes & Past Exams</span></div>
-      <div class="grid">
-        <a href="#" class="card">
-          <div class="card-num">01</div>
-          <div class="card-name">Processes & Threads</div>
-          <div class="card-desc">
-            Process lifecycle, context switching, thread models &
-            synchronization.
+
+      <!-- COUNTDOWN -->
+      <div class="countdown-bar">
+        <div>
+          <div class="cb-label">Next Exam — Exam 2</div>
+          <div class="cb-val" id="examCountdown">—</div>
+          <div class="cb-sub">
+            Chapters 2–5 · OS Structures, Processes, Threads, CPU Scheduling
           </div>
-          <div class="card-arrow">↗</div>
-        </a>
-        <a href="#" class="card">
-          <div class="card-num">02</div>
-          <div class="card-name">CPU Scheduling</div>
-          <div class="card-desc">
-            FCFS, SJF, Round Robin, Priority scheduling & multilevel queues.
-          </div>
-          <div class="card-arrow">↗</div>
-        </a>
-        <a href="#" class="card">
-          <div class="card-num">03</div>
-          <div class="card-name">Memory Management</div>
-          <div class="card-desc">
-            Paging, segmentation, virtual memory & page replacement.
-          </div>
-          <div class="card-arrow">↗</div>
-        </a>
-        <a href="#" class="card">
-          <div class="card-num">04</div>
-          <div class="card-name">File Systems</div>
-          <div class="card-desc">
-            File allocation, directories, journaling & disk scheduling.
-          </div>
-          <div class="card-arrow">↗</div>
-        </a>
-        <a href="#" class="card">
-          <div class="card-num">05</div>
-          <div class="card-name">Deadlocks</div>
-          <div class="card-desc">
-            Detection, prevention, avoidance & the Banker's algorithm.
-          </div>
-          <div class="card-arrow">↗</div>
-        </a>
-        <a href="#" class="card">
-          <div class="card-num">EXAM</div>
-          <div class="card-name">Past Exams</div>
-          <div class="card-desc">
-            Previous exams, quizzes and practice problems.
-          </div>
-          <div class="card-arrow">↗</div>
-        </a>
+        </div>
+        <a
+          href="exam-2/index.html"
+          style="
+            font-family: &quot;Space Mono&quot;, monospace;
+            font-size: 0.7rem;
+            color: var(--accent);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+          "
+          >Go to Exam 2 Hub →</a
+        >
       </div>
+
+      <!-- EXAMS -->
+      <div class="section-block">
+        <div class="section-label">Exams <span>Midterms & Finals</span></div>
+        <div class="exam-grid">
+          <div class="exam-card locked">
+            <div class="ec-tag done">Exam 1</div>
+            <div class="ec-title">Exam 1</div>
+            <div class="ec-status status-locked">🔒 Placeholder</div>
+            <div class="ec-meta">Study materials coming soon.</div>
+          </div>
+
+          <a href="exam-2/index.html" class="exam-card">
+            <div class="ec-tag">Exam 2</div>
+            <div class="ec-title">Exam 2 — OS Structures & Processes</div>
+            <div class="ec-status status-upcoming">● Upcoming</div>
+            <div class="ec-meta">
+              Ch. 2 OS Structures · Ch. 3 Processes<br />
+              Ch. 4 Threads · Ch. 5 CPU Scheduling
+            </div>
+            <div class="ec-arrow">Open Exam Hub →</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- NOTES -->
+      <div class="section-block">
+        <div class="section-label">Notes <span>By Topic</span></div>
+        <div class="notes-grid">
+          <div class="note-card">
+            <div class="nc-tag">Chapter 2</div>
+            <div class="nc-title">OS Structures</div>
+            <div class="nc-coming">Notes coming soon</div>
+          </div>
+          <div class="note-card">
+            <div class="nc-tag">Chapter 3</div>
+            <div class="nc-title">Processes</div>
+            <div class="nc-coming">Notes coming soon</div>
+          </div>
+          <div class="note-card">
+            <div class="nc-tag">Chapter 4</div>
+            <div class="nc-title">Threads</div>
+            <div class="nc-coming">Notes coming soon</div>
+          </div>
+          <div class="note-card">
+            <div class="nc-tag">Chapter 5</div>
+            <div class="nc-title">CPU Scheduling</div>
+            <div class="nc-coming">Notes coming soon</div>
+          </div>
+        </div>
+      </div>
+
       <footer>
         <span>rutgers-notes / spring-2026 / operating-systems</span>
         <a
           href="../index.html"
           style="color: var(--accent); text-decoration: none"
-          >← Home</a
+          >← Spring 2026</a
         >
       </footer>
     </div>
+
+    <script>
+      const exam = new Date("2026-03-12T00:00:00");
+      const now = new Date();
+      const diff = exam - now;
+      const days = Math.ceil(diff / 86400000);
+      const el = document.getElementById("examCountdown");
+      if (days > 0) el.textContent = days + (days === 1 ? " day" : " days");
+      else if (days === 0) el.textContent = "Today!";
+      else {
+        el.textContent = "Done";
+        el.style.color = "var(--muted)";
+      }
+    </script>
   </body>
 </html>

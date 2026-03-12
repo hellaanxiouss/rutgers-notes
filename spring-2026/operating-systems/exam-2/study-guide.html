@@ -1,0 +1,5406 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OS Master Class 🚀 — Ace Your Exam</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #080c18;
+        --surface: #0d1526;
+        --surface2: #121d34;
+        --border: #1e3a5f;
+        --neon: #00e5ff;
+        --orange: #ff6b35;
+        --green: #39ff14;
+        --yellow: #ffd166;
+        --purple: #c77dff;
+        --pink: #ff4d9e;
+        --text: #e2e8f0;
+        --muted: #7a9cc0;
+        --ch2: #4ecdc4;
+        --ch3: #ff6b35;
+        --ch4: #c77dff;
+        --ch5: #00e5ff;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Nunito", sans-serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* STARS BACKGROUND */
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background:
+          radial-gradient(
+            ellipse at 20% 50%,
+            rgba(0, 229, 255, 0.04) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse at 80% 20%,
+            rgba(199, 125, 255, 0.04) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* LAYOUT */
+      .layout {
+        display: flex;
+        min-height: 100vh;
+        position: relative;
+      }
+
+      /* SIDEBAR */
+      .sidebar {
+        width: 280px;
+        min-width: 280px;
+        background: var(--surface);
+        border-right: 1px solid var(--border);
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        overflow-y: auto;
+        z-index: 100;
+        transition: transform 0.3s ease;
+      }
+      .sidebar::-webkit-scrollbar {
+        width: 4px;
+      }
+      .sidebar::-webkit-scrollbar-track {
+        background: var(--surface);
+      }
+      .sidebar::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 2px;
+      }
+
+      .sidebar-header {
+        padding: 24px 20px 16px;
+        background: linear-gradient(135deg, #0a1628, #0d1f3c);
+        border-bottom: 1px solid var(--border);
+      }
+      .logo {
+        font-family: "Orbitron", monospace;
+        font-size: 14px;
+        font-weight: 900;
+        color: var(--neon);
+        letter-spacing: 2px;
+      }
+      .logo-sub {
+        font-size: 11px;
+        color: var(--muted);
+        margin-top: 4px;
+      }
+
+      .progress-bar-wrap {
+        margin: 12px 0 4px;
+        background: var(--border);
+        border-radius: 4px;
+        height: 4px;
+        overflow: hidden;
+      }
+      .progress-bar {
+        height: 100%;
+        background: linear-gradient(90deg, var(--neon), var(--purple));
+        border-radius: 4px;
+        transition: width 0.5s ease;
+        width: 0%;
+      }
+      .progress-label {
+        font-size: 10px;
+        color: var(--muted);
+      }
+
+      .chapter-nav {
+        padding: 12px 0;
+      }
+      .ch-label {
+        padding: 10px 20px 6px;
+        font-family: "Orbitron", monospace;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .nav-chapter {
+        margin-bottom: 4px;
+      }
+      .nav-chapter-btn {
+        width: 100%;
+        padding: 10px 20px;
+        background: none;
+        border: none;
+        text-align: left;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: "Nunito", sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--text);
+        border-left: 3px solid transparent;
+        transition: all 0.2s;
+      }
+      .nav-chapter-btn:hover {
+        background: var(--surface2);
+        color: var(--neon);
+      }
+      .nav-chapter-btn.active {
+        border-left-color: var(--accent);
+        color: var(--accent);
+        background: rgba(0, 229, 255, 0.05);
+      }
+      .ch-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .nav-topics {
+        display: none;
+        padding: 0 0 8px 0;
+      }
+      .nav-topics.open {
+        display: block;
+      }
+      .nav-topic {
+        display: block;
+        padding: 6px 20px 6px 40px;
+        font-size: 12px;
+        color: var(--muted);
+        cursor: pointer;
+        transition: all 0.2s;
+        border: none;
+        background: none;
+        width: 100%;
+        text-align: left;
+        font-family: "Nunito", sans-serif;
+      }
+      .nav-topic:hover {
+        color: var(--text);
+      }
+      .nav-topic.active {
+        color: var(--accent);
+      }
+
+      /* MAIN */
+      .main {
+        margin-left: 280px;
+        flex: 1;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* HERO */
+      .hero {
+        padding: 60px 60px 40px;
+        background: linear-gradient(
+          135deg,
+          #080c18 0%,
+          #0d1526 50%,
+          #080c18 100%
+        );
+        border-bottom: 1px solid var(--border);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 600px;
+        height: 400px;
+        background: radial-gradient(
+          ellipse,
+          rgba(0, 229, 255, 0.08) 0%,
+          transparent 70%
+        );
+      }
+      .hero h1 {
+        font-family: "Orbitron", monospace;
+        font-size: clamp(28px, 3vw, 42px);
+        font-weight: 900;
+        background: linear-gradient(135deg, var(--neon), var(--purple));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 12px;
+        position: relative;
+      }
+      .hero p {
+        color: var(--muted);
+        font-size: 16px;
+        max-width: 600px;
+        margin: 0 auto 24px;
+        position: relative;
+      }
+      .chapter-pills {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+        position: relative;
+      }
+      .pill {
+        padding: 8px 20px;
+        border-radius: 30px;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        border: 1px solid;
+        transition: all 0.3s;
+        font-family: "Nunito", sans-serif;
+      }
+      .pill:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      }
+      .pill-2 {
+        color: var(--ch2);
+        border-color: var(--ch2);
+        background: rgba(78, 205, 196, 0.08);
+      }
+      .pill-2:hover {
+        background: rgba(78, 205, 196, 0.2);
+      }
+      .pill-3 {
+        color: var(--ch3);
+        border-color: var(--ch3);
+        background: rgba(255, 107, 53, 0.08);
+      }
+      .pill-3:hover {
+        background: rgba(255, 107, 53, 0.2);
+      }
+      .pill-4 {
+        color: var(--ch4);
+        border-color: var(--ch4);
+        background: rgba(199, 125, 255, 0.08);
+      }
+      .pill-4:hover {
+        background: rgba(199, 125, 255, 0.2);
+      }
+      .pill-5 {
+        color: var(--ch5);
+        border-color: var(--ch5);
+        background: rgba(0, 229, 255, 0.08);
+      }
+      .pill-5:hover {
+        background: rgba(0, 229, 255, 0.2);
+      }
+
+      /* CHAPTER SECTIONS */
+      .chapter-section {
+        padding: 60px;
+        border-bottom: 2px solid var(--border);
+      }
+      .chapter-section:nth-child(even) {
+        background: rgba(13, 21, 38, 0.5);
+      }
+
+      .ch-header {
+        margin-bottom: 40px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      .ch-number {
+        font-family: "Orbitron", monospace;
+        font-size: 48px;
+        font-weight: 900;
+        opacity: 0.15;
+        line-height: 1;
+      }
+      .ch-title-wrap {
+      }
+      .ch-tag {
+        font-family: "Space Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+      .ch-title {
+        font-family: "Orbitron", monospace;
+        font-size: clamp(20px, 2.5vw, 30px);
+        font-weight: 700;
+      }
+
+      /* TOPIC CARDS */
+      .topics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 20px;
+        margin-bottom: 32px;
+      }
+      .topic-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .topic-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+      }
+      .topic-card-header {
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        border-bottom: 1px solid var(--border);
+      }
+      .topic-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        flex-shrink: 0;
+      }
+      .topic-title {
+        font-weight: 800;
+        font-size: 15px;
+      }
+      .topic-subtitle {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 2px;
+      }
+      .topic-body {
+        padding: 16px 20px 20px;
+        display: none;
+      }
+      .topic-body.open {
+        display: block;
+      }
+      .topic-card-chevron {
+        margin-left: auto;
+        color: var(--muted);
+        transition: transform 0.3s;
+        font-size: 18px;
+      }
+      .topic-card.open .topic-card-chevron {
+        transform: rotate(180deg);
+      }
+
+      /* KEY POINTS */
+      .key-points {
+        list-style: none;
+        margin: 12px 0;
+      }
+      .key-points li {
+        padding: 8px 0 8px 28px;
+        position: relative;
+        font-size: 14px;
+        line-height: 1.6;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      }
+      .key-points li:last-child {
+        border-bottom: none;
+      }
+      .key-points li::before {
+        content: "▶";
+        position: absolute;
+        left: 0;
+        font-size: 8px;
+        top: 12px;
+      }
+
+      /* HIGHLIGHT BOXES */
+      .highlight-box {
+        border-radius: 12px;
+        padding: 16px 20px;
+        margin: 16px 0;
+        font-size: 14px;
+        border-left: 3px solid;
+        line-height: 1.7;
+      }
+      .box-info {
+        background: rgba(0, 229, 255, 0.06);
+        border-color: var(--neon);
+        color: #b0e8f0;
+      }
+      .box-warn {
+        background: rgba(255, 107, 53, 0.06);
+        border-color: var(--orange);
+        color: #f0c8b0;
+      }
+      .box-success {
+        background: rgba(57, 255, 20, 0.05);
+        border-color: var(--green);
+        color: #b0f0b0;
+      }
+      .box-purple {
+        background: rgba(199, 125, 255, 0.06);
+        border-color: var(--purple);
+        color: #ddb0f0;
+      }
+      .box-yellow {
+        background: rgba(255, 209, 102, 0.06);
+        border-color: var(--yellow);
+        color: #f0e0b0;
+      }
+
+      .box-title {
+        font-family: "Space Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-weight: 700;
+        margin-bottom: 8px;
+        display: block;
+      }
+
+      /* DIAGRAMS */
+      .diagram-wrap {
+        margin: 20px 0;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+      }
+      .diagram-title {
+        padding: 12px 20px;
+        background: var(--surface2);
+        border-bottom: 1px solid var(--border);
+        font-family: "Space Mono", monospace;
+        font-size: 12px;
+        color: var(--muted);
+        letter-spacing: 1px;
+      }
+
+      /* PROCESS STATE DIAGRAM */
+      .state-diagram {
+        padding: 30px;
+        background: var(--surface);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 280px;
+      }
+      .states-container {
+        position: relative;
+        width: 100%;
+        max-width: 600px;
+        height: 260px;
+        margin: 0 auto;
+      }
+      .state-node {
+        position: absolute;
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 700;
+        text-align: center;
+        border: 2px solid;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-family: "Space Mono", monospace;
+        letter-spacing: 0.5px;
+      }
+      .state-node:hover {
+        transform: scale(1.1);
+      }
+      .state-new {
+        top: 85px;
+        left: 0;
+        border-color: #4ecdc4;
+        background: rgba(78, 205, 196, 0.1);
+        color: #4ecdc4;
+      }
+      .state-ready {
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-color: #ffd166;
+        background: rgba(255, 209, 102, 0.1);
+        color: #ffd166;
+      }
+      .state-running {
+        top: 85px;
+        right: 0;
+        border-color: #39ff14;
+        background: rgba(57, 255, 20, 0.1);
+        color: #39ff14;
+      }
+      .state-waiting {
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        border-color: #ff6b35;
+        background: rgba(255, 107, 53, 0.1);
+        color: #ff6b35;
+      }
+      .state-terminated {
+        bottom: 30px;
+        right: 0;
+        border-color: #7a9cc0;
+        background: rgba(122, 156, 192, 0.1);
+        color: #7a9cc0;
+      }
+
+      .state-arrow {
+        position: absolute;
+        font-size: 10px;
+        color: var(--muted);
+        font-family: "Nunito", sans-serif;
+        font-weight: 700;
+        pointer-events: none;
+      }
+
+      /* SVG arrows for state diagram */
+      .state-svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+
+      /* GANTT CHART */
+      .gantt-wrap {
+        padding: 20px;
+        background: var(--surface);
+      }
+      .gantt-label {
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 8px;
+        font-family: "Space Mono", monospace;
+      }
+      .gantt-chart {
+        display: flex;
+        height: 50px;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 8px;
+      }
+      .gantt-block {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 700;
+        font-family: "Space Mono", monospace;
+        border-right: 1px solid var(--bg);
+        transition: all 0.3s;
+        cursor: pointer;
+        position: relative;
+      }
+      .gantt-block:hover {
+        filter: brightness(1.3);
+      }
+      .gantt-timeline {
+        display: flex;
+        justify-content: space-between;
+        font-size: 10px;
+        color: var(--muted);
+        font-family: "Space Mono", monospace;
+        margin-top: 4px;
+      }
+
+      /* COMPARISON TABLE */
+      .compare-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 16px 0;
+        font-size: 13px;
+      }
+      .compare-table th {
+        background: var(--surface2);
+        padding: 12px 16px;
+        text-align: left;
+        font-family: "Space Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 1px;
+        color: var(--muted);
+        border-bottom: 1px solid var(--border);
+      }
+      .compare-table td {
+        padding: 10px 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        vertical-align: top;
+      }
+      .compare-table tr:hover td {
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .badge {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 700;
+        font-family: "Space Mono", monospace;
+        margin: 2px;
+      }
+
+      /* FLIP CARDS */
+      .flip-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 16px;
+        margin: 16px 0;
+      }
+      .flip-card {
+        height: 140px;
+        cursor: pointer;
+        perspective: 1000px;
+      }
+      .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+      }
+      .flip-card.flipped .flip-card-inner {
+        transform: rotateY(180deg);
+      }
+      .flip-front,
+      .flip-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: 12px;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        border: 1px solid var(--border);
+      }
+      .flip-front {
+        background: var(--surface2);
+        font-weight: 700;
+        font-size: 14px;
+      }
+      .flip-back {
+        background: var(--surface);
+        transform: rotateY(180deg);
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+      .flip-hint {
+        font-size: 10px;
+        color: var(--muted);
+        margin-top: 8px;
+        font-family: "Space Mono", monospace;
+      }
+
+      /* INTERACTIVE SCHEDULER */
+      .scheduler-demo {
+        padding: 20px;
+        background: var(--surface);
+      }
+      .scheduler-controls {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      .btn {
+        padding: 8px 18px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface2);
+        color: var(--text);
+        font-family: "Nunito", sans-serif;
+        font-weight: 700;
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .btn:hover {
+        background: var(--border);
+        transform: translateY(-1px);
+      }
+      .btn-primary {
+        background: rgba(0, 229, 255, 0.1);
+        border-color: var(--neon);
+        color: var(--neon);
+      }
+      .btn-primary:hover {
+        background: rgba(0, 229, 255, 0.2);
+      }
+      .btn-active {
+        background: rgba(57, 255, 20, 0.1);
+        border-color: var(--green);
+        color: var(--green);
+      }
+      select {
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface2);
+        color: var(--text);
+        font-family: "Nunito", sans-serif;
+        font-size: 13px;
+        cursor: pointer;
+        outline: none;
+      }
+
+      /* QUIZ SECTION */
+      .quiz-wrap {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 32px;
+        margin-top: 40px;
+      }
+      .quiz-title {
+        font-family: "Orbitron", monospace;
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .quiz-subtitle {
+        color: var(--muted);
+        font-size: 14px;
+        margin-bottom: 24px;
+      }
+      .quiz-question {
+        background: var(--surface2);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 16px;
+        border: 1px solid var(--border);
+      }
+      .quiz-q-text {
+        font-size: 15px;
+        font-weight: 700;
+        margin-bottom: 14px;
+        line-height: 1.5;
+      }
+      .quiz-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .quiz-option {
+        padding: 12px 16px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        transition: all 0.2s;
+        text-align: left;
+        font-family: "Nunito", sans-serif;
+      }
+      .quiz-option:hover {
+        border-color: var(--neon);
+        background: rgba(0, 229, 255, 0.05);
+      }
+      .quiz-option.correct {
+        border-color: var(--green);
+        background: rgba(57, 255, 20, 0.1);
+        color: var(--green);
+      }
+      .quiz-option.wrong {
+        border-color: var(--orange);
+        background: rgba(255, 107, 53, 0.1);
+        color: var(--orange);
+      }
+      .quiz-option.reveal {
+        border-color: var(--green);
+        background: rgba(57, 255, 20, 0.05);
+      }
+      .quiz-explanation {
+        margin-top: 12px;
+        padding: 12px;
+        background: rgba(0, 229, 255, 0.05);
+        border-radius: 8px;
+        font-size: 13px;
+        color: var(--muted);
+        display: none;
+        line-height: 1.6;
+      }
+      .quiz-explanation.show {
+        display: block;
+      }
+      .quiz-score {
+        text-align: center;
+        padding: 20px;
+        background: var(--surface2);
+        border-radius: 12px;
+        display: none;
+        margin-top: 16px;
+      }
+      .score-number {
+        font-family: "Orbitron", monospace;
+        font-size: 48px;
+        font-weight: 900;
+      }
+
+      /* MEMORY LAYOUT */
+      .memory-layout {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+        margin: 16px auto;
+        max-width: 280px;
+      }
+      .mem-block {
+        width: 100%;
+        padding: 12px 20px;
+        text-align: center;
+        font-family: "Space Mono", monospace;
+        font-size: 12px;
+        font-weight: 700;
+        border: 1px solid;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .mem-block:hover {
+        filter: brightness(1.3);
+      }
+
+      /* IPC COMPARISON */
+      .ipc-compare {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin: 16px 0;
+      }
+      .ipc-card {
+        background: var(--surface2);
+        border-radius: 12px;
+        padding: 20px;
+        border: 1px solid var(--border);
+      }
+      .ipc-card-title {
+        font-weight: 800;
+        font-size: 15px;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      /* THREADING MODELS */
+      .thread-model {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        background: var(--surface2);
+        border-radius: 12px;
+        padding: 20px;
+        border: 1px solid var(--border);
+      }
+      .thread-row {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .thread-circle {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 2px solid;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        font-weight: 700;
+        font-family: "Space Mono", monospace;
+      }
+      .user-thread {
+        border-color: var(--purple);
+        background: rgba(199, 125, 255, 0.1);
+        color: var(--purple);
+      }
+      .kernel-thread {
+        border-color: var(--neon);
+        background: rgba(0, 229, 255, 0.1);
+        color: var(--neon);
+      }
+      .thread-arrow {
+        font-size: 18px;
+        color: var(--muted);
+      }
+
+      /* SCHEDULING CRITERIA */
+      .criteria-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 12px;
+        margin: 16px 0;
+      }
+      .criteria-card {
+        background: var(--surface2);
+        border-radius: 12px;
+        padding: 16px;
+        text-align: center;
+        border: 1px solid var(--border);
+        transition: all 0.3s;
+        cursor: pointer;
+      }
+      .criteria-card:hover {
+        transform: translateY(-4px);
+      }
+      .criteria-icon {
+        font-size: 28px;
+        margin-bottom: 8px;
+      }
+      .criteria-name {
+        font-weight: 800;
+        font-size: 13px;
+        margin-bottom: 4px;
+      }
+      .criteria-desc {
+        font-size: 11px;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      /* AMDAHL */
+      .amdahl-bar {
+        height: 30px;
+        background: var(--surface2);
+        border-radius: 8px;
+        overflow: hidden;
+        margin: 8px 0;
+        display: flex;
+      }
+      .amdahl-serial {
+        background: rgba(255, 107, 53, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 700;
+        font-family: "Space Mono", monospace;
+      }
+      .amdahl-parallel {
+        background: rgba(57, 255, 20, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 700;
+        font-family: "Space Mono", monospace;
+        flex: 1;
+      }
+
+      /* MOBILE MENU */
+      .menu-toggle {
+        display: none;
+        position: fixed;
+        top: 16px;
+        left: 16px;
+        z-index: 200;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 10px;
+        cursor: pointer;
+        font-size: 20px;
+      }
+
+      /* SCROLL INDICATOR */
+      .scroll-indicator {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 10px 16px;
+        font-size: 12px;
+        color: var(--muted);
+        font-family: "Space Mono", monospace;
+        z-index: 100;
+        transition: opacity 0.3s;
+      }
+
+      /* EXAM TIP */
+      .exam-tip {
+        background: linear-gradient(
+          135deg,
+          rgba(255, 209, 102, 0.05),
+          rgba(255, 107, 53, 0.05)
+        );
+        border: 1px solid rgba(255, 209, 102, 0.3);
+        border-radius: 12px;
+        padding: 16px 20px;
+        margin: 16px 0;
+      }
+      .exam-tip-label {
+        font-family: "Orbitron", monospace;
+        font-size: 9px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--yellow);
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .exam-tip p {
+        font-size: 13px;
+        color: var(--text);
+        line-height: 1.7;
+      }
+
+      /* ANIMATIONS */
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes glow {
+        0%,
+        100% {
+          box-shadow: 0 0 5px rgba(0, 229, 255, 0.3);
+        }
+        50% {
+          box-shadow: 0 0 20px rgba(0, 229, 255, 0.6);
+        }
+      }
+
+      .animate-in {
+        animation: slideIn 0.5s ease forwards;
+      }
+
+      /* SECTION DIVIDER */
+      .section-divider {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 32px 0;
+      }
+
+      /* TAG CHIP */
+      .tag {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 700;
+        font-family: "Space Mono", monospace;
+        margin: 2px;
+      }
+
+      @media (max-width: 768px) {
+        .sidebar {
+          transform: translateX(-100%);
+        }
+        .sidebar.open {
+          transform: translateX(0);
+        }
+        .main {
+          margin-left: 0;
+        }
+        .chapter-section {
+          padding: 30px 20px;
+        }
+        .topics-grid {
+          grid-template-columns: 1fr;
+        }
+        .quiz-options {
+          grid-template-columns: 1fr;
+        }
+        .ipc-compare {
+          grid-template-columns: 1fr;
+        }
+        .menu-toggle {
+          display: flex;
+        }
+        .hero {
+          padding: 40px 20px 30px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">OS MASTER CLASS</div>
+        <div class="logo-sub">Chapters 2–5 | Ace Your Exam</div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="progress-label" id="progressLabel">0% complete</div>
+      </div>
+      <div class="chapter-nav">
+        <div class="ch-label">Chapters</div>
+
+        <div class="nav-chapter">
+          <button
+            class="nav-chapter-btn"
+            onclick="
+              toggleNav('nav2');
+              scrollTo('ch2');
+            "
+            style="--accent: var(--ch2)"
+          >
+            <span class="ch-dot" style="background: var(--ch2)"></span>
+            Ch.2 OS Structures
+            <span style="margin-left: auto; font-size: 10px; opacity: 0.5"
+              >▼</span
+            >
+          </button>
+          <div class="nav-topics" id="nav2">
+            <button class="nav-topic" onclick="scrollTo('os-services')">
+              OS Services
+            </button>
+            <button class="nav-topic" onclick="scrollTo('user-interface')">
+              CLI, GUI & Interfaces
+            </button>
+            <button class="nav-topic" onclick="scrollTo('system-calls')">
+              System Calls
+            </button>
+            <button class="nav-topic" onclick="scrollTo('system-programs')">
+              System Programs
+            </button>
+            <button class="nav-topic" onclick="scrollTo('os-structure')">
+              OS Structure
+            </button>
+            <button class="nav-topic" onclick="scrollTo('system-boot')">
+              Boot Process
+            </button>
+            <button class="nav-topic" onclick="scrollTo('quiz2')">
+              🧠 Quiz
+            </button>
+          </div>
+        </div>
+
+        <div class="nav-chapter">
+          <button
+            class="nav-chapter-btn"
+            onclick="
+              toggleNav('nav3');
+              scrollTo('ch3');
+            "
+            style="--accent: var(--ch3)"
+          >
+            <span class="ch-dot" style="background: var(--ch3)"></span>
+            Ch.3 Processes
+            <span style="margin-left: auto; font-size: 10px; opacity: 0.5"
+              >▼</span
+            >
+          </button>
+          <div class="nav-topics" id="nav3">
+            <button class="nav-topic" onclick="scrollTo('process-concept')">
+              Process Concept
+            </button>
+            <button class="nav-topic" onclick="scrollTo('process-states')">
+              Process States
+            </button>
+            <button class="nav-topic" onclick="scrollTo('pcb')">PCB</button>
+            <button class="nav-topic" onclick="scrollTo('schedulers')">
+              Schedulers & Queues
+            </button>
+            <button class="nav-topic" onclick="scrollTo('context-switch')">
+              Context Switch
+            </button>
+            <button class="nav-topic" onclick="scrollTo('process-creation')">
+              Creation & Termination
+            </button>
+            <button class="nav-topic" onclick="scrollTo('ipc')">IPC</button>
+            <button class="nav-topic" onclick="scrollTo('quiz3')">
+              🧠 Quiz
+            </button>
+          </div>
+        </div>
+
+        <div class="nav-chapter">
+          <button
+            class="nav-chapter-btn"
+            onclick="
+              toggleNav('nav4');
+              scrollTo('ch4');
+            "
+            style="--accent: var(--ch4)"
+          >
+            <span class="ch-dot" style="background: var(--ch4)"></span>
+            Ch.4 Threads
+            <span style="margin-left: auto; font-size: 10px; opacity: 0.5"
+              >▼</span
+            >
+          </button>
+          <div class="nav-topics" id="nav4">
+            <button class="nav-topic" onclick="scrollTo('thread-overview')">
+              Thread Overview
+            </button>
+            <button class="nav-topic" onclick="scrollTo('multicore')">
+              Multicore Programming
+            </button>
+            <button class="nav-topic" onclick="scrollTo('thread-models')">
+              Threading Models
+            </button>
+            <button class="nav-topic" onclick="scrollTo('implicit-threading')">
+              Implicit Threading
+            </button>
+            <button class="nav-topic" onclick="scrollTo('thread-issues')">
+              Threading Issues
+            </button>
+            <button class="nav-topic" onclick="scrollTo('quiz4')">
+              🧠 Quiz
+            </button>
+          </div>
+        </div>
+
+        <div class="nav-chapter">
+          <button
+            class="nav-chapter-btn"
+            onclick="
+              toggleNav('nav5');
+              scrollTo('ch5');
+            "
+            style="--accent: var(--ch5)"
+          >
+            <span class="ch-dot" style="background: var(--ch5)"></span>
+            Ch.5 CPU Scheduling
+            <span style="margin-left: auto; font-size: 10px; opacity: 0.5"
+              >▼</span
+            >
+          </button>
+          <div class="nav-topics" id="nav5">
+            <button class="nav-topic" onclick="scrollTo('sched-basics')">
+              Basic Concepts
+            </button>
+            <button class="nav-topic" onclick="scrollTo('sched-criteria')">
+              Scheduling Criteria
+            </button>
+            <button class="nav-topic" onclick="scrollTo('fcfs')">FCFS</button>
+            <button class="nav-topic" onclick="scrollTo('sjf')">
+              SJF & SRTF
+            </button>
+            <button class="nav-topic" onclick="scrollTo('priority')">
+              Priority Scheduling
+            </button>
+            <button class="nav-topic" onclick="scrollTo('rr')">
+              Round Robin
+            </button>
+            <button class="nav-topic" onclick="scrollTo('multilevel')">
+              Multilevel Queues
+            </button>
+            <button class="nav-topic" onclick="scrollTo('quiz5')">
+              🧠 Quiz
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main">
+      <!-- HERO -->
+      <div class="hero">
+        <h1>OS Master Class 🚀</h1>
+        <p>
+          Your complete interactive guide to Operating Systems — Chapters 2
+          through 5. Study smart, ace the exam.
+        </p>
+        <div class="chapter-pills">
+          <div class="pill pill-2" onclick="scrollTo('ch2')">
+            📦 Ch.2 OS Structures
+          </div>
+          <div class="pill pill-3" onclick="scrollTo('ch3')">
+            ⚙️ Ch.3 Processes
+          </div>
+          <div class="pill pill-4" onclick="scrollTo('ch4')">
+            🧵 Ch.4 Threads
+          </div>
+          <div class="pill pill-5" onclick="scrollTo('ch5')">
+            ⏱️ Ch.5 CPU Scheduling
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================= CHAPTER 2 ======================= -->
+      <div class="chapter-section" id="ch2">
+        <div class="ch-header">
+          <div class="ch-number" style="color: var(--ch2)">02</div>
+          <div class="ch-title-wrap">
+            <div class="ch-tag" style="color: var(--ch2)">Chapter Two</div>
+            <div class="ch-title" style="color: var(--ch2)">
+              Operating System Structures
+            </div>
+          </div>
+        </div>
+
+        <!-- OS SERVICES -->
+        <div id="os-services" class="topics-grid">
+          <div class="topic-card" onclick="toggleCard(this)">
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(78, 205, 196, 0.15)"
+              >
+                🛎️
+              </div>
+              <div>
+                <div class="topic-title">OS Services</div>
+                <div class="topic-subtitle">
+                  What an OS does for you & the system
+                </div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <div class="highlight-box box-info">
+                <span class="box-title">📌 Core Idea</span>
+                An OS provides services in two categories:
+                <strong>user-helpful services</strong> (convenient for users)
+                and <strong>system efficiency services</strong> (keep the OS
+                running well).
+              </div>
+
+              <p
+                style="
+                  font-size: 14px;
+                  font-weight: 800;
+                  margin: 12px 0 8px;
+                  color: var(--ch2);
+                "
+              >
+                👤 User-Helpful Services:
+              </p>
+              <ul class="key-points">
+                <li style="--color: var(--ch2)">
+                  <strong>User Interface (UI)</strong> — CLI (command line), GUI
+                  (graphical), or touch. Every OS has at least one.
+                </li>
+                <li>
+                  <strong>Program Execution</strong> — Load programs into
+                  memory, run them, handle normal/abnormal termination.
+                </li>
+                <li>
+                  <strong>I/O Operations</strong> — Running programs may need
+                  I/O (files, devices). OS manages this safely.
+                </li>
+                <li>
+                  <strong>File-System Manipulation</strong> — Read/write files,
+                  create/delete directories, manage permissions.
+                </li>
+                <li>
+                  <strong>Communications</strong> — Processes exchange info via
+                  <em>shared memory</em> or <em>message passing</em>.
+                </li>
+                <li>
+                  <strong>Error Detection</strong> — Detect errors in CPU,
+                  memory, I/O devices, user programs and respond appropriately.
+                </li>
+              </ul>
+
+              <p
+                style="
+                  font-size: 14px;
+                  font-weight: 800;
+                  margin: 12px 0 8px;
+                  color: var(--yellow);
+                "
+              >
+                ⚙️ System Efficiency Services:
+              </p>
+              <ul class="key-points">
+                <li>
+                  <strong>Resource Allocation</strong> — Allocate CPU cycles,
+                  memory, I/O devices among multiple concurrent processes.
+                </li>
+                <li>
+                  <strong>Accounting</strong> — Track which users use which
+                  resources and how much.
+                </li>
+                <li>
+                  <strong>Protection & Security</strong> — Control access to
+                  resources; authenticate users; defend against external
+                  attacks.
+                </li>
+              </ul>
+
+              <div class="exam-tip">
+                <div class="exam-tip-label">🎯 Exam Tip</div>
+                <p>
+                  Remember: 6 user-helpful services (UI, Execution, I/O,
+                  File-system, Communication, Error Detection) + 3 system
+                  efficiency services (Resource allocation, Accounting,
+                  Protection). Use mnemonic: <strong>U-E-I-F-C-E</strong> +
+                  <strong>RAP</strong>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="topic-card"
+            id="user-interface"
+            onclick="toggleCard(this)"
+          >
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(78, 205, 196, 0.15)"
+              >
+                🖥️
+              </div>
+              <div>
+                <div class="topic-title">User Interfaces</div>
+                <div class="topic-subtitle">CLI vs GUI vs Touch</div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <table class="compare-table">
+                <tr>
+                  <th>Type</th>
+                  <th>Description</th>
+                  <th>Examples</th>
+                </tr>
+                <tr>
+                  <td>
+                    <span
+                      class="badge"
+                      style="
+                        background: rgba(0, 229, 255, 0.1);
+                        color: var(--neon);
+                        border: 1px solid var(--neon);
+                      "
+                      >CLI</span
+                    >
+                  </td>
+                  <td>
+                    Command-Line Interface. Text commands typed directly. Shells
+                    can be built into kernel or as system programs.
+                  </td>
+                  <td>Bash, sh, PowerShell</td>
+                </tr>
+                <tr>
+                  <td>
+                    <span
+                      class="badge"
+                      style="
+                        background: rgba(199, 125, 255, 0.1);
+                        color: var(--purple);
+                        border: 1px solid var(--purple);
+                      "
+                      >GUI</span
+                    >
+                  </td>
+                  <td>
+                    Desktop metaphor with icons, folders, mouse. Invented at
+                    Xerox PARC. More user-friendly.
+                  </td>
+                  <td>Windows, macOS Aqua, GNOME</td>
+                </tr>
+                <tr>
+                  <td>
+                    <span
+                      class="badge"
+                      style="
+                        background: rgba(255, 107, 53, 0.1);
+                        color: var(--orange);
+                        border: 1px solid var(--orange);
+                      "
+                      >Touch</span
+                    >
+                  </td>
+                  <td>
+                    Gesture-based input. No mouse. Virtual keyboard. Voice
+                    commands.
+                  </td>
+                  <td>iOS, Android</td>
+                </tr>
+              </table>
+              <div class="highlight-box box-purple">
+                <span class="box-title">💡 Key Fact</span>
+                Most modern systems have BOTH CLI and GUI. Mac OS X has Aqua GUI
+                but also supports UNIX shells. Windows has GUI + Command
+                Prompt/PowerShell.
+              </div>
+              <div class="exam-tip">
+                <div class="exam-tip-label">🎯 Exam Tip</div>
+                <p>
+                  CLI: sometimes in kernel, sometimes as program. Adding new
+                  commands to shell doesn't require modifying the shell
+                  (commands are just program names).
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-card" id="system-calls" onclick="toggleCard(this)">
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(78, 205, 196, 0.15)"
+              >
+                📞
+              </div>
+              <div>
+                <div class="topic-title">System Calls</div>
+                <div class="topic-subtitle">
+                  The bridge between user programs & OS kernel
+                </div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <div class="highlight-box box-info">
+                <span class="box-title">📌 Definition</span>
+                A <strong>system call</strong> is the programmatic way a user
+                program requests a service from the OS kernel. Think of it as
+                the "API of the OS."
+              </div>
+
+              <div
+                style="
+                  text-align: center;
+                  margin: 20px 0;
+                  font-family: &quot;Space Mono&quot;, monospace;
+                  font-size: 12px;
+                "
+              >
+                <div
+                  style="
+                    background: rgba(199, 125, 255, 0.1);
+                    border: 1px solid var(--purple);
+                    border-radius: 8px;
+                    padding: 12px;
+                    margin-bottom: 8px;
+                  "
+                >
+                  👤 User Program
+                </div>
+                <div style="color: var(--muted)">
+                  ↓ calls API (e.g., printf)
+                </div>
+                <div
+                  style="
+                    background: rgba(0, 229, 255, 0.1);
+                    border: 1px solid var(--neon);
+                    border-radius: 8px;
+                    padding: 12px;
+                    margin: 8px 0;
+                  "
+                >
+                  📚 Run-time Library / API<br /><span
+                    style="font-size: 10px; color: var(--muted)"
+                    >(Win32, POSIX, Java API)</span
+                  >
+                </div>
+                <div style="color: var(--muted)">
+                  ↓ triggers system call (e.g., write)
+                </div>
+                <div
+                  style="
+                    background: rgba(57, 255, 20, 0.1);
+                    border: 1px solid var(--green);
+                    border-radius: 8px;
+                    padding: 12px;
+                    margin-top: 8px;
+                  "
+                >
+                  🔧 OS Kernel
+                </div>
+              </div>
+
+              <p style="font-size: 14px; font-weight: 800; margin: 12px 0 8px">
+                Parameter Passing Methods:
+              </p>
+              <ul class="key-points">
+                <li>
+                  <strong>Registers</strong> — Simplest: pass params directly in
+                  CPU registers (limited by number of registers).
+                </li>
+                <li>
+                  <strong>Memory Table</strong> — Store params in a block/table
+                  in memory, pass the address in a register. Used by Linux &
+                  Solaris.
+                </li>
+                <li>
+                  <strong>Stack</strong> — Push params onto stack, OS pops them.
+                  No limit on number/length of params.
+                </li>
+              </ul>
+
+              <p
+                style="
+                  font-size: 14px;
+                  font-weight: 800;
+                  margin: 12px 0 8px;
+                  color: var(--yellow);
+                "
+              >
+                6 Types of System Calls:
+              </p>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: 1fr 1fr;
+                  gap: 8px;
+                  font-size: 13px;
+                "
+              >
+                <div class="highlight-box box-info" style="margin: 0">
+                  <strong>Process Control</strong><br />create/terminate
+                  process, wait, allocate memory
+                </div>
+                <div class="highlight-box box-purple" style="margin: 0">
+                  <strong>File Management</strong
+                  ><br />create/delete/open/close/read/write files
+                </div>
+                <div class="highlight-box box-warn" style="margin: 0">
+                  <strong>Device Management</strong><br />request/release
+                  devices, read/write devices
+                </div>
+                <div class="highlight-box box-success" style="margin: 0">
+                  <strong>Information Maintenance</strong><br />get/set time,
+                  date, system data, attributes
+                </div>
+                <div class="highlight-box box-yellow" style="margin: 0">
+                  <strong>Communications</strong><br />create/delete
+                  connections, send/receive messages
+                </div>
+                <div class="highlight-box box-info" style="margin: 0">
+                  <strong>Protection</strong><br />control access, get/set
+                  permissions
+                </div>
+              </div>
+
+              <div class="exam-tip">
+                <div class="exam-tip-label">🎯 Exam Tip</div>
+                <p>
+                  Mnemonic for 6 types: <strong>P-F-D-I-C-P</strong> =
+                  <em>Please Find Dave, I Can't Proceed</em>. The caller doesn't
+                  need to know HOW system calls work — they just use the API.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="topic-card"
+            id="system-programs"
+            onclick="toggleCard(this)"
+          >
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(78, 205, 196, 0.15)"
+              >
+                🔧
+              </div>
+              <div>
+                <div class="topic-title">System Programs</div>
+                <div class="topic-subtitle">Programs that come with the OS</div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <div class="highlight-box box-info">
+                <span class="box-title">📌 Core Idea</span>
+                System programs provide a convenient environment for program
+                development and execution. They are the USER's view of the OS —
+                most users see system programs, not system calls.
+              </div>
+              <ul class="key-points">
+                <li>
+                  <strong>File Management</strong> — Create, delete, copy,
+                  rename, print, list files and directories.
+                </li>
+                <li>
+                  <strong>Status Information</strong> — Date, time, memory/disk
+                  usage, performance metrics. Some use a registry.
+                </li>
+                <li>
+                  <strong>File Modification</strong> — Text editors to
+                  create/modify files; commands to search or transform text.
+                </li>
+                <li>
+                  <strong>Programming Language Support</strong> — Compilers,
+                  assemblers, debuggers, interpreters.
+                </li>
+                <li>
+                  <strong>Program Loading & Execution</strong> — Loaders,
+                  linkage editors, overlay loaders.
+                </li>
+                <li>
+                  <strong>Communications</strong> — Virtual connections between
+                  processes, users, systems (email, web, login).
+                </li>
+                <li>
+                  <strong>Background Services (Daemons)</strong> — Launch at
+                  boot. Disk checking, process scheduling, error logging,
+                  printing. Run in USER context, not kernel.
+                </li>
+              </ul>
+              <div class="highlight-box box-warn">
+                <span class="box-title">⚠️ System vs Application Programs</span>
+                System programs help OTHER systems/programs run. Application
+                programs (email clients, browsers, games) serve END USERS
+                directly. Application programs are NOT part of the OS.
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-card" id="os-structure" onclick="toggleCard(this)">
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(78, 205, 196, 0.15)"
+              >
+                🏗️
+              </div>
+              <div>
+                <div class="topic-title">OS Structure</div>
+                <div class="topic-subtitle">
+                  Simple, Layered, Microkernel, Modular
+                </div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <p style="font-size: 14px; font-weight: 800; margin-bottom: 16px">
+                Key Design Principle:
+                <span style="color: var(--neon)">Policy vs Mechanism</span>
+              </p>
+              <div class="highlight-box box-info">
+                <strong>Policy</strong> = WHAT will be done? (e.g., which
+                process runs next?)<br />
+                <strong>Mechanism</strong> = HOW to do it? (e.g., timer
+                interrupt)<br /><br />
+                Separating them allows flexibility — policy can change without
+                changing mechanism.
+              </div>
+
+              <table class="compare-table" style="margin-top: 16px">
+                <tr>
+                  <th>Structure</th>
+                  <th>Description</th>
+                  <th>Pros/Cons</th>
+                </tr>
+                <tr>
+                  <td>
+                    <strong style="color: var(--orange)"
+                      >Simple (MS-DOS)</strong
+                    >
+                  </td>
+                  <td>
+                    No clear separation of layers. Most functionality in least
+                    space. Interfaces not well-separated.
+                  </td>
+                  <td>❌ Not modular, insecure, fragile</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong style="color: var(--yellow)"
+                      >Monolithic (UNIX)</strong
+                    >
+                  </td>
+                  <td>
+                    Kernel does everything between hardware and system-call
+                    interface. Large but functional.
+                  </td>
+                  <td>✅ Fast ❌ Hard to maintain</td>
+                </tr>
+                <tr>
+                  <td><strong style="color: var(--neon)">Layered</strong></td>
+                  <td>
+                    OS divided into N layers. Layer 0 = hardware, Layer N = UI.
+                    Each layer uses only layers below it.
+                  </td>
+                  <td>✅ Modular ❌ Performance overhead</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong style="color: var(--purple)">Microkernel</strong>
+                  </td>
+                  <td>
+                    Moves as much as possible from kernel to user space. Kernel
+                    is tiny. Communication via message passing.
+                  </td>
+                  <td>✅ Reliable, secure, portable ❌ Performance overhead</td>
+                </tr>
+                <tr>
+                  <td><strong style="color: var(--green)">Modular</strong></td>
+                  <td>
+                    Loadable kernel modules. Object-oriented. Each component is
+                    separate but interfaces with others. Linux, Solaris.
+                  </td>
+                  <td>✅ Flexible, like layers but better</td>
+                </tr>
+                <tr>
+                  <td><strong style="color: var(--pink)">Hybrid</strong></td>
+                  <td>
+                    Mix of approaches. macOS = Mach microkernel + BSD Unix.
+                    Windows = mostly monolithic + microkernel elements.
+                  </td>
+                  <td>✅ Best of all worlds</td>
+                </tr>
+              </table>
+
+              <div class="exam-tip">
+                <div class="exam-tip-label">🎯 Exam Tip</div>
+                <p>
+                  Microkernel benefits: easier to extend, easier to port, more
+                  reliable (less kernel code), more secure. Main detriment:
+                  performance overhead of user↔kernel communication.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-card" id="system-boot" onclick="toggleCard(this)">
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(78, 205, 196, 0.15)"
+              >
+                🚀
+              </div>
+              <div>
+                <div class="topic-title">System Boot & Debugging</div>
+                <div class="topic-subtitle">From power-on to running OS</div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <p
+                style="
+                  font-size: 14px;
+                  font-weight: 800;
+                  margin-bottom: 12px;
+                  color: var(--ch2);
+                "
+              >
+                Boot Sequence:
+              </p>
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  gap: 0;
+                  margin-bottom: 16px;
+                "
+              >
+                <div
+                  style="
+                    background: rgba(78, 205, 196, 0.08);
+                    border: 1px solid rgba(78, 205, 196, 0.3);
+                    border-radius: 8px 8px 0 0;
+                    padding: 12px 16px;
+                    font-size: 13px;
+                  "
+                >
+                  <strong>1.</strong> Power on → CPU starts execution at fixed
+                  memory location (ROM)
+                </div>
+                <div
+                  style="
+                    background: rgba(78, 205, 196, 0.05);
+                    border: 1px solid rgba(78, 205, 196, 0.2);
+                    border-left: 1px solid rgba(78, 205, 196, 0.2);
+                    border-right: 1px solid rgba(78, 205, 196, 0.2);
+                    border-top: none;
+                    padding: 12px 16px;
+                    font-size: 13px;
+                  "
+                >
+                  <strong>2.</strong> Firmware (BIOS/UEFI) in ROM runs initial
+                  boot code
+                </div>
+                <div
+                  style="
+                    background: rgba(78, 205, 196, 0.03);
+                    border: 1px solid rgba(78, 205, 196, 0.2);
+                    border-left: 1px solid rgba(78, 205, 196, 0.2);
+                    border-right: 1px solid rgba(78, 205, 196, 0.2);
+                    border-top: none;
+                    padding: 12px 16px;
+                    font-size: 13px;
+                  "
+                >
+                  <strong>3.</strong> Bootstrap loader (GRUB) found in
+                  ROM/EEPROM — locates kernel on disk, loads it into memory
+                </div>
+                <div
+                  style="
+                    background: rgba(78, 205, 196, 0.01);
+                    border: 1px solid rgba(78, 205, 196, 0.2);
+                    border-radius: 0 0 8px 8px;
+                    border-top: none;
+                    padding: 12px 16px;
+                    font-size: 13px;
+                  "
+                >
+                  <strong>4.</strong> Kernel is loaded and system starts running
+                  🎉
+                </div>
+              </div>
+
+              <div class="highlight-box box-success">
+                <span class="box-title">Debugging Terms</span>
+                <strong>Core dump</strong> = memory snapshot when application
+                crashes<br />
+                <strong>Crash dump</strong> = kernel memory snapshot when OS
+                fails<br />
+                <strong>Profiling</strong> = sampling instruction pointer to
+                find performance hotspots<br />
+                <strong>DTrace</strong> = Solaris tool for live system
+                instrumentation
+              </div>
+
+              <div class="highlight-box box-info">
+                <span class="box-title">SYSGEN</span>
+                SYSGEN (System Generation) configures the OS for specific
+                hardware. Can produce more efficient code than a general-purpose
+                kernel.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHAPTER 2 QUIZ -->
+        <div class="quiz-wrap" id="quiz2">
+          <div class="quiz-title" style="color: var(--ch2)">
+            🧠 Chapter 2 Quiz
+          </div>
+          <div class="quiz-subtitle">
+            Test your understanding of OS Structures
+          </div>
+          <div id="quiz2-questions"></div>
+          <button
+            class="btn btn-primary"
+            onclick="submitQuiz('quiz2')"
+            style="margin-top: 16px"
+          >
+            Check Answers
+          </button>
+          <div class="quiz-score" id="quiz2-score"></div>
+        </div>
+      </div>
+
+      <!-- ======================= CHAPTER 3 ======================= -->
+      <div class="chapter-section" id="ch3">
+        <div class="ch-header">
+          <div class="ch-number" style="color: var(--ch3)">03</div>
+          <div class="ch-title-wrap">
+            <div class="ch-tag" style="color: var(--ch3)">Chapter Three</div>
+            <div class="ch-title" style="color: var(--ch3)">Processes</div>
+          </div>
+        </div>
+
+        <div class="topics-grid">
+          <div
+            class="topic-card"
+            id="process-concept"
+            onclick="toggleCard(this)"
+          >
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(255, 107, 53, 0.15)"
+              >
+                ⚙️
+              </div>
+              <div>
+                <div class="topic-title">Process Concept</div>
+                <div class="topic-subtitle">
+                  Program vs Process & Memory Layout
+                </div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <div class="highlight-box box-warn">
+                <span class="box-title">📌 Key Distinction</span>
+                <strong>Program</strong> = passive entity stored on disk
+                (executable file)<br />
+                <strong>Process</strong> = active entity — a program IN
+                EXECUTION<br />
+                A program becomes a process when loaded into memory. One program
+                = multiple processes possible!
+              </div>
+
+              <p
+                style="
+                  font-size: 14px;
+                  font-weight: 800;
+                  margin: 16px 0 12px;
+                  color: var(--ch3);
+                "
+              >
+                Process Memory Layout:
+              </p>
+              <div class="memory-layout">
+                <div
+                  class="mem-block"
+                  style="
+                    border-color: #ff4d9e;
+                    background: rgba(255, 77, 158, 0.1);
+                    color: #ff4d9e;
+                    border-radius: 8px 8px 0 0;
+                  "
+                  title="Grows downward"
+                >
+                  🔴 Stack<br /><span style="font-size: 10px; font-weight: 400"
+                    >Function calls, local vars, return addresses</span
+                  >
+                </div>
+                <div
+                  class="mem-block"
+                  style="
+                    border-color: #7a9cc0;
+                    background: rgba(122, 156, 192, 0.1);
+                    color: #7a9cc0;
+                    border-color-top: none;
+                  "
+                >
+                  ↕ Free Space
+                </div>
+                <div
+                  class="mem-block"
+                  style="
+                    border-color: #39ff14;
+                    background: rgba(57, 255, 20, 0.1);
+                    color: #39ff14;
+                    border-top: none;
+                  "
+                  title="Grows upward"
+                >
+                  🟢 Heap<br /><span style="font-size: 10px; font-weight: 400"
+                    >Dynamic memory allocation (runtime)</span
+                  >
+                </div>
+                <div
+                  class="mem-block"
+                  style="
+                    border-color: #ffd166;
+                    background: rgba(255, 209, 102, 0.1);
+                    color: #ffd166;
+                    border-top: none;
+                  "
+                >
+                  🟡 Data<br /><span style="font-size: 10px; font-weight: 400"
+                    >Global variables</span
+                  >
+                </div>
+                <div
+                  class="mem-block"
+                  style="
+                    border-color: #00e5ff;
+                    background: rgba(0, 229, 255, 0.1);
+                    color: #00e5ff;
+                    border-top: none;
+                    border-radius: 0 0 8px 8px;
+                  "
+                >
+                  🔵 Text (Code)<br /><span
+                    style="font-size: 10px; font-weight: 400"
+                    >Program code / instructions</span
+                  >
+                </div>
+              </div>
+              <p
+                style="
+                  text-align: center;
+                  font-size: 11px;
+                  color: var(--muted);
+                  margin-top: 8px;
+                "
+              >
+                Stack grows ↓ downward | Heap grows ↑ upward
+              </p>
+
+              <div class="exam-tip">
+                <div class="exam-tip-label">🎯 Exam Tip</div>
+                <p>
+                  Remember SDHT: Stack, Data, Heap, Text. Stack = temporary
+                  data. Heap = dynamic runtime allocation. Data = global
+                  variables. Text = actual code.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="topic-card"
+            id="process-states"
+            onclick="toggleCard(this)"
+          >
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(255, 107, 53, 0.15)"
+              >
+                🔄
+              </div>
+              <div>
+                <div class="topic-title">Process States</div>
+                <div class="topic-subtitle">
+                  The 5 states every process goes through
+                </div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <div class="diagram-wrap">
+                <div class="diagram-title">📊 Process State Diagram</div>
+                <div class="state-diagram">
+                  <div class="states-container">
+                    <svg class="state-svg" viewBox="0 0 600 260">
+                      <!-- New → Ready -->
+                      <defs>
+                        <marker
+                          id="arrowhead"
+                          markerWidth="8"
+                          markerHeight="6"
+                          refX="8"
+                          refY="3"
+                          orient="auto"
+                        >
+                          <polygon points="0 0, 8 3, 0 6" fill="#7a9cc0" />
+                        </marker>
+                      </defs>
+                      <!-- New to Ready -->
+                      <path
+                        d="M 90 130 Q 180 60 255 55"
+                        stroke="#7a9cc0"
+                        stroke-width="1.5"
+                        fill="none"
+                        marker-end="url(#arrowhead)"
+                      />
+                      <text
+                        x="140"
+                        y="75"
+                        fill="#7a9cc0"
+                        font-size="10"
+                        font-family="Space Mono"
+                      >
+                        admitted
+                      </text>
+                      <!-- Ready to Running -->
+                      <path
+                        d="M 345 55 Q 430 60 510 120"
+                        stroke="#7a9cc0"
+                        stroke-width="1.5"
+                        fill="none"
+                        marker-end="url(#arrowhead)"
+                      />
+                      <text
+                        x="390"
+                        y="70"
+                        fill="#7a9cc0"
+                        font-size="10"
+                        font-family="Space Mono"
+                      >
+                        scheduled
+                      </text>
+                      <!-- Running to Waiting -->
+                      <path
+                        d="M 510 165 Q 430 230 350 225"
+                        stroke="#7a9cc0"
+                        stroke-width="1.5"
+                        fill="none"
+                        marker-end="url(#arrowhead)"
+                      />
+                      <text
+                        x="390"
+                        y="240"
+                        fill="#7a9cc0"
+                        font-size="10"
+                        font-family="Space Mono"
+                      >
+                        I/O wait
+                      </text>
+                      <!-- Waiting to Ready -->
+                      <path
+                        d="M 250 225 Q 200 200 210 100"
+                        stroke="#7a9cc0"
+                        stroke-width="1.5"
+                        fill="none"
+                        marker-end="url(#arrowhead)"
+                      />
+                      <text
+                        x="155"
+                        y="175"
+                        fill="#7a9cc0"
+                        font-size="10"
+                        font-family="Space Mono"
+                      >
+                        I/O done
+                      </text>
+                      <!-- Running to Ready (interrupt) -->
+                      <path
+                        d="M 510 105 Q 460 20 345 35"
+                        stroke="#7a9cc0"
+                        stroke-width="1.5"
+                        fill="none"
+                        marker-end="url(#arrowhead)"
+                        stroke-dasharray="5,3"
+                      />
+                      <text
+                        x="395"
+                        y="22"
+                        fill="#7a9cc0"
+                        font-size="10"
+                        font-family="Space Mono"
+                      >
+                        interrupt
+                      </text>
+                      <!-- Running to Terminated -->
+                      <path
+                        d="M 555 165 Q 570 210 545 230"
+                        stroke="#7a9cc0"
+                        stroke-width="1.5"
+                        fill="none"
+                        marker-end="url(#arrowhead)"
+                      />
+                      <text
+                        x="565"
+                        y="210"
+                        fill="#7a9cc0"
+                        font-size="9"
+                        font-family="Space Mono"
+                      >
+                        exit
+                      </text>
+                    </svg>
+                    <div class="state-node state-new">
+                      NEW<br /><span style="font-size: 9px">creating</span>
+                    </div>
+                    <div class="state-node state-ready">
+                      READY<br /><span style="font-size: 9px"
+                        >waiting<br />for CPU</span
+                      >
+                    </div>
+                    <div class="state-node state-running">
+                      RUNNING<br /><span style="font-size: 9px">executing</span>
+                    </div>
+                    <div class="state-node state-waiting">
+                      WAITING<br /><span style="font-size: 9px">I/O event</span>
+                    </div>
+                    <div
+                      class="state-node state-terminated"
+                      style="width: 80px; height: 80px; font-size: 10px"
+                    >
+                      TERMINATED<br /><span style="font-size: 8px"
+                        >finished</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <table class="compare-table">
+                <tr>
+                  <th>State</th>
+                  <th>Meaning</th>
+                </tr>
+                <tr>
+                  <td>
+                    <span
+                      class="badge"
+                      style="
+                        background: rgba(78, 205, 196, 0.1);
+                        color: #4ecdc4;
+                        border: 1px solid #4ecdc4;
+                      "
+                      >New</span
+                    >
+                  </td>
+                  <td>Process is being created</td>
+                </tr>
+                <tr>
+                  <td>
+                    <span
+                      class="badge"
+                      style="
+                        background: rgba(255, 209, 102, 0.1);
+                        color: var(--yellow);
+                        border: 1px solid var(--yellow);
+                      "
+                      >Ready</span
+                    >
+                  </td>
+                  <td>Loaded in memory, waiting to be assigned CPU</td>
+                </tr>
+                <tr>
+                  <td>
+                    <span
+                      class="badge"
+                      style="
+                        background: rgba(57, 255, 20, 0.1);
+                        color: var(--green);
+                        border: 1px solid var(--green);
+                      "
+                      >Running</span
+                    >
+                  </td>
+                  <td>Instructions are being executed right now</td>
+                </tr>
+                <tr>
+                  <td>
+                    <span
+                      class="badge"
+                      style="
+                        background: rgba(255, 107, 53, 0.1);
+                        color: var(--orange);
+                        border: 1px solid var(--orange);
+                      "
+                      >Waiting</span
+                    >
+                  </td>
+                  <td>Waiting for I/O or an event (NOT waiting for CPU)</td>
+                </tr>
+                <tr>
+                  <td>
+                    <span
+                      class="badge"
+                      style="
+                        background: rgba(122, 156, 192, 0.1);
+                        color: var(--muted);
+                        border: 1px solid var(--muted);
+                      "
+                      >Terminated</span
+                    >
+                  </td>
+                  <td>Process has finished execution</td>
+                </tr>
+              </table>
+
+              <div class="exam-tip">
+                <div class="exam-tip-label">🎯 Exam Tip</div>
+                <p>
+                  CRITICAL: Only ONE process can be RUNNING on a single CPU at a
+                  time. MANY processes can be in Ready or Waiting state
+                  simultaneously. Ready ≠ Waiting — Ready wants CPU, Waiting
+                  wants I/O.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-card" id="pcb" onclick="toggleCard(this)">
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(255, 107, 53, 0.15)"
+              >
+                📋
+              </div>
+              <div>
+                <div class="topic-title">Process Control Block (PCB)</div>
+                <div class="topic-subtitle">
+                  The OS's data structure for each process
+                </div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <div class="highlight-box box-warn">
+                <span class="box-title">📌 What is PCB?</span>
+                The PCB (also called Task Control Block) is a data structure the
+                OS maintains for each process. It contains ALL information about
+                a process. When the OS switches processes, it saves/restores PCB
+                data.
+              </div>
+
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  gap: 0;
+                  max-width: 300px;
+                  margin: 16px auto;
+                "
+              >
+                <div
+                  style="
+                    background: rgba(255, 107, 53, 0.12);
+                    border: 1px solid rgba(255, 107, 53, 0.4);
+                    border-radius: 8px 8px 0 0;
+                    padding: 10px 16px;
+                    font-size: 13px;
+                    font-weight: 700;
+                    text-align: center;
+                  "
+                >
+                  📋 PCB
+                </div>
+                <div
+                  style="
+                    background: rgba(255, 107, 53, 0.06);
+                    border: 1px solid rgba(255, 107, 53, 0.2);
+                    border-top: none;
+                    padding: 8px 16px;
+                    font-size: 12px;
+                  "
+                >
+                  Process State (new/ready/running/...)
+                </div>
+                <div
+                  style="
+                    background: rgba(255, 107, 53, 0.04);
+                    border: 1px solid rgba(255, 107, 53, 0.2);
+                    border-top: none;
+                    padding: 8px 16px;
+                    font-size: 12px;
+                  "
+                >
+                  Program Counter (next instruction)
+                </div>
+                <div
+                  style="
+                    background: rgba(255, 107, 53, 0.06);
+                    border: 1px solid rgba(255, 107, 53, 0.2);
+                    border-top: none;
+                    padding: 8px 16px;
+                    font-size: 12px;
+                  "
+                >
+                  CPU Registers (all register values)
+                </div>
+                <div
+                  style="
+                    background: rgba(255, 107, 53, 0.04);
+                    border: 1px solid rgba(255, 107, 53, 0.2);
+                    border-top: none;
+                    padding: 8px 16px;
+                    font-size: 12px;
+                  "
+                >
+                  CPU Scheduling Info (priorities, queue pointers)
+                </div>
+                <div
+                  style="
+                    background: rgba(255, 107, 53, 0.06);
+                    border: 1px solid rgba(255, 107, 53, 0.2);
+                    border-top: none;
+                    padding: 8px 16px;
+                    font-size: 12px;
+                  "
+                >
+                  Memory Management Info
+                </div>
+                <div
+                  style="
+                    background: rgba(255, 107, 53, 0.04);
+                    border: 1px solid rgba(255, 107, 53, 0.2);
+                    border-top: none;
+                    padding: 8px 16px;
+                    font-size: 12px;
+                  "
+                >
+                  Accounting Info (CPU time used, time limits)
+                </div>
+                <div
+                  style="
+                    background: rgba(255, 107, 53, 0.06);
+                    border: 1px solid rgba(255, 107, 53, 0.2);
+                    border-top: none;
+                    border-radius: 0 0 8px 8px;
+                    padding: 8px 16px;
+                    font-size: 12px;
+                  "
+                >
+                  I/O Status Info (devices allocated, open files)
+                </div>
+              </div>
+
+              <div class="exam-tip">
+                <div class="exam-tip-label">🎯 Exam Tip</div>
+                <p>
+                  Mnemonic: <strong>S-P-C-S-M-A-I</strong> = "Some Programmers
+                  Can Save Many Apps Indeed" → State, Program counter, CPU
+                  registers, Scheduling info, Memory info, Accounting info, I/O
+                  info.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-card" id="schedulers" onclick="toggleCard(this)">
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(255, 107, 53, 0.15)"
+              >
+                📋
+              </div>
+              <div>
+                <div class="topic-title">Schedulers & Queues</div>
+                <div class="topic-subtitle">
+                  Short-term, Long-term, Medium-term
+                </div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <table class="compare-table">
+                <tr>
+                  <th>Scheduler</th>
+                  <th>Also Called</th>
+                  <th>Frequency</th>
+                  <th>Job</th>
+                </tr>
+                <tr>
+                  <td>
+                    <strong style="color: var(--green)">Short-term</strong>
+                  </td>
+                  <td>CPU Scheduler</td>
+                  <td>Very frequent (ms)</td>
+                  <td>
+                    Selects which READY process gets the CPU next. Must be FAST.
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong style="color: var(--yellow)">Long-term</strong>
+                  </td>
+                  <td>Job Scheduler</td>
+                  <td>Infrequent (seconds/min)</td>
+                  <td>
+                    Selects which processes enter the ready queue from disk.
+                    Controls degree of multiprogramming. Can be slow.
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong style="color: var(--purple)">Medium-term</strong>
+                  </td>
+                  <td>Swapper</td>
+                  <td>As needed</td>
+                  <td>
+                    Removes processes from memory to disk (swapping) to reduce
+                    multiprogramming degree temporarily.
+                  </td>
+                </tr>
+              </table>
+
+              <p
+                style="
+                  font-size: 14px;
+                  font-weight: 800;
+                  margin: 16px 0 8px;
+                  color: var(--ch3);
+                "
+              >
+                Process Types (for Long-term scheduler):
+              </p>
+              <div class="ipc-compare">
+                <div class="ipc-card">
+                  <div class="ipc-card-title">⚡ I/O-Bound Process</div>
+                  <p style="font-size: 13px; color: var(--muted)">
+                    Spends more time doing I/O. Many SHORT CPU bursts. Example:
+                    file editor, web browser.
+                  </p>
+                </div>
+                <div class="ipc-card">
+                  <div class="ipc-card-title">🔥 CPU-Bound Process</div>
+                  <p style="font-size: 13px; color: var(--muted)">
+                    Spends more time computing. Few LONG CPU bursts. Example:
+                    scientific calculations, video encoding.
+                  </p>
+                </div>
+              </div>
+              <div class="highlight-box box-purple">
+                Long-term scheduler aims for a <strong>good mix</strong> of
+                I/O-bound and CPU-bound processes for optimal system
+                performance.
+              </div>
+
+              <div class="exam-tip">
+                <div class="exam-tip-label">🎯 Exam Tip</div>
+                <p>
+                  Three queues: <strong>Job Queue</strong> (all processes in
+                  system), <strong>Ready Queue</strong> (in memory, ready to
+                  run), <strong>Device Queue</strong> (waiting for I/O device).
+                  Processes migrate between these queues constantly.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="topic-card"
+            id="context-switch"
+            onclick="toggleCard(this)"
+          >
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(255, 107, 53, 0.15)"
+              >
+                🔀
+              </div>
+              <div>
+                <div class="topic-title">Context Switch</div>
+                <div class="topic-subtitle">
+                  Saving & restoring process state
+                </div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <div class="highlight-box box-warn">
+                <span class="box-title">📌 Definition</span>
+                When the CPU switches from one process to another, the OS must
+                <strong>save the state</strong> (PCB) of the old process and
+                <strong>load the saved state</strong> of the new process. This
+                is a <strong>context switch</strong>.
+              </div>
+
+              <div
+                style="
+                  display: flex;
+                  gap: 12px;
+                  margin: 16px 0;
+                  align-items: flex-start;
+                  font-size: 12px;
+                "
+              >
+                <div
+                  style="
+                    flex: 1;
+                    background: rgba(255, 107, 53, 0.05);
+                    border: 1px solid rgba(255, 107, 53, 0.2);
+                    border-radius: 8px;
+                    padding: 12px;
+                  "
+                >
+                  <div
+                    style="
+                      font-weight: 700;
+                      color: var(--orange);
+                      margin-bottom: 8px;
+                    "
+                  >
+                    Process P0
+                  </div>
+                  <div style="color: var(--muted)">Running...</div>
+                  <div style="color: var(--green); margin: 8px 0">
+                    → Save PCB of P0
+                  </div>
+                  <div style="color: var(--muted)">IDLE</div>
+                  <div style="color: var(--green); margin: 8px 0">
+                    ← Restore PCB of P0
+                  </div>
+                  <div style="color: var(--muted)">Running again...</div>
+                </div>
+                <div style="width: 80px; text-align: center; padding-top: 30px">
+                  <div
+                    style="
+                      font-family: &quot;Space Mono&quot;, monospace;
+                      font-size: 10px;
+                      color: var(--muted);
+                    "
+                  >
+                    OS Kernel
+                  </div>
+                  <div style="font-size: 20px">⚡</div>
+                  <div
+                    style="
+                      font-size: 11px;
+                      color: var(--yellow);
+                      font-weight: 700;
+                    "
+                  >
+                    OVERHEAD<br />(no useful<br />work done)
+                  </div>
+                </div>
+                <div
+                  style="
+                    flex: 1;
+                    background: rgba(57, 255, 20, 0.05);
+                    border: 1px solid rgba(57, 255, 20, 0.2);
+                    border-radius: 8px;
+                    padding: 12px;
+                  "
+                >
+                  <div
+                    style="
+                      font-weight: 700;
+                      color: var(--green);
+                      margin-bottom: 8px;
+                    "
+                  >
+                    Process P1
+                  </div>
+                  <div style="color: var(--muted)">IDLE</div>
+                  <div style="color: var(--green); margin: 8px 0">
+                    ← Restore PCB of P1
+                  </div>
+                  <div style="color: var(--muted)">Running...</div>
+                  <div style="color: var(--green); margin: 8px 0">
+                    → Save PCB of P1
+                  </div>
+                  <div style="color: var(--muted)">IDLE again</div>
+                </div>
+              </div>
+
+              <div class="highlight-box box-info">
+                Context switch time is pure <strong>overhead</strong> — the
+                system does NO useful work. More complex OS/PCB = longer context
+                switch time. Hardware support (multiple register sets) can speed
+                this up.
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="topic-card"
+            id="process-creation"
+            onclick="toggleCard(this)"
+          >
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(255, 107, 53, 0.15)"
+              >
+                🌱
+              </div>
+              <div>
+                <div class="topic-title">Process Creation & Termination</div>
+                <div class="topic-subtitle">
+                  fork(), exec(), exit(), zombie & orphan
+                </div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <div class="highlight-box box-warn">
+                Processes form a <strong>tree</strong>. Parent creates children
+                using system calls. Each process has a unique
+                <strong>PID (Process Identifier)</strong>.
+              </div>
+
+              <p
+                style="
+                  font-size: 14px;
+                  font-weight: 800;
+                  margin: 12px 0 8px;
+                  color: var(--ch3);
+                "
+              >
+                UNIX Process Creation:
+              </p>
+              <ul class="key-points">
+                <li>
+                  <strong>fork()</strong> — Creates a new child process. Child
+                  is a DUPLICATE of parent. Returns PID to parent, 0 to child.
+                </li>
+                <li>
+                  <strong>exec()</strong> — Called after fork(). Replaces the
+                  process's memory space with a new program. Child becomes a
+                  different program.
+                </li>
+                <li>
+                  <strong>wait()</strong> — Parent waits for child to terminate.
+                  Returns child PID and status.
+                </li>
+                <li>
+                  <strong>exit()</strong> — Process terminates itself, returns
+                  status to parent.
+                </li>
+              </ul>
+
+              <div class="flip-cards" style="margin-top: 16px">
+                <div
+                  class="flip-card"
+                  onclick="this.classList.toggle('flipped')"
+                >
+                  <div class="flip-card-inner">
+                    <div class="flip-front" style="border-color: var(--orange)">
+                      <span style="font-size: 24px">🧟</span>
+                      <div>Zombie Process</div>
+                      <div class="flip-hint">click to reveal</div>
+                    </div>
+                    <div class="flip-back" style="border-color: var(--orange)">
+                      Process has finished (exit()) but parent hasn't called
+                      wait() yet. PCB still exists to store exit status.
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="flip-card"
+                  onclick="this.classList.toggle('flipped')"
+                >
+                  <div class="flip-card-inner">
+                    <div class="flip-front" style="border-color: var(--yellow)">
+                      <span style="font-size: 24px">👶</span>
+                      <div>Orphan Process</div>
+                      <div class="flip-hint">click to reveal</div>
+                    </div>
+                    <div class="flip-back" style="border-color: var(--yellow)">
+                      Parent terminated without calling wait(). Child continues
+                      running without a parent. Usually re-parented to init.
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="flip-card"
+                  onclick="this.classList.toggle('flipped')"
+                >
+                  <div class="flip-card-inner">
+                    <div class="flip-front" style="border-color: var(--purple)">
+                      <span style="font-size: 24px">🌊</span>
+                      <div>Cascading Termination</div>
+                      <div class="flip-hint">click to reveal</div>
+                    </div>
+                    <div class="flip-back" style="border-color: var(--purple)">
+                      When parent terminates, OS terminates ALL its children too
+                      (grandchildren, etc.). Initiated by OS.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="exam-tip">
+                <div class="exam-tip-label">🎯 Exam Tip</div>
+                <p>
+                  Chrome browser = 3 process types:
+                  <strong>Browser process</strong> (UI, I/O),
+                  <strong>Renderer process</strong> (one per website,
+                  sandboxed), <strong>Plugin process</strong> (one per plugin).
+                  This is why one tab crashing doesn't kill the whole browser!
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-card" id="ipc" onclick="toggleCard(this)">
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(255, 107, 53, 0.15)"
+              >
+                💬
+              </div>
+              <div>
+                <div class="topic-title">Interprocess Communication (IPC)</div>
+                <div class="topic-subtitle">
+                  Shared Memory vs Message Passing
+                </div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <div class="highlight-box box-warn">
+                Cooperating processes can affect/be affected by each other. They
+                need IPC. Reasons: information sharing, computation speedup,
+                modularity, convenience.
+              </div>
+
+              <div class="ipc-compare">
+                <div
+                  class="ipc-card"
+                  style="border-color: rgba(0, 229, 255, 0.3)"
+                >
+                  <div class="ipc-card-title" style="color: var(--neon)">
+                    🧠 Shared Memory
+                  </div>
+                  <ul class="key-points" style="margin-top: 8px">
+                    <li>Processes share a region of memory</li>
+                    <li>Under control of USER processes (not OS)</li>
+                    <li>Must synchronize access!</li>
+                    <li>Faster — no kernel involvement after setup</li>
+                    <li>Producer-Consumer model: shared buffer</li>
+                  </ul>
+                </div>
+                <div
+                  class="ipc-card"
+                  style="border-color: rgba(199, 125, 255, 0.3)"
+                >
+                  <div class="ipc-card-title" style="color: var(--purple)">
+                    📨 Message Passing
+                  </div>
+                  <ul class="key-points" style="margin-top: 8px">
+                    <li>send(message) / receive(message)</li>
+                    <li>OS manages the communication link</li>
+                    <li>Easier to implement, no synchronization needed</li>
+                    <li>Slower — every msg goes through kernel</li>
+                    <li>Good for distributed systems</li>
+                  </ul>
+                </div>
+              </div>
+
+              <p
+                style="
+                  font-size: 14px;
+                  font-weight: 800;
+                  margin: 16px 0 8px;
+                  color: var(--ch3);
+                "
+              >
+                Message Passing Details:
+              </p>
+              <ul class="key-points">
+                <li>
+                  <strong>Direct</strong> — Processes name each other
+                  explicitly: send(P, msg), receive(Q, msg)
+                </li>
+                <li>
+                  <strong>Indirect (Mailboxes/Ports)</strong> — Messages go to a
+                  mailbox with unique ID. Many processes can share a mailbox.
+                </li>
+                <li>
+                  <strong>Blocking (Synchronous)</strong> — Sender/receiver
+                  blocks until message is sent/received. Both blocking =
+                  <em>rendezvous</em>.
+                </li>
+                <li>
+                  <strong>Non-blocking (Asynchronous)</strong> — Sender sends
+                  and continues. Receiver gets valid message or null.
+                </li>
+              </ul>
+
+              <p
+                style="
+                  font-size: 14px;
+                  font-weight: 800;
+                  margin: 16px 0 8px;
+                  color: var(--ch3);
+                "
+              >
+                Client-Server Communication:
+              </p>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: 1fr 1fr;
+                  gap: 8px;
+                  font-size: 13px;
+                "
+              >
+                <div class="highlight-box box-info" style="margin: 0">
+                  <strong>Sockets</strong> — Endpoint = IP:Port. Below port 1024
+                  = well-known services. 127.0.0.1 = loopback.
+                </div>
+                <div class="highlight-box box-purple" style="margin: 0">
+                  <strong>RPC</strong> — Remote Procedure Call. Stubs handle
+                  marshalling/unmarshalling params across network.
+                </div>
+                <div class="highlight-box box-warn" style="margin: 0">
+                  <strong>Pipes</strong> — Ordinary: unidirectional,
+                  parent-child only. Named: bidirectional, no relationship
+                  needed.
+                </div>
+                <div class="highlight-box box-success" style="margin: 0">
+                  <strong>RMI</strong> — Java's Remote Method Invocation.
+                  Similar to RPC but for Java objects.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHAPTER 3 QUIZ -->
+        <div class="quiz-wrap" id="quiz3">
+          <div class="quiz-title" style="color: var(--ch3)">
+            🧠 Chapter 3 Quiz
+          </div>
+          <div class="quiz-subtitle">Test your understanding of Processes</div>
+          <div id="quiz3-questions"></div>
+          <button
+            class="btn btn-primary"
+            onclick="submitQuiz('quiz3')"
+            style="margin-top: 16px"
+          >
+            Check Answers
+          </button>
+          <div class="quiz-score" id="quiz3-score"></div>
+        </div>
+      </div>
+
+      <!-- ======================= CHAPTER 4 ======================= -->
+      <div class="chapter-section" id="ch4">
+        <div class="ch-header">
+          <div class="ch-number" style="color: var(--ch4)">04</div>
+          <div class="ch-title-wrap">
+            <div class="ch-tag" style="color: var(--ch4)">Chapter Four</div>
+            <div class="ch-title" style="color: var(--ch4)">Threads</div>
+          </div>
+        </div>
+
+        <div class="topics-grid">
+          <div
+            class="topic-card"
+            id="thread-overview"
+            onclick="toggleCard(this)"
+          >
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(199, 125, 255, 0.15)"
+              >
+                🧵
+              </div>
+              <div>
+                <div class="topic-title">Thread Overview & Benefits</div>
+                <div class="topic-subtitle">
+                  What threads are and why they matter
+                </div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <div class="highlight-box box-purple">
+                <span class="box-title">📌 Definition</span>
+                A <strong>thread</strong> is the fundamental unit of CPU
+                utilization. A process can have multiple threads. Each thread
+                has its own Thread ID, Program Counter, Register set, and Stack
+                — but shares the process's Code, Data, and Open Files with other
+                threads.
+              </div>
+
+              <div class="ipc-compare" style="margin: 16px 0">
+                <div class="ipc-card">
+                  <div class="ipc-card-title">📦 Single-threaded</div>
+                  <div
+                    style="
+                      text-align: center;
+                      padding: 12px;
+                      font-family: &quot;Space Mono&quot;, monospace;
+                      font-size: 12px;
+                    "
+                  >
+                    <div
+                      style="
+                        background: rgba(199, 125, 255, 0.1);
+                        border: 1px solid var(--purple);
+                        border-radius: 8px;
+                        padding: 8px;
+                        margin-bottom: 8px;
+                      "
+                    >
+                      Process
+                    </div>
+                    <div
+                      style="
+                        background: rgba(255, 255, 255, 0.05);
+                        border: 1px dashed var(--border);
+                        border-radius: 6px;
+                        padding: 6px;
+                      "
+                    >
+                      Single Thread
+                    </div>
+                  </div>
+                </div>
+                <div class="ipc-card">
+                  <div class="ipc-card-title">🧵 Multi-threaded</div>
+                  <div
+                    style="
+                      text-align: center;
+                      padding: 12px;
+                      font-family: &quot;Space Mono&quot;, monospace;
+                      font-size: 12px;
+                    "
+                  >
+                    <div
+                      style="
+                        background: rgba(199, 125, 255, 0.1);
+                        border: 1px solid var(--purple);
+                        border-radius: 8px;
+                        padding: 8px;
+                        margin-bottom: 8px;
+                      "
+                    >
+                      Process (shared memory)
+                    </div>
+                    <div
+                      style="
+                        display: grid;
+                        grid-template-columns: 1fr 1fr 1fr;
+                        gap: 4px;
+                      "
+                    >
+                      <div
+                        style="
+                          background: rgba(255, 255, 255, 0.05);
+                          border: 1px dashed var(--border);
+                          border-radius: 6px;
+                          padding: 4px;
+                          font-size: 10px;
+                        "
+                      >
+                        Thread 1
+                      </div>
+                      <div
+                        style="
+                          background: rgba(255, 255, 255, 0.05);
+                          border: 1px dashed var(--border);
+                          border-radius: 6px;
+                          padding: 4px;
+                          font-size: 10px;
+                        "
+                      >
+                        Thread 2
+                      </div>
+                      <div
+                        style="
+                          background: rgba(255, 255, 255, 0.05);
+                          border: 1px dashed var(--border);
+                          border-radius: 6px;
+                          padding: 4px;
+                          font-size: 10px;
+                        "
+                      >
+                        Thread 3
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <p
+                style="
+                  font-size: 14px;
+                  font-weight: 800;
+                  margin: 12px 0 8px;
+                  color: var(--ch4);
+                "
+              >
+                4 Benefits of Threads (RRES):
+              </p>
+              <div class="criteria-grid">
+                <div
+                  class="criteria-card"
+                  style="border-color: rgba(0, 229, 255, 0.3)"
+                >
+                  <div class="criteria-icon">⚡</div>
+                  <div class="criteria-name" style="color: var(--neon)">
+                    Responsiveness
+                  </div>
+                  <div class="criteria-desc">
+                    Continue executing if part is blocked. Critical for UIs.
+                  </div>
+                </div>
+                <div
+                  class="criteria-card"
+                  style="border-color: rgba(57, 255, 20, 0.3)"
+                >
+                  <div class="criteria-icon">🔗</div>
+                  <div class="criteria-name" style="color: var(--green)">
+                    Resource Sharing
+                  </div>
+                  <div class="criteria-desc">
+                    Threads share process resources automatically. Easier than
+                    shared memory or message passing.
+                  </div>
+                </div>
+                <div
+                  class="criteria-card"
+                  style="border-color: rgba(255, 209, 102, 0.3)"
+                >
+                  <div class="criteria-icon">💰</div>
+                  <div class="criteria-name" style="color: var(--yellow)">
+                    Economy
+                  </div>
+                  <div class="criteria-desc">
+                    Cheaper than process creation. Thread switching has lower
+                    overhead than context switching.
+                  </div>
+                </div>
+                <div
+                  class="criteria-card"
+                  style="border-color: rgba(255, 77, 158, 0.3)"
+                >
+                  <div class="criteria-icon">📈</div>
+                  <div class="criteria-name" style="color: var(--pink)">
+                    Scalability
+                  </div>
+                  <div class="criteria-desc">
+                    Can take advantage of multiprocessor/multicore
+                    architectures.
+                  </div>
+                </div>
+              </div>
+
+              <div class="exam-tip">
+                <div class="exam-tip-label">🎯 Exam Tip</div>
+                <p>
+                  Thread creation is <strong>light-weight</strong>; process
+                  creation is <strong>heavy-weight</strong>. Kernels themselves
+                  are generally multithreaded. Per thread: own stack, registers,
+                  PC. Shared: code, data, files.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-card" id="multicore" onclick="toggleCard(this)">
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(199, 125, 255, 0.15)"
+              >
+                🔲
+              </div>
+              <div>
+                <div class="topic-title">Multicore Programming</div>
+                <div class="topic-subtitle">
+                  Concurrency vs Parallelism + Amdahl's Law
+                </div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <div class="ipc-compare">
+                <div
+                  class="ipc-card"
+                  style="border-color: rgba(0, 229, 255, 0.3)"
+                >
+                  <div class="ipc-card-title" style="color: var(--neon)">
+                    ⚡ Concurrency
+                  </div>
+                  <p style="font-size: 13px; color: var(--muted)">
+                    More than one task making <em>progress</em>. Works on a
+                    SINGLE core using rapid switching. Gives illusion of
+                    simultaneous execution.
+                  </p>
+                  <div
+                    style="
+                      margin-top: 12px;
+                      font-family: &quot;Space Mono&quot;, monospace;
+                      font-size: 10px;
+                    "
+                  >
+                    <div
+                      style="
+                        background: rgba(255, 107, 53, 0.3);
+                        height: 16px;
+                        border-radius: 3px;
+                        margin-bottom: 4px;
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        padding: 0 6px;
+                      "
+                    >
+                      T1 ██ T2 ██ T1 ██ T2
+                    </div>
+                    <div style="color: var(--muted)">← Single Core →</div>
+                  </div>
+                </div>
+                <div
+                  class="ipc-card"
+                  style="border-color: rgba(57, 255, 20, 0.3)"
+                >
+                  <div class="ipc-card-title" style="color: var(--green)">
+                    🔀 Parallelism
+                  </div>
+                  <p style="font-size: 13px; color: var(--muted)">
+                    Truly running more than one task <em>simultaneously</em>.
+                    Requires MULTIPLE cores. Real simultaneous execution.
+                  </p>
+                  <div
+                    style="
+                      margin-top: 12px;
+                      font-family: &quot;Space Mono&quot;, monospace;
+                      font-size: 10px;
+                    "
+                  >
+                    <div
+                      style="
+                        background: rgba(255, 107, 53, 0.3);
+                        height: 12px;
+                        border-radius: 3px;
+                        margin-bottom: 4px;
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        padding: 0 6px;
+                      "
+                    >
+                      Core 1: T1 ████████████
+                    </div>
+                    <div
+                      style="
+                        background: rgba(0, 229, 255, 0.3);
+                        height: 12px;
+                        border-radius: 3px;
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        padding: 0 6px;
+                      "
+                    >
+                      Core 2: T2 ████████████
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <p
+                style="
+                  font-size: 14px;
+                  font-weight: 800;
+                  margin: 16px 0 8px;
+                  color: var(--ch4);
+                "
+              >
+                Types of Parallelism:
+              </p>
+              <ul class="key-points">
+                <li>
+                  <strong>Data Parallelism</strong> — Same operation on subsets
+                  of data across multiple cores (e.g., each core processes part
+                  of an array).
+                </li>
+                <li>
+                  <strong>Task Parallelism</strong> — Different threads perform
+                  different operations across cores (e.g., one thread downloads,
+                  another decodes).
+                </li>
+              </ul>
+
+              <div class="highlight-box box-purple">
+                <span class="box-title">📐 Amdahl's Law</span>
+                Speedup = 1 / (S + (1-S)/N) where S = serial portion, N =
+                cores.<br /><br />
+                Even if 75% of app is parallel, going from 1→2 cores gives only
+                1.6x speedup. The <strong>serial portion dominates</strong> as
+                N→∞, speedup approaches 1/S.
+              </div>
+
+              <div id="amdahl-demo" style="margin: 16px 0">
+                <p
+                  style="font-size: 13px; font-weight: 700; margin-bottom: 10px"
+                >
+                  Amdahl's Law Visualizer:
+                </p>
+                <div
+                  style="
+                    margin-bottom: 8px;
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    font-size: 13px;
+                  "
+                >
+                  <label
+                    >Serial %:
+                    <input
+                      type="range"
+                      id="serialSlider"
+                      min="5"
+                      max="50"
+                      value="25"
+                      style="width: 120px"
+                      oninput="updateAmdahl()"
+                    /><span id="serialVal">25%</span></label
+                  >
+                  <label
+                    >Cores:
+                    <input
+                      type="range"
+                      id="coresSlider"
+                      min="1"
+                      max="16"
+                      value="4"
+                      style="width: 100px"
+                      oninput="updateAmdahl()"
+                    /><span id="coresVal">4</span></label
+                  >
+                </div>
+                <div
+                  style="
+                    background: var(--surface2);
+                    border-radius: 8px;
+                    padding: 12px;
+                    font-family: &quot;Space Mono&quot;, monospace;
+                    font-size: 13px;
+                  "
+                >
+                  <div id="amdahlResult" style="color: var(--green)">
+                    Speedup: calculating...
+                  </div>
+                  <div style="margin-top: 8px">
+                    <div
+                      style="
+                        font-size: 11px;
+                        color: var(--muted);
+                        margin-bottom: 6px;
+                      "
+                    >
+                      Serial vs Parallel split:
+                    </div>
+                    <div class="amdahl-bar" id="amdahlBar">
+                      <div
+                        class="amdahl-serial"
+                        id="amdahlSerial"
+                        style="width: 25%"
+                      >
+                        Serial 25%
+                      </div>
+                      <div class="amdahl-parallel" id="amdahlParallel">
+                        Parallel 75%
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="exam-tip">
+                <div class="exam-tip-label">🎯 Exam Tip</div>
+                <p>
+                  Challenges of multicore programming: Dividing activities,
+                  Balance (equal work per core), Data splitting, Data
+                  dependency, Testing & debugging. Remember these 5 challenges!
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-card" id="thread-models" onclick="toggleCard(this)">
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(199, 125, 255, 0.15)"
+              >
+                🗂️
+              </div>
+              <div>
+                <div class="topic-title">Threading Models</div>
+                <div class="topic-subtitle">
+                  Many-to-One, One-to-One, Many-to-Many
+                </div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: 1fr 1fr;
+                  gap: 16px;
+                  margin: 12px 0;
+                "
+              >
+                <div class="thread-model">
+                  <p
+                    style="
+                      font-weight: 800;
+                      color: var(--orange);
+                      font-size: 14px;
+                    "
+                  >
+                    Many-to-One
+                  </p>
+                  <p
+                    style="
+                      font-size: 11px;
+                      color: var(--muted);
+                      text-align: center;
+                    "
+                  >
+                    Many user threads → 1 kernel thread
+                  </p>
+                  <div class="thread-row">
+                    <div class="thread-circle user-thread">U</div>
+                    <div class="thread-circle user-thread">U</div>
+                    <div class="thread-circle user-thread">U</div>
+                  </div>
+                  <div style="font-size: 18px; color: var(--muted)">↓</div>
+                  <div class="thread-row">
+                    <div class="thread-circle kernel-thread">K</div>
+                  </div>
+                  <p
+                    style="
+                      font-size: 11px;
+                      color: var(--orange);
+                      text-align: center;
+                      margin-top: 8px;
+                    "
+                  >
+                    ❌ 1 block → all block<br />❌ No true parallelism
+                  </p>
+                  <p style="font-size: 10px; color: var(--muted)">
+                    e.g., Solaris Green Threads
+                  </p>
+                </div>
+
+                <div class="thread-model">
+                  <p
+                    style="
+                      font-weight: 800;
+                      color: var(--green);
+                      font-size: 14px;
+                    "
+                  >
+                    One-to-One
+                  </p>
+                  <p
+                    style="
+                      font-size: 11px;
+                      color: var(--muted);
+                      text-align: center;
+                    "
+                  >
+                    Each user thread → 1 kernel thread
+                  </p>
+                  <div class="thread-row">
+                    <div class="thread-circle user-thread">U</div>
+                    <div class="thread-circle user-thread">U</div>
+                    <div class="thread-circle user-thread">U</div>
+                  </div>
+                  <div style="display: flex; gap: 8px">
+                    <div style="font-size: 16px; color: var(--muted)">↓</div>
+                    <div style="font-size: 16px; color: var(--muted)">↓</div>
+                    <div style="font-size: 16px; color: var(--muted)">↓</div>
+                  </div>
+                  <div class="thread-row">
+                    <div class="thread-circle kernel-thread">K</div>
+                    <div class="thread-circle kernel-thread">K</div>
+                    <div class="thread-circle kernel-thread">K</div>
+                  </div>
+                  <p
+                    style="
+                      font-size: 11px;
+                      color: var(--green);
+                      text-align: center;
+                      margin-top: 8px;
+                    "
+                  >
+                    ✅ More concurrency<br />⚠️ Can limit thread count
+                  </p>
+                  <p style="font-size: 10px; color: var(--muted)">
+                    e.g., Windows, Linux
+                  </p>
+                </div>
+
+                <div class="thread-model" style="grid-column: span 2">
+                  <p
+                    style="
+                      font-weight: 800;
+                      color: var(--purple);
+                      font-size: 14px;
+                    "
+                  >
+                    Many-to-Many
+                  </p>
+                  <p
+                    style="
+                      font-size: 11px;
+                      color: var(--muted);
+                      text-align: center;
+                    "
+                  >
+                    Many user threads mapped to many kernel threads
+                  </p>
+                  <div class="thread-row">
+                    <div class="thread-circle user-thread">U</div>
+                    <div class="thread-circle user-thread">U</div>
+                    <div class="thread-circle user-thread">U</div>
+                    <div class="thread-circle user-thread">U</div>
+                  </div>
+                  <div style="font-size: 14px; color: var(--muted)">
+                    ↕ flexible mapping ↕
+                  </div>
+                  <div class="thread-row">
+                    <div class="thread-circle kernel-thread">K</div>
+                    <div class="thread-circle kernel-thread">K</div>
+                  </div>
+                  <p
+                    style="
+                      font-size: 11px;
+                      color: var(--purple);
+                      text-align: center;
+                      margin-top: 8px;
+                    "
+                  >
+                    ✅ Best of both worlds<br />✅ OS creates sufficient kernel
+                    threads
+                  </p>
+                </div>
+              </div>
+
+              <div class="highlight-box box-info">
+                <strong>Two-Level Model</strong> = Similar to M:M but ALSO
+                allows a user thread to be <em>bound</em> to a specific kernel
+                thread (used in IRIX, HP-UX).
+              </div>
+
+              <div class="exam-tip">
+                <div class="exam-tip-label">🎯 Exam Tip</div>
+                <p>
+                  Thread libraries: <strong>Pthreads</strong> (POSIX, user or
+                  kernel level), <strong>Windows Threads</strong> (kernel
+                  level), <strong>Java Threads</strong> (managed by JVM, uses
+                  underlying OS threads). User threads = managed by library.
+                  Kernel threads = supported by OS directly.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="topic-card"
+            id="implicit-threading"
+            onclick="toggleCard(this)"
+          >
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(199, 125, 255, 0.15)"
+              >
+                🤖
+              </div>
+              <div>
+                <div class="topic-title">Implicit Threading</div>
+                <div class="topic-subtitle">
+                  Thread Pools, OpenMP, Grand Central Dispatch
+                </div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <div class="highlight-box box-purple">
+                Implicit threading = compilers/runtime libraries manage thread
+                creation instead of programmers. Growing in popularity as
+                programs get more complex.
+              </div>
+              <ul class="key-points">
+                <li>
+                  <strong>Thread Pools</strong> — Create N threads at startup,
+                  put them in a pool awaiting work. <br />✅ Faster (no creation
+                  overhead), bounded (pool size), separates task from mechanics.
+                  Tasks can be scheduled periodically.
+                </li>
+                <li>
+                  <strong>OpenMP</strong> — Set of compiler directives for
+                  C/C++/FORTRAN. Developer marks parallel regions with #pragma.
+                  Creates as many threads as there are cores. Handles
+                  shared-memory parallel programming.
+                </li>
+                <li>
+                  <strong>Grand Central Dispatch (GCD)</strong> — Apple's
+                  technology for macOS/iOS. Blocks of code placed in dispatch
+                  queues. Serial queues (FIFO, one at a time) or Concurrent
+                  queues (FIFO but multiple simultaneously). Thread pool handles
+                  execution.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="topic-card" id="thread-issues" onclick="toggleCard(this)">
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(199, 125, 255, 0.15)"
+              >
+                ⚠️
+              </div>
+              <div>
+                <div class="topic-title">Threading Issues</div>
+                <div class="topic-subtitle">
+                  fork, signals, cancellation, TLS
+                </div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <ul class="key-points">
+                <li>
+                  <strong>fork() in multithreaded programs</strong> — Does
+                  fork() duplicate ALL threads or just the calling thread? Some
+                  UNIX systems have two versions. exec() replaces ALL threads
+                  with new program.
+                </li>
+                <li>
+                  <strong>Signal Handling</strong> — Signals notify a process of
+                  an event. In multithreaded: deliver to the thread it applies
+                  to? All threads? A specific thread? Per-process assignment is
+                  common solution.
+                </li>
+                <li>
+                  <strong>Thread Cancellation</strong> — Terminating a thread
+                  before it finishes.<br />
+                  <em>Asynchronous</em>: kills immediately (risky!)<br />
+                  <em>Deferred</em>: thread periodically checks a cancellation
+                  flag at safe points (safer, default in Pthreads)
+                </li>
+                <li>
+                  <strong>Thread-Local Storage (TLS)</strong> — Each thread has
+                  its OWN copy of certain data. Different from local variables
+                  (visible only in one function call). Similar to static data
+                  but unique per thread. Useful with thread pools.
+                </li>
+                <li>
+                  <strong>Scheduler Activations / LWP</strong> — Lightweight
+                  Process (LWP) = virtual processor between user and kernel
+                  threads. For M:M model. Kernel communicates with thread
+                  library via <em>upcalls</em>.
+                </li>
+              </ul>
+              <div class="exam-tip">
+                <div class="exam-tip-label">🎯 Exam Tip</div>
+                <p>
+                  Linux doesn't distinguish threads from processes — both are
+                  "tasks." Thread creation uses clone() system call which allows
+                  sharing address space. Windows: ETHREAD (executive), KTHREAD
+                  (kernel), TEB (user space).
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHAPTER 4 QUIZ -->
+        <div class="quiz-wrap" id="quiz4">
+          <div class="quiz-title" style="color: var(--ch4)">
+            🧠 Chapter 4 Quiz
+          </div>
+          <div class="quiz-subtitle">Test your understanding of Threads</div>
+          <div id="quiz4-questions"></div>
+          <button
+            class="btn btn-primary"
+            onclick="submitQuiz('quiz4')"
+            style="margin-top: 16px"
+          >
+            Check Answers
+          </button>
+          <div class="quiz-score" id="quiz4-score"></div>
+        </div>
+      </div>
+
+      <!-- ======================= CHAPTER 5 ======================= -->
+      <div class="chapter-section" id="ch5">
+        <div class="ch-header">
+          <div class="ch-number" style="color: var(--ch5)">05</div>
+          <div class="ch-title-wrap">
+            <div class="ch-tag" style="color: var(--ch5)">Chapter Five</div>
+            <div class="ch-title" style="color: var(--ch5)">CPU Scheduling</div>
+          </div>
+        </div>
+
+        <div class="topics-grid">
+          <div class="topic-card" id="sched-basics" onclick="toggleCard(this)">
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(0, 229, 255, 0.15)"
+              >
+                ⏱️
+              </div>
+              <div>
+                <div class="topic-title">Basic Concepts</div>
+                <div class="topic-subtitle">
+                  CPU burst cycle, Dispatcher, Preemption
+                </div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <div class="highlight-box box-info">
+                <span class="box-title">📌 Core Idea</span>
+                Maximize CPU utilization via <strong>multiprogramming</strong>.
+                When one process waits for I/O, CPU switches to another. This is
+                the basis of all modern OS scheduling.
+              </div>
+
+              <p
+                style="
+                  font-size: 14px;
+                  font-weight: 800;
+                  margin: 12px 0 8px;
+                  color: var(--ch5);
+                "
+              >
+                CPU–I/O Burst Cycle:
+              </p>
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 0;
+                  margin: 12px 0;
+                  font-family: &quot;Space Mono&quot;, monospace;
+                  font-size: 11px;
+                  overflow: hidden;
+                  border-radius: 8px;
+                "
+              >
+                <div
+                  style="
+                    background: rgba(0, 229, 255, 0.2);
+                    border: 1px solid var(--neon);
+                    padding: 10px;
+                    flex: 1;
+                    text-align: center;
+                  "
+                >
+                  CPU Burst<br />(compute)
+                </div>
+                <div
+                  style="
+                    background: rgba(255, 107, 53, 0.2);
+                    border: 1px solid var(--orange);
+                    padding: 10px;
+                    flex: 1;
+                    text-align: center;
+                    border-left: none;
+                  "
+                >
+                  I/O Burst<br />(wait)
+                </div>
+                <div
+                  style="
+                    background: rgba(0, 229, 255, 0.2);
+                    border: 1px solid var(--neon);
+                    padding: 10px;
+                    flex: 1;
+                    text-align: center;
+                    border-left: none;
+                  "
+                >
+                  CPU Burst<br />(compute)
+                </div>
+                <div
+                  style="
+                    background: rgba(255, 107, 53, 0.2);
+                    border: 1px solid var(--orange);
+                    padding: 10px;
+                    flex: 1;
+                    text-align: center;
+                    border-left: none;
+                  "
+                >
+                  I/O Burst<br />(wait)
+                </div>
+                <div
+                  style="
+                    background: rgba(122, 156, 192, 0.2);
+                    border: 1px solid var(--muted);
+                    padding: 10px;
+                    flex: 1;
+                    text-align: center;
+                    border-left: none;
+                  "
+                >
+                  ...exit
+                </div>
+              </div>
+
+              <div class="highlight-box box-info">
+                <span class="box-title">The Dispatcher</span>
+                The dispatcher gives control of CPU to the selected process. It
+                handles: switching context, switching to user mode, jumping to
+                the correct program location.<br /><br />
+                <strong>Dispatch latency</strong> = time to stop one process and
+                start another. Should be minimal.
+              </div>
+
+              <p
+                style="
+                  font-size: 14px;
+                  font-weight: 800;
+                  margin: 12px 0 8px;
+                  color: var(--ch5);
+                "
+              >
+                When does scheduling happen?
+              </p>
+              <ul class="key-points">
+                <li>
+                  <strong>Running → Waiting</strong> (I/O request) —
+                  <span style="color: var(--orange)">Non-preemptive</span>
+                </li>
+                <li>
+                  <strong>Running → Ready</strong> (interrupt) —
+                  <span style="color: var(--green)">Preemptive</span>
+                </li>
+                <li>
+                  <strong>Waiting → Ready</strong> (I/O complete) —
+                  <span style="color: var(--green)">Preemptive</span>
+                </li>
+                <li>
+                  <strong>Process Terminates</strong> —
+                  <span style="color: var(--orange)">Non-preemptive</span>
+                </li>
+              </ul>
+
+              <div class="highlight-box box-warn">
+                <strong>Non-preemptive</strong> = process keeps CPU until it
+                voluntarily gives up (done or waiting)<br />
+                <strong>Preemptive</strong> = OS can forcibly take CPU away from
+                process (most modern OSes)
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="topic-card"
+            id="sched-criteria"
+            onclick="toggleCard(this)"
+          >
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(0, 229, 255, 0.15)"
+              >
+                📊
+              </div>
+              <div>
+                <div class="topic-title">Scheduling Criteria</div>
+                <div class="topic-subtitle">
+                  How we measure scheduling performance
+                </div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <div class="criteria-grid">
+                <div
+                  class="criteria-card"
+                  style="border-color: rgba(0, 229, 255, 0.3)"
+                >
+                  <div class="criteria-icon">🔥</div>
+                  <div class="criteria-name" style="color: var(--neon)">
+                    CPU Utilization
+                  </div>
+                  <div class="criteria-desc">
+                    Keep CPU as busy as possible. Goal: MAXIMIZE (typically
+                    40-90%).
+                  </div>
+                </div>
+                <div
+                  class="criteria-card"
+                  style="border-color: rgba(57, 255, 20, 0.3)"
+                >
+                  <div class="criteria-icon">📦</div>
+                  <div class="criteria-name" style="color: var(--green)">
+                    Throughput
+                  </div>
+                  <div class="criteria-desc">
+                    Number of processes completing per time unit. Goal:
+                    MAXIMIZE.
+                  </div>
+                </div>
+                <div
+                  class="criteria-card"
+                  style="border-color: rgba(255, 209, 102, 0.3)"
+                >
+                  <div class="criteria-icon">⏰</div>
+                  <div class="criteria-name" style="color: var(--yellow)">
+                    Turnaround Time
+                  </div>
+                  <div class="criteria-desc">
+                    Total time from submission to completion. Goal: MINIMIZE. =
+                    finish - arrival.
+                  </div>
+                </div>
+                <div
+                  class="criteria-card"
+                  style="border-color: rgba(255, 107, 53, 0.3)"
+                >
+                  <div class="criteria-icon">⌛</div>
+                  <div class="criteria-name" style="color: var(--orange)">
+                    Waiting Time
+                  </div>
+                  <div class="criteria-desc">
+                    Time spent in the ready queue. Goal: MINIMIZE.
+                  </div>
+                </div>
+                <div
+                  class="criteria-card"
+                  style="border-color: rgba(255, 77, 158, 0.3)"
+                >
+                  <div class="criteria-icon">💨</div>
+                  <div class="criteria-name" style="color: var(--pink)">
+                    Response Time
+                  </div>
+                  <div class="criteria-desc">
+                    Time from request submission to first response (not
+                    completion). Goal: MINIMIZE. Key for interactive systems.
+                  </div>
+                </div>
+              </div>
+
+              <div class="exam-tip">
+                <div class="exam-tip-label">🎯 Exam Tip</div>
+                <p>
+                  MAXIMIZE: CPU Utilization, Throughput. MINIMIZE: Turnaround
+                  time, Waiting time, Response time. Mnemonic:
+                  <strong>"Max CPU-T, Min T-W-R"</strong>. Waiting time =
+                  turnaround - burst time.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-card" id="fcfs" onclick="toggleCard(this)">
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(0, 229, 255, 0.15)"
+              >
+                🚶
+              </div>
+              <div>
+                <div class="topic-title">FCFS — First Come, First Served</div>
+                <div class="topic-subtitle">
+                  Simplest algorithm — and its problem
+                </div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <div class="highlight-box box-info">
+                Processes get CPU in the order they arrive. Non-preemptive —
+                once a process starts, it runs until done or waiting.
+                Implemented with a simple FIFO queue.
+              </div>
+
+              <p
+                style="
+                  font-size: 14px;
+                  font-weight: 800;
+                  margin: 12px 0 8px;
+                  color: var(--ch5);
+                "
+              >
+                Example: P1(24ms), P2(3ms), P3(3ms) arriving in order P1, P2,
+                P3:
+              </p>
+              <div class="diagram-wrap">
+                <div class="diagram-title">📊 FCFS Gantt Chart</div>
+                <div class="gantt-wrap">
+                  <div class="gantt-chart">
+                    <div
+                      class="gantt-block"
+                      style="
+                        flex: 24;
+                        background: rgba(255, 107, 53, 0.4);
+                        border-color: var(--orange);
+                      "
+                    >
+                      P1
+                    </div>
+                    <div
+                      class="gantt-block"
+                      style="
+                        flex: 3;
+                        background: rgba(0, 229, 255, 0.4);
+                        border-color: var(--neon);
+                      "
+                    >
+                      P2
+                    </div>
+                    <div
+                      class="gantt-block"
+                      style="
+                        flex: 3;
+                        background: rgba(57, 255, 20, 0.4);
+                        border-color: var(--green);
+                      "
+                    >
+                      P3
+                    </div>
+                  </div>
+                  <div class="gantt-timeline">
+                    <span>0</span><span>24</span><span>27</span><span>30</span>
+                  </div>
+                  <p
+                    style="
+                      font-size: 13px;
+                      color: var(--muted);
+                      margin-top: 8px;
+                    "
+                  >
+                    Wait: P1=0, P2=24, P3=27 |
+                    <strong style="color: var(--orange)"
+                      >Avg wait = 17ms</strong
+                    >
+                  </p>
+                </div>
+              </div>
+
+              <p
+                style="
+                  font-size: 14px;
+                  font-weight: 800;
+                  margin: 12px 0 8px;
+                  color: var(--ch5);
+                "
+              >
+                Better order: P2, P3, P1:
+              </p>
+              <div class="diagram-wrap">
+                <div class="diagram-title">📊 FCFS — Better Order</div>
+                <div class="gantt-wrap">
+                  <div class="gantt-chart">
+                    <div
+                      class="gantt-block"
+                      style="
+                        flex: 3;
+                        background: rgba(0, 229, 255, 0.4);
+                        border-color: var(--neon);
+                      "
+                    >
+                      P2
+                    </div>
+                    <div
+                      class="gantt-block"
+                      style="
+                        flex: 3;
+                        background: rgba(57, 255, 20, 0.4);
+                        border-color: var(--green);
+                      "
+                    >
+                      P3
+                    </div>
+                    <div
+                      class="gantt-block"
+                      style="
+                        flex: 24;
+                        background: rgba(255, 107, 53, 0.4);
+                        border-color: var(--orange);
+                      "
+                    >
+                      P1
+                    </div>
+                  </div>
+                  <div class="gantt-timeline">
+                    <span>0</span><span>3</span><span>6</span><span>30</span>
+                  </div>
+                  <p
+                    style="
+                      font-size: 13px;
+                      color: var(--muted);
+                      margin-top: 8px;
+                    "
+                  >
+                    Wait: P1=6, P2=0, P3=3 |
+                    <strong style="color: var(--green)"
+                      >Avg wait = 3ms ✅</strong
+                    >
+                  </p>
+                </div>
+              </div>
+
+              <div class="highlight-box box-warn">
+                <span class="box-title">⚠️ Convoy Effect</span>
+                Short processes get stuck behind one long process, causing
+                everyone to wait. This is the main problem with FCFS. It's like
+                being behind a slow truck in traffic!
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-card" id="sjf" onclick="toggleCard(this)">
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(0, 229, 255, 0.15)"
+              >
+                ⚡
+              </div>
+              <div>
+                <div class="topic-title">SJF & SRTF</div>
+                <div class="topic-subtitle">
+                  Shortest Job First + preemptive version
+                </div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <div class="highlight-box box-success">
+                <span class="box-title">📌 Key Fact</span>
+                SJF is <strong>provably optimal</strong> — gives minimum average
+                waiting time for a given set of processes. Schedule shortest CPU
+                burst next.
+              </div>
+
+              <div class="ipc-compare">
+                <div class="ipc-card">
+                  <div class="ipc-card-title" style="color: var(--green)">
+                    Non-Preemptive SJF
+                  </div>
+                  <p style="font-size: 13px; color: var(--muted)">
+                    Once a process starts running, it can't be interrupted even
+                    if a shorter process arrives.
+                  </p>
+                </div>
+                <div class="ipc-card">
+                  <div class="ipc-card-title" style="color: var(--neon)">
+                    SRTF (Preemptive)
+                  </div>
+                  <p style="font-size: 13px; color: var(--muted)">
+                    If a new process arrives with shorter remaining time than
+                    current, CPU switches immediately. "Shortest Remaining Time
+                    First."
+                  </p>
+                </div>
+              </div>
+
+              <p
+                style="
+                  font-size: 14px;
+                  font-weight: 800;
+                  margin: 16px 0 8px;
+                  color: var(--ch5);
+                "
+              >
+                SRTF Example: P1(8ms,arr:0), P2(4ms,arr:1), P3(9ms,arr:2),
+                P4(5ms,arr:3)
+              </p>
+              <div class="diagram-wrap">
+                <div class="diagram-title">📊 SRTF Gantt Chart</div>
+                <div class="gantt-wrap">
+                  <div class="gantt-chart">
+                    <div
+                      class="gantt-block"
+                      style="flex: 1; background: rgba(255, 107, 53, 0.4)"
+                    >
+                      P1
+                    </div>
+                    <div
+                      class="gantt-block"
+                      style="flex: 4; background: rgba(0, 229, 255, 0.4)"
+                    >
+                      P2
+                    </div>
+                    <div
+                      class="gantt-block"
+                      style="flex: 5; background: rgba(255, 209, 102, 0.4)"
+                    >
+                      P4
+                    </div>
+                    <div
+                      class="gantt-block"
+                      style="flex: 7; background: rgba(255, 107, 53, 0.4)"
+                    >
+                      P1
+                    </div>
+                    <div
+                      class="gantt-block"
+                      style="flex: 9; background: rgba(57, 255, 20, 0.4)"
+                    >
+                      P3
+                    </div>
+                  </div>
+                  <div class="gantt-timeline">
+                    <span>0</span><span>1</span><span>5</span><span>10</span
+                    ><span>17</span><span>26</span>
+                  </div>
+                  <p
+                    style="
+                      font-size: 13px;
+                      color: var(--muted);
+                      margin-top: 8px;
+                    "
+                  >
+                    <strong style="color: var(--green)"
+                      >Avg wait = 6.5ms</strong
+                    >
+                  </p>
+                </div>
+              </div>
+
+              <div class="highlight-box box-warn">
+                <span class="box-title">⚠️ Problem with SJF</span>
+                We can't know the ACTUAL length of next CPU burst in advance!
+                Solution: ESTIMATE using exponential averaging of past burst
+                lengths: τ(n+1) = α·t(n) + (1-α)·τ(n). Common α = 0.5.
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-card" id="priority" onclick="toggleCard(this)">
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(0, 229, 255, 0.15)"
+              >
+                👑
+              </div>
+              <div>
+                <div class="topic-title">Priority Scheduling</div>
+                <div class="topic-subtitle">
+                  Starvation problem & Aging solution
+                </div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <div class="highlight-box box-info">
+                Each process gets a priority number. CPU allocated to highest
+                priority process. SJF is a special case of priority scheduling
+                (priority = inverse of burst time).
+              </div>
+
+              <div class="ipc-compare">
+                <div class="ipc-card">
+                  <div class="ipc-card-title" style="color: var(--yellow)">
+                    Preemptive
+                  </div>
+                  <p style="font-size: 13px; color: var(--muted)">
+                    If a higher-priority process arrives, it immediately takes
+                    the CPU.
+                  </p>
+                </div>
+                <div class="ipc-card">
+                  <div class="ipc-card-title" style="color: var(--orange)">
+                    Non-Preemptive
+                  </div>
+                  <p style="font-size: 13px; color: var(--muted)">
+                    Current process finishes, then highest priority gets CPU
+                    next.
+                  </p>
+                </div>
+              </div>
+
+              <div class="flip-cards">
+                <div
+                  class="flip-card"
+                  onclick="this.classList.toggle('flipped')"
+                >
+                  <div class="flip-card-inner">
+                    <div class="flip-front" style="border-color: var(--orange)">
+                      <span style="font-size: 28px">😵</span>
+                      <div style="color: var(--orange)">Starvation</div>
+                      <div class="flip-hint">tap to reveal</div>
+                    </div>
+                    <div class="flip-back" style="border-color: var(--orange)">
+                      Low-priority processes may NEVER execute because
+                      high-priority processes keep arriving. They wait
+                      indefinitely.
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="flip-card"
+                  onclick="this.classList.toggle('flipped')"
+                >
+                  <div class="flip-card-inner">
+                    <div class="flip-front" style="border-color: var(--green)">
+                      <span style="font-size: 28px">🌱</span>
+                      <div style="color: var(--green)">Aging</div>
+                      <div class="flip-hint">tap to reveal</div>
+                    </div>
+                    <div class="flip-back" style="border-color: var(--green)">
+                      Solution to starvation: gradually increase the priority of
+                      waiting processes over time. Eventually they'll run!
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="exam-tip">
+                <div class="exam-tip-label">🎯 Exam Tip</div>
+                <p>
+                  IMPORTANT: "Highest priority" = SMALLEST priority number
+                  (priority 1 > priority 5). Problem = Starvation. Solution =
+                  Aging. SJF = priority scheduling with priority = 1/burst_time.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-card" id="rr" onclick="toggleCard(this)">
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(0, 229, 255, 0.15)"
+              >
+                🔁
+              </div>
+              <div>
+                <div class="topic-title">Round Robin (RR)</div>
+                <div class="topic-subtitle">
+                  Fair time-sharing with time quantum
+                </div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <div class="highlight-box box-info">
+                <span class="box-title">📌 Key Idea</span>
+                Each process gets a small CPU time slice (<strong
+                  >quantum q</strong
+                >, typically 10–100ms). When it expires, process is
+                <em>preempted</em> and added to end of ready queue. This is the
+                standard for <strong>time-sharing systems</strong>.
+              </div>
+
+              <p style="font-size: 13px; color: var(--muted); margin: 8px 0">
+                With n processes and quantum q: each gets 1/n of CPU in chunks ≤
+                q. Max wait = (n-1)×q.
+              </p>
+
+              <p
+                style="
+                  font-size: 14px;
+                  font-weight: 800;
+                  margin: 12px 0 8px;
+                  color: var(--ch5);
+                "
+              >
+                Example: P1(24ms), P2(3ms), P3(3ms) with q=4:
+              </p>
+              <div class="diagram-wrap">
+                <div class="diagram-title">📊 Round Robin Gantt (q=4)</div>
+                <div class="gantt-wrap">
+                  <div class="gantt-chart">
+                    <div
+                      class="gantt-block"
+                      style="flex: 4; background: rgba(255, 107, 53, 0.4)"
+                    >
+                      P1
+                    </div>
+                    <div
+                      class="gantt-block"
+                      style="flex: 3; background: rgba(0, 229, 255, 0.4)"
+                    >
+                      P2
+                    </div>
+                    <div
+                      class="gantt-block"
+                      style="flex: 3; background: rgba(57, 255, 20, 0.4)"
+                    >
+                      P3
+                    </div>
+                    <div
+                      class="gantt-block"
+                      style="flex: 4; background: rgba(255, 107, 53, 0.4)"
+                    >
+                      P1
+                    </div>
+                    <div
+                      class="gantt-block"
+                      style="flex: 4; background: rgba(255, 107, 53, 0.4)"
+                    >
+                      P1
+                    </div>
+                    <div
+                      class="gantt-block"
+                      style="flex: 4; background: rgba(255, 107, 53, 0.4)"
+                    >
+                      P1
+                    </div>
+                    <div
+                      class="gantt-block"
+                      style="flex: 4; background: rgba(255, 107, 53, 0.4)"
+                    >
+                      P1
+                    </div>
+                    <div
+                      class="gantt-block"
+                      style="flex: 4; background: rgba(255, 107, 53, 0.4)"
+                    >
+                      P1
+                    </div>
+                  </div>
+                  <div class="gantt-timeline">
+                    <span>0</span><span>4</span><span>7</span><span>10</span
+                    ><span>14</span><span>18</span><span>22</span><span>26</span
+                    ><span>30</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ipc-compare" style="margin-top: 16px">
+                <div class="ipc-card">
+                  <div class="ipc-card-title" style="color: var(--orange)">
+                    Large q (→ FCFS)
+                  </div>
+                  <p style="font-size: 13px; color: var(--muted)">
+                    Each process runs to completion before switch. Same as FCFS.
+                  </p>
+                </div>
+                <div class="ipc-card">
+                  <div class="ipc-card-title" style="color: var(--green)">
+                    Small q (→ overhead)
+                  </div>
+                  <p style="font-size: 13px; color: var(--muted)">
+                    Lots of context switches. q must be large relative to
+                    context switch time.
+                  </p>
+                </div>
+              </div>
+
+              <div class="exam-tip">
+                <div class="exam-tip-label">🎯 Exam Tip</div>
+                <p>
+                  RR typically has higher average turnaround than SJF, but
+                  better response time. Context switch time is typically
+                  &lt;10μs. Quantum should be 10–100ms.
+                  <strong
+                    >Rule of thumb: 80% of CPU bursts should be shorter than
+                    q.</strong
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-card" id="multilevel" onclick="toggleCard(this)">
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(0, 229, 255, 0.15)"
+              >
+                🏛️
+              </div>
+              <div>
+                <div class="topic-title">Multilevel & Feedback Queues</div>
+                <div class="topic-subtitle">
+                  The most sophisticated approach
+                </div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <div class="highlight-box box-info">
+                <span class="box-title">Multilevel Queue</span>
+                Ready queue split into multiple queues (e.g.,
+                foreground/interactive vs background/batch). Each queue has its
+                own algorithm. Process is permanently assigned to a queue.
+              </div>
+
+              <div
+                style="
+                  margin: 16px 0;
+                  font-family: &quot;Space Mono&quot;, monospace;
+                  font-size: 12px;
+                "
+              >
+                <div
+                  style="
+                    background: rgba(255, 77, 158, 0.15);
+                    border: 1px solid rgba(255, 77, 158, 0.4);
+                    border-radius: 6px;
+                    padding: 10px;
+                    margin-bottom: 4px;
+                  "
+                >
+                  <strong style="color: var(--pink)"
+                    >Priority 1: System Processes</strong
+                  >
+                  ← always runs first
+                </div>
+                <div
+                  style="
+                    background: rgba(255, 107, 53, 0.1);
+                    border: 1px solid rgba(255, 107, 53, 0.3);
+                    border-radius: 6px;
+                    padding: 10px;
+                    margin-bottom: 4px;
+                  "
+                >
+                  <strong style="color: var(--orange)"
+                    >Priority 2: Interactive Processes</strong
+                  >
+                  (RR)
+                </div>
+                <div
+                  style="
+                    background: rgba(255, 209, 102, 0.1);
+                    border: 1px solid rgba(255, 209, 102, 0.3);
+                    border-radius: 6px;
+                    padding: 10px;
+                    margin-bottom: 4px;
+                  "
+                >
+                  <strong style="color: var(--yellow)"
+                    >Priority 3: Interactive Editing</strong
+                  >
+                  (RR)
+                </div>
+                <div
+                  style="
+                    background: rgba(57, 255, 20, 0.08);
+                    border: 1px solid rgba(57, 255, 20, 0.2);
+                    border-radius: 6px;
+                    padding: 10px;
+                    margin-bottom: 4px;
+                  "
+                >
+                  <strong style="color: var(--green)"
+                    >Priority 4: Batch Processes</strong
+                  >
+                  (FCFS) ← 80% of CPU
+                </div>
+                <div
+                  style="
+                    background: rgba(122, 156, 192, 0.08);
+                    border: 1px solid rgba(122, 156, 192, 0.2);
+                    border-radius: 6px;
+                    padding: 10px;
+                  "
+                >
+                  <strong style="color: var(--muted)"
+                    >Priority 5: Student Processes</strong
+                  >
+                  (FCFS) ← whatever's left
+                </div>
+              </div>
+
+              <div class="highlight-box box-purple">
+                <span class="box-title">Multilevel FEEDBACK Queue</span>
+                Processes can MOVE BETWEEN queues! If a process uses too much
+                CPU time, it gets moved to a lower-priority queue. I/O-bound and
+                interactive processes stay in higher-priority queues. Aging
+                implemented via queue upgrades.
+              </div>
+
+              <p
+                style="
+                  font-size: 14px;
+                  font-weight: 800;
+                  margin: 12px 0 8px;
+                  color: var(--ch5);
+                "
+              >
+                Classic 3-Queue Feedback Example:
+              </p>
+              <div style="font-size: 13px; margin: 8px 0">
+                <div
+                  style="
+                    background: rgba(0, 229, 255, 0.1);
+                    border: 1px solid rgba(0, 229, 255, 0.3);
+                    border-radius: 6px;
+                    padding: 10px;
+                    margin-bottom: 4px;
+                  "
+                >
+                  <strong style="color: var(--neon)">Q0:</strong> RR with q=8ms
+                  → if not done, move to Q1
+                </div>
+                <div
+                  style="
+                    background: rgba(199, 125, 255, 0.1);
+                    border: 1px solid rgba(199, 125, 255, 0.3);
+                    border-radius: 6px;
+                    padding: 10px;
+                    margin-bottom: 4px;
+                  "
+                >
+                  <strong style="color: var(--purple)">Q1:</strong> RR with
+                  q=16ms → if not done, move to Q2
+                </div>
+                <div
+                  style="
+                    background: rgba(122, 156, 192, 0.1);
+                    border: 1px solid rgba(122, 156, 192, 0.3);
+                    border-radius: 6px;
+                    padding: 10px;
+                  "
+                >
+                  <strong style="color: var(--muted)">Q2:</strong> FCFS (run
+                  until done)
+                </div>
+              </div>
+
+              <div class="exam-tip">
+                <div class="exam-tip-label">🎯 Exam Tip</div>
+                <p>
+                  Multilevel Feedback Queue is the MOST COMPLEX but MOST
+                  FLEXIBLE scheduler. Parameters: number of queues, algorithm
+                  per queue, when to upgrade/demote, which queue new processes
+                  enter. It can implement aging by moving waiting processes to
+                  higher queues.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ALGORITHM COMPARISON TABLE -->
+          <div
+            class="topic-card"
+            onclick="toggleCard(this)"
+            style="grid-column: span 2"
+          >
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(0, 229, 255, 0.15)"
+              >
+                📋
+              </div>
+              <div>
+                <div class="topic-title">Algorithm Comparison</div>
+                <div class="topic-subtitle">
+                  All scheduling algorithms side by side
+                </div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <table class="compare-table">
+                <tr>
+                  <th>Algorithm</th>
+                  <th>Type</th>
+                  <th>Criteria Optimized</th>
+                  <th>Problem</th>
+                  <th>When to Use</th>
+                </tr>
+                <tr>
+                  <td><strong style="color: var(--neon)">FCFS</strong></td>
+                  <td>
+                    <span
+                      class="badge"
+                      style="
+                        background: rgba(255, 107, 53, 0.1);
+                        color: var(--orange);
+                        border: 1px solid var(--orange);
+                      "
+                      >Non-Preemptive</span
+                    >
+                  </td>
+                  <td>Simple</td>
+                  <td>Convoy effect, long wait</td>
+                  <td>Batch systems</td>
+                </tr>
+                <tr>
+                  <td><strong style="color: var(--green)">SJF</strong></td>
+                  <td>
+                    <span
+                      class="badge"
+                      style="
+                        background: rgba(255, 107, 53, 0.1);
+                        color: var(--orange);
+                        border: 1px solid var(--orange);
+                      "
+                      >Non-Preemptive</span
+                    >
+                  </td>
+                  <td>Min avg waiting time (optimal!)</td>
+                  <td>Can't know burst length; starvation</td>
+                  <td>Batch (if known bursts)</td>
+                </tr>
+                <tr>
+                  <td><strong style="color: var(--yellow)">SRTF</strong></td>
+                  <td>
+                    <span
+                      class="badge"
+                      style="
+                        background: rgba(57, 255, 20, 0.1);
+                        color: var(--green);
+                        border: 1px solid var(--green);
+                      "
+                      >Preemptive</span
+                    >
+                  </td>
+                  <td>Min avg waiting time</td>
+                  <td>Starvation for long processes</td>
+                  <td>Systems with known bursts</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong style="color: var(--purple)">Priority</strong>
+                  </td>
+                  <td>Both</td>
+                  <td>Important processes first</td>
+                  <td>Starvation → need aging</td>
+                  <td>Real-time / important tasks</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong style="color: var(--pink)">Round Robin</strong>
+                  </td>
+                  <td>
+                    <span
+                      class="badge"
+                      style="
+                        background: rgba(57, 255, 20, 0.1);
+                        color: var(--green);
+                        border: 1px solid var(--green);
+                      "
+                      >Preemptive</span
+                    >
+                  </td>
+                  <td>Response time, fairness</td>
+                  <td>Higher turnaround than SJF</td>
+                  <td>Time-sharing, interactive</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong style="color: var(--neon)">Multilevel Queue</strong>
+                  </td>
+                  <td>Both</td>
+                  <td>Different criteria per queue</td>
+                  <td>Starvation for lower queues</td>
+                  <td>Mixed workloads</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong style="color: var(--orange)"
+                      >Multilevel Feedback</strong
+                    >
+                  </td>
+                  <td>Both</td>
+                  <td>All criteria (most flexible)</td>
+                  <td>Complex to configure</td>
+                  <td>General-purpose OS (most real OSes)</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="topic-card" onclick="toggleCard(this)">
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(0, 229, 255, 0.15)"
+              >
+                🌐
+              </div>
+              <div>
+                <div class="topic-title">Multiple-Processor Scheduling</div>
+                <div class="topic-subtitle">SMP, load balancing, affinity</div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <ul class="key-points">
+                <li>
+                  <strong>Asymmetric Multiprocessing</strong> — One master
+                  processor handles all scheduling. Simple but bottleneck at
+                  master.
+                </li>
+                <li>
+                  <strong>Symmetric Multiprocessing (SMP)</strong> — Each
+                  processor self-schedules. Most common. Either shared ready
+                  queue or private per-CPU queue.
+                </li>
+                <li>
+                  <strong>Processor Affinity</strong> — Process has affinity for
+                  CPU it's running on (cache warming). <em>Soft affinity</em>:
+                  OS tries but doesn't guarantee. <em>Hard affinity</em>:
+                  process specifies which CPUs it can use.
+                </li>
+                <li>
+                  <strong>Load Balancing</strong> — Keep all CPUs busy.
+                  <em>Push migration</em>: task checks load and pushes from
+                  overloaded CPU. <em>Pull migration</em>: idle CPU pulls tasks
+                  from busy CPU.
+                </li>
+                <li>
+                  <strong>NUMA</strong> — Non-Uniform Memory Access. Memory
+                  closer to some CPUs. Scheduler considers memory placement for
+                  affinity.
+                </li>
+              </ul>
+              <div class="highlight-box box-info">
+                <strong>Multicore Processors</strong>: Multiple cores on single
+                chip. Faster, less power. Can have multiple hardware threads per
+                core. Memory stalls (waiting for memory fetch) allow other
+                threads to run — this is "chip multithreading."
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-card" onclick="toggleCard(this)">
+            <div class="topic-card-header">
+              <div
+                class="topic-icon"
+                style="background: rgba(0, 229, 255, 0.15)"
+              >
+                ⏰
+              </div>
+              <div>
+                <div class="topic-title">Real-Time Scheduling</div>
+                <div class="topic-subtitle">
+                  Hard vs Soft, EDF, Rate Monotonic
+                </div>
+              </div>
+              <div class="topic-card-chevron">⌄</div>
+            </div>
+            <div class="topic-body">
+              <div class="ipc-compare">
+                <div
+                  class="ipc-card"
+                  style="border-color: rgba(255, 107, 53, 0.3)"
+                >
+                  <div class="ipc-card-title" style="color: var(--orange)">
+                    Soft Real-Time
+                  </div>
+                  <p style="font-size: 13px; color: var(--muted)">
+                    Critical processes get priority but NO guarantee of meeting
+                    deadline. Best effort.
+                  </p>
+                </div>
+                <div
+                  class="ipc-card"
+                  style="border-color: rgba(255, 77, 158, 0.3)"
+                >
+                  <div class="ipc-card-title" style="color: var(--pink)">
+                    Hard Real-Time
+                  </div>
+                  <p style="font-size: 13px; color: var(--muted)">
+                    Task MUST be serviced by its deadline. Missing deadline =
+                    system failure. Used in medical devices, aircraft.
+                  </p>
+                </div>
+              </div>
+
+              <ul class="key-points" style="margin-top: 12px">
+                <li>
+                  <strong>Interrupt Latency</strong> — Time from interrupt
+                  arrival to start of service routine. Minimize this!
+                </li>
+                <li>
+                  <strong>Rate Monotonic</strong> — Priority based on PERIOD.
+                  Shorter period → higher priority. P1 period=50ms gets higher
+                  priority than P2 period=100ms.
+                </li>
+                <li>
+                  <strong>Earliest Deadline First (EDF)</strong> — Dynamically
+                  assign priority based on deadline. Earlier deadline → higher
+                  priority. Optimal for uniprocessors but complex.
+                </li>
+                <li>
+                  <strong>Proportional Share</strong> — T shares distributed.
+                  Each process gets N shares where N/T = fraction of CPU time.
+                </li>
+              </ul>
+
+              <div class="exam-tip">
+                <div class="exam-tip-label">🎯 Exam Tip</div>
+                <p>
+                  Real-time process has: processing time t, deadline d, period
+                  p. Relationship: 0 ≤ t ≤ d ≤ p. Rate = 1/p. Rate Monotonic =
+                  static priority (based on period). EDF = dynamic priority
+                  (based on deadline). EDF can achieve 100% utilization.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHAPTER 5 QUIZ -->
+        <div class="quiz-wrap" id="quiz5">
+          <div class="quiz-title" style="color: var(--ch5)">
+            🧠 Chapter 5 Quiz
+          </div>
+          <div class="quiz-subtitle">
+            Test your understanding of CPU Scheduling
+          </div>
+          <div id="quiz5-questions"></div>
+          <button
+            class="btn btn-primary"
+            onclick="submitQuiz('quiz5')"
+            style="margin-top: 16px"
+          >
+            Check Answers
+          </button>
+          <div class="quiz-score" id="quiz5-score"></div>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div
+        style="
+          padding: 40px 60px;
+          text-align: center;
+          border-top: 1px solid var(--border);
+        "
+      >
+        <div
+          style="
+            font-family: &quot;Orbitron&quot;, monospace;
+            font-size: 24px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--neon), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+          "
+        >
+          You've Got This! 🚀
+        </div>
+        <p style="color: var(--muted); font-size: 15px">
+          Review each chapter, take the quizzes, and make sure you can explain
+          every concept in your own words.
+        </p>
+      </div>
+    </div>
+
+    <script>
+      // ============ NAVIGATION ============
+      function toggleNav(id) {
+        const el = document.getElementById(id);
+        el.classList.toggle("open");
+      }
+
+      function scrollTo(id) {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        if (window.innerWidth < 768)
+          document.getElementById("sidebar").classList.remove("open");
+      }
+
+      function toggleSidebar() {
+        document.getElementById("sidebar").classList.toggle("open");
+      }
+
+      // ============ TOPIC CARDS ============
+      function toggleCard(card) {
+        const body = card.querySelector(".topic-body");
+        const isOpen = card.classList.contains("open");
+        card.classList.toggle("open");
+        body.classList.toggle("open");
+      }
+
+      // ============ AMDAHL'S LAW ============
+      function updateAmdahl() {
+        const s = parseInt(document.getElementById("serialSlider").value) / 100;
+        const n = parseInt(document.getElementById("coresSlider").value);
+        document.getElementById("serialVal").textContent =
+          Math.round(s * 100) + "%";
+        document.getElementById("coresVal").textContent = n;
+
+        const speedup = 1 / (s + (1 - s) / n);
+        document.getElementById("amdahlResult").textContent =
+          `Speedup: ${speedup.toFixed(2)}x with ${n} cores`;
+        document.getElementById("amdahlSerial").style.width = s * 100 + "%";
+        document.getElementById("amdahlSerial").textContent =
+          `Serial ${Math.round(s * 100)}%`;
+        document.getElementById("amdahlParallel").textContent =
+          `Parallel ${Math.round((1 - s) * 100)}%`;
+      }
+      updateAmdahl();
+
+      // ============ QUIZ DATA ============
+      const quizData = {
+        quiz2: [
+          {
+            q: "Which of these is a USER-HELPFUL OS service (not system efficiency)?",
+            options: [
+              "Resource Allocation",
+              "Accounting",
+              "Error Detection",
+              "Protection",
+            ],
+            answer: 2,
+            explain:
+              "Error detection is a user-helpful service. Resource allocation, Accounting, and Protection are system efficiency services that help the OS manage itself.",
+          },
+          {
+            q: "What is the main advantage of separating Policy from Mechanism in OS design?",
+            options: [
+              "Makes the OS faster",
+              "Allows policy to change without changing mechanism — maximum flexibility",
+              "Reduces memory usage",
+              "Eliminates the need for system calls",
+            ],
+            answer: 1,
+            explain:
+              "Separating policy (WHAT) from mechanism (HOW) allows OS designers to change policies (like which process runs next) without redesigning the underlying mechanisms.",
+          },
+          {
+            q: "What is the Convoy Effect in FCFS scheduling?",
+            options: [
+              "A fast process helps slow ones",
+              "Short processes stuck behind a long process, causing long waits",
+              "Processes form a chain to help each other",
+              "The OS creates convoys of processes",
+            ],
+            answer: 1,
+            explain:
+              "The Convoy Effect: short processes get stuck waiting behind one long process, just like small cars stuck behind a slow truck.",
+          },
+          {
+            q: "Which OS structure moves as much as possible from kernel to user space, communicating via message passing?",
+            options: [
+              "Layered OS",
+              "Monolithic OS",
+              "Microkernel OS",
+              "Simple OS",
+            ],
+            answer: 2,
+            explain:
+              "Microkernel moves most services to user space. Communication happens via message passing. Benefits: easier to extend/port, more reliable and secure. Main downside: performance overhead.",
+          },
+        ],
+        quiz3: [
+          {
+            q: "What is the difference between a program and a process?",
+            options: [
+              "No difference — they're the same thing",
+              "Program is passive (stored on disk), Process is active (program in execution)",
+              "A process is just a running program, nothing more",
+              "Programs run faster than processes",
+            ],
+            answer: 1,
+            explain:
+              "Key distinction: Program = passive entity on disk (executable file). Process = active entity — the program IN EXECUTION with its own memory, state, and resources.",
+          },
+          {
+            q: "A process that has finished but whose parent hasn't called wait() yet is called a:",
+            options: ["Orphan", "Daemon", "Zombie", "Background process"],
+            answer: 2,
+            explain:
+              "A ZOMBIE process has completed execution but its PCB still exists because the parent hasn't called wait() yet to collect its exit status. An ORPHAN is when the parent terminates first.",
+          },
+          {
+            q: "Which queue contains processes that are ready to run but waiting for the CPU?",
+            options: ["Job Queue", "Device Queue", "Ready Queue", "Swap Queue"],
+            answer: 2,
+            explain:
+              "Ready Queue = processes in main memory that are ready and waiting to be assigned to a processor. Job Queue = all processes in system. Device Queue = waiting for I/O device.",
+          },
+          {
+            q: "Shared Memory IPC is under control of:",
+            options: [
+              "The OS kernel",
+              "The hardware",
+              "The user processes",
+              "The file system",
+            ],
+            answer: 2,
+            explain:
+              "Shared Memory is under control of USER PROCESSES, not the OS. After setup, the OS is not involved. This makes it faster but requires user processes to synchronize access.",
+          },
+        ],
+        quiz4: [
+          {
+            q: "What do threads within the SAME process share?",
+            options: [
+              "Stack and registers",
+              "Program counter and stack",
+              "Code, data section, and open files",
+              "Only the program counter",
+            ],
+            answer: 2,
+            explain:
+              "Threads share: code section, data section, and open files. Each thread has its OWN: thread ID, program counter, register set, and stack.",
+          },
+          {
+            q: "In the Many-to-One threading model, if ONE thread blocks:",
+            options: [
+              "Only that thread blocks",
+              "All other threads in the process block too",
+              "The kernel creates a new thread",
+              "The process terminates",
+            ],
+            answer: 1,
+            explain:
+              "Many-to-One: Many user threads → 1 kernel thread. If that kernel thread blocks (e.g., during I/O), ALL user threads in that process block. This is why it's rarely used.",
+          },
+          {
+            q: "According to Amdahl's Law, what is the bottleneck that limits speedup from adding more cores?",
+            options: [
+              "The number of threads",
+              "Memory bandwidth",
+              "The serial (sequential) portion of the program",
+              "The size of the cache",
+            ],
+            answer: 2,
+            explain:
+              "Amdahl's Law: Speedup = 1/(S + (1-S)/N). As N→∞, speedup approaches 1/S. The SERIAL portion S is the fundamental limit — you can't parallelize what must run sequentially.",
+          },
+          {
+            q: "Thread-Local Storage (TLS) differs from local variables because:",
+            options: [
+              "TLS is shared between threads",
+              "TLS is visible across function invocations (like static data but per-thread)",
+              "TLS is stored in kernel memory",
+              "Local variables are faster than TLS",
+            ],
+            answer: 1,
+            explain:
+              "Local variables are visible only during a single function call. TLS persists across function invocations, similar to static data, but each thread gets its own unique copy.",
+          },
+        ],
+        quiz5: [
+          {
+            q: "Which scheduling algorithm is OPTIMAL for minimizing average waiting time?",
+            options: [
+              "FCFS",
+              "Round Robin",
+              "SJF (Shortest Job First)",
+              "Priority Scheduling",
+            ],
+            answer: 2,
+            explain:
+              "SJF is provably optimal — it gives the minimum average waiting time for a given set of processes. However, it requires knowing future CPU burst lengths, which isn't always possible.",
+          },
+          {
+            q: "In priority scheduling, a process waiting indefinitely because higher-priority processes keep arriving suffers from:",
+            options: ["Convoy Effect", "Starvation", "Deadlock", "Aging"],
+            answer: 1,
+            explain:
+              "STARVATION = low-priority process may never execute because higher-priority processes keep arriving. The SOLUTION is AGING: gradually increase priority of waiting processes over time.",
+          },
+          {
+            q: "In Round Robin with a very LARGE time quantum, RR behaves like:",
+            options: ["SJF", "Priority Scheduling", "FCFS", "Multilevel Queue"],
+            answer: 2,
+            explain:
+              "With a very large quantum, each process runs to completion before the next one starts — exactly like FCFS. With a very small quantum, there's too much context switch overhead.",
+          },
+          {
+            q: "What is the key difference between Multilevel Queue and Multilevel FEEDBACK Queue?",
+            options: [
+              "Multilevel Queue has more queues",
+              "In Feedback Queue, processes CAN MOVE between queues based on behavior",
+              "Feedback Queue uses only FCFS",
+              "Multilevel Queue is preemptive only",
+            ],
+            answer: 1,
+            explain:
+              "Multilevel Queue: process is PERMANENTLY assigned to a queue. Multilevel FEEDBACK Queue: processes can MOVE between queues — if they use too much CPU, they're demoted; aging promotes waiting processes.",
+          },
+        ],
+      };
+
+      // ============ RENDER QUIZZES ============
+      function renderQuiz(quizId) {
+        const container = document.getElementById(quizId + "-questions");
+        const data = quizData[quizId];
+        container.innerHTML = data
+          .map(
+            (q, qi) => `
+    <div class="quiz-question">
+      <div class="quiz-q-text">Q${qi + 1}. ${q.q}</div>
+      <div class="quiz-options">
+        ${q.options
+          .map(
+            (opt, oi) => `
+          <button class="quiz-option" onclick="selectOption('${quizId}',${qi},${oi},${q.answer})" id="${quizId}-q${qi}-o${oi}">
+            <span style="opacity:0.5;margin-right:6px;">${["A", "B", "C", "D"][oi]}</span> ${opt}
+          </button>
+        `,
+          )
+          .join("")}
+      </div>
+      <div class="quiz-explanation" id="${quizId}-exp${qi}">💡 ${q.explain}</div>
+    </div>
+  `,
+          )
+          .join("");
+      }
+
+      const selectedAnswers = {};
+
+      function selectOption(quizId, qi, oi, correct) {
+        if (!selectedAnswers[quizId]) selectedAnswers[quizId] = {};
+        selectedAnswers[quizId][qi] = oi;
+        // Visual feedback
+        const options = document.querySelectorAll(`[id^="${quizId}-q${qi}-o"]`);
+        options.forEach((opt, idx) => {
+          opt.classList.remove("correct", "wrong", "reveal");
+          if (idx === oi) {
+            opt.classList.add(oi === correct ? "correct" : "wrong");
+          }
+          if (idx === correct && oi !== correct) {
+            opt.classList.add("reveal");
+          }
+        });
+        document.getElementById(`${quizId}-exp${qi}`).classList.add("show");
+        updateProgress();
+      }
+
+      function submitQuiz(quizId) {
+        const data = quizData[quizId];
+        const answers = selectedAnswers[quizId] || {};
+        let score = 0;
+        data.forEach((q, qi) => {
+          if (answers[qi] === q.answer) score++;
+          const options = document.querySelectorAll(
+            `[id^="${quizId}-q${qi}-o"]`,
+          );
+          options.forEach((opt, idx) => {
+            if (idx === q.answer) opt.classList.add("reveal");
+          });
+          document.getElementById(`${quizId}-exp${qi}`).classList.add("show");
+        });
+        const scoreEl = document.getElementById(quizId + "-score");
+        const pct = Math.round((score / data.length) * 100);
+        const emoji = pct >= 75 ? "🎉" : pct >= 50 ? "💪" : "📚";
+        const msg =
+          pct >= 75
+            ? "Excellent! Keep it up!"
+            : pct >= 50
+              ? "Good progress! Review the missed ones."
+              : "Review this chapter again.";
+        scoreEl.innerHTML = `
+    <div class="score-number" style="color:${pct >= 75 ? "var(--green)" : pct >= 50 ? "var(--yellow)" : "var(--orange)"}">${score}/${data.length}</div>
+    <div style="font-size:32px;margin:8px 0;">${emoji}</div>
+    <div style="font-size:16px;font-weight:700;">${pct}% — ${msg}</div>
+  `;
+        scoreEl.style.display = "block";
+        updateProgress();
+      }
+
+      function updateProgress() {
+        const total = Object.values(quizData).reduce((a, q) => a + q.length, 0);
+        const answered = Object.values(selectedAnswers).reduce(
+          (a, v) => a + Object.keys(v).length,
+          0,
+        );
+        const pct = Math.min(100, Math.round((answered / total) * 100));
+        document.getElementById("progressBar").style.width = pct + "%";
+        document.getElementById("progressLabel").textContent =
+          pct + "% complete";
+      }
+
+      // Init quizzes
+      ["quiz2", "quiz3", "quiz4", "quiz5"].forEach(renderQuiz);
+    </script>
+  </body>
+</html>
